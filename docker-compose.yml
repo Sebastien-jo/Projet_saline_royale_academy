@@ -15,6 +15,9 @@ services:
     container_name: symfony-sra
     restart: on-failure
     environment:
+      ELASTICSEARCH_USER: elastic
+      ELASTICSEARCH_PASSWORD: ${ELASTIC_PASSWORD}
+      ELASTICSEARCH_HOST: http://elasticsearch:9200/
       DATABASE_URL: mysql://$MYSQL_USER:$MYSQL_PASSWORD@db/$MYSQL_DATABASE?serverVersion=mariadb-$MYSQL_VERSION
     ports:
       - "1234:1234"
@@ -22,6 +25,7 @@ services:
       - ./app/back:/var/www/symfony:delegated
       - ./docker/nginx/symfony.conf:/etc/nginx/http.d/default.conf
     networks:
+      - elasticsearch
       - web
       - acpSymfony
 
@@ -47,7 +51,7 @@ services:
     restart: on-failure
     container_name: db-sra
     volumes:
-#      - './docker/bdd/my.cnf:/etc/mysql/conf.d/my.cnf:ro'
+      #      - './docker/bdd/my.cnf:/etc/mysql/conf.d/my.cnf:ro'
       - 'db-data-sra:/var/lib/mysql/:delegated'
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
@@ -59,6 +63,44 @@ services:
     networks:
       - acpSymfony
 
+  elasticsearch:
+    image: arm64v8/elasticsearch:8.7.1
+    environment:
+      ES_JAVA_OPTS: -Xms1g -Xmx1g
+      discovery.type: single-node
+      ELASTIC_PASSWORD : ${ELASTIC_PASSWORD}
+      KIBANA_PASSWORD: ${KIBANA_PASSWORD}
+#      USERNAME: ${USERNAME_ELASTIC}:elastica
+#      PASSWORD: ${PASSWORD_ELASTIC}:elastica
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /usr/share/elasticsearch/data
+#      - ./docker/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elasticsearch
+
+  kibana:
+    container_name: kibana-sra
+    image: arm64v8/kibana:8.7.1
+#    volumes:
+#      -  ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: kibana_system
+      ELASTICSEARCH_HOSTS: 'http://elasticsearch:9200'
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    networks:
+        - elasticsearch
+
   mailhog:
     image: mailhog/mailhog
     networks:
@@ -69,9 +111,13 @@ services:
 volumes:
   db-data-sra:
     driver: local
+  elasticsearch-data:
+    driver: local
 
 networks:
   web:
     driver: bridge
   acpSymfony:
+    driver: bridge
+  elasticsearch:
     driver: bridge

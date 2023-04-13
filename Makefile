@@ -27,8 +27,6 @@ build-dev:
 		cd ../..
 
 ky:
-		docker-compose exec symfony sh -c 'set -e ;apt-get install -y openssl;'
-		docker-compose exec symfony sh -c 'set -e ;apt-get install -y acl;'
 		docker-compose exec symfony sh -c 'php bin/console lexik:jwt:generate-keypair'
 		docker-compose exec symfony sh -c 'setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
 		docker-compose exec symfony sh -c' setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
