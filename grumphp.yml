@@ -1,0 +1,21 @@
+# See https://github.com/phpro/grumphp#configuration
+grumphp:
+  hooks_dir: './bin/hooks/'
+  hide_circumvention_tip: true
+  ascii:
+    failed: ~
+    succeeded: ~
+  fixer:
+    enabled: false
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: exec
+  environment:
+      variables:
+          GRUMPHP_BIN_DIR: './app/back/vendor/bin'
+  tasks:
+    phpcsfixer2:
+      verbose: false
+      diff: true
+      triggered_by: ['php']
+      config: ./app/back/.php_cs.strict
+      config_contains_finder: false

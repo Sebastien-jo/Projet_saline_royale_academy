@@ -9,8 +9,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY ./app/front/package.json ./
-RUN npm install --silent
-RUN npm install react-scripts -g --silent
+RUN npm install
+RUN npm install react-scripts -g
 
 ## add app
 #COPY /app/front/ ./

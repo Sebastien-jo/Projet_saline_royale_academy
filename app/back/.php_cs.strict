@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Stricter config for tools we want to make it stricter (e.g pre-comits, progressive adoption, ...)
+ */
+
+declare(strict_types=1);
+
+if (file_exists(__DIR__ . '/.php-cs-fixer.php')) {
+    $config = require __DIR__ . '/.php-cs-fixer.php';
+} else {
+    $config = require __DIR__ . '/.php-cs-fixer.dist.php';
+}
+
+return $config->setRules(
+    array_merge(
+        $config->getRules(),
+        [
+        ]
+    )
+);
