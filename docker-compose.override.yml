@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - db
+    networks:
+      - acpSymfony
+    ports:
+      - '8001:80'
