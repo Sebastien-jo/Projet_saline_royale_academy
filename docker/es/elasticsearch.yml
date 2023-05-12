@@ -1,0 +1,5 @@
+cluster.name: "sra-cluster"
+node.name: sranode
+network.host: 0.0.0.0
+xpack.security.enrollment.enabled: false
+
