@@ -3,6 +3,7 @@
 install: up ##@docker First init docker's containers
 		sh bin/install.sh
 		$(MAKE) vendor-install
+		php app/back/vendor/bin/grumphp git:init
 
 deploy:
 		sh bin/deploy.sh
