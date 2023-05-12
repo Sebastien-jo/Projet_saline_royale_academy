@@ -1,0 +1,13 @@
+parameters:
+    level: 8
+    reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
+
+    parallel:
+        processTimeout: 500.0
+        # Uncomment when you regenerate the baseline @see https://github.com/phpstan/phpstan/issues/3827
+        #maximumNumberOfProcesses: 1
+
+    paths:
+        - src
+        - tests

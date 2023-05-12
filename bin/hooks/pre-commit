@@ -1,0 +1,26 @@
+#!/bin/sh
+
+#
+# GrumPHP pre-commit hook template. This file will be moved in git hooks by GumPHP
+#
+
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+RESET="\033[0m"
+
+# -------------------
+#  GumPHP pre-commit
+# -------------------
+
+echo "\n${YELLOW}Executing pre-commit hook...${RESET}"
+make cs
+
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -gt 0 ]; then
+    echo "\n${YELLOW}-----------------------------------------------------${RESET}"
+    echo "\n${YELLOW}Oops ! Something goes wrong, you should fix errors before commit again, do not forget to git add the changes after fixing!${RESET}"
+fi
+
+exit $EXIT_CODE
