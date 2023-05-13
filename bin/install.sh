@@ -25,6 +25,7 @@ docker-compose exec symfony sh -c 'bin/console assets:install public'
 
 # Create database + update schema
 docker-compose exec symfony sh -c 'bin/console doctrine:database:create --if-not-exists'
+docker-compose exec symfony sh -c 'bin/console d:m:m -n'
 docker-compose exec symfony sh -c 'bin/console cache:clear'
 
 # Update var directory permissions
@@ -42,3 +43,6 @@ if [ ! -f "$JWT_PRIVATE_KEY" ]; then
   docker-compose exec symfony sh -c' setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
 fi
 
+
+#add fixtures
+docker-compose exec symfony sh -c 'bin/console d:f:l -n'

@@ -35,6 +35,18 @@
             "src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "3.2",
         "recipe": {
@@ -46,18 +58,6 @@
         "files": [
             "config/packages/doctrine_migrations.yaml",
             "migrations/.gitignore"
-        ]
-    },
-    "friendsofphp/php-cs-fixer": {
-        "version": "3.16",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "3.0",
-            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
-        },
-        "files": [
-            ".php-cs-fixer.dist.php"
         ]
     },
     "friends-of-behat/symfony-extension": {
@@ -73,6 +73,18 @@
             "config/services_test.yaml",
             "features/demo.feature",
             "tests/Behat/DemoContext.php"
+        ]
+    },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.16",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
         ]
     },
     "friendsofsymfony/elastica-bundle": {
@@ -166,6 +178,15 @@
             "config/packages/mailer.yaml"
         ]
     },
+    "symfony/maker-bundle": {
+        "version": "1.48",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
     "symfony/monolog-bundle": {
         "version": "3.8",
         "recipe": {
@@ -239,6 +260,18 @@
         },
         "files": [
             "config/packages/validator.yaml"
+        ]
+    },
+    "zenstruck/foundry": {
+        "version": "1.32",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.10",
+            "ref": "37c2f894cc098ab4c08874b80cccc8e2f8de7976"
+        },
+        "files": [
+            "config/packages/zenstruck_foundry.yaml"
         ]
     }
 }
