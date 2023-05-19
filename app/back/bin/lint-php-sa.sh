@@ -8,7 +8,7 @@
 #
 
 if [ ! -f  "app/back/composer.json" ]; then
-    echo "ERR: This script must be executed from the project root directory."
+    echo "ERR: This script must be executed from the back root directory."
     exit 1
 fi
 

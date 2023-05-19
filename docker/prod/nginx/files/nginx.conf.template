@@ -1,0 +1,67 @@
+daemon off;
+
+user nginx;
+
+worker_processes 4;
+worker_rlimit_nofile 2048;
+
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    multi_accept on;
+    use epoll;
+}
+
+http {
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 10;
+    types_hash_max_size 2048;
+    client_max_body_size 100m;
+    open_file_cache max=100;
+    disable_symlinks off;
+    large_client_header_buffers  4 32k;
+
+    server_tokens off;
+
+    charset UTF-8;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log off;
+    error_log /dev/stderr;
+
+    gzip on;
+    gzip_disable "msie6";
+    gzip_min_length 1400;
+    gzip_comp_level 9;
+    gzip_vary on;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    fastcgi_intercept_errors off;
+
+    log_format json escape=json '{'
+    '"env": "${ENV_NAME}", '
+    '"network.client_ip": "$remote_addr",'
+    '"network.request_length": "$request_length",'
+    '"network.response_lenght": $body_bytes_sent,'
+    '"http.authorization_token": "$http_authorization",'
+    '"http.host": "$host",'
+    '"http.referer": "$http_referer",'
+    '"http.request": "$request_uri",'
+    '"http.request_body": "$request_body",'
+    '"http.response_time": $request_time,'
+    '"http.status_code": $status,'
+    '"http.user_agent": "$http_user_agent",'
+    '"http.verb": "$request_method",'
+    '"http.x_forwarded_for": "$http_x_forwarded_for",'
+    '"message": "$request"'
+    '}';
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}

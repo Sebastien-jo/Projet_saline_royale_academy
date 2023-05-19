@@ -1,6 +1,6 @@
 UNAME := $(shell uname)
 
-DOCKER_IMAGE_PHP = projet_saline_royale_academy_symfony:latest
+DOCKER_IMAGE_PHP = projet_saline_royale_academy-symfony:latest
 
 # Perl Colors, with fallback if tput command not available
 GREEN  := $(shell command -v tput >/dev/null 2>&1 && tput -Txterm setaf 2 || echo "")
