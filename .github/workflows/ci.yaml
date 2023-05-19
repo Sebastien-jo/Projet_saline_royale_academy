@@ -1,0 +1,124 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "preprod" branch
+  push:
+    branches:
+      - preprod
+      - main
+  pull_request:
+    branches:
+      - preprod
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+#
+#  yaml-validation:
+#    name: Yaml Validation
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          SERVER_PASSWORD: ${secrets.SERVER_PASSWORD}
+#          SERVER_ADDRESS: ${secrets.SERVER_ADDRESS}
+#      - name: Yaml validation
+#        run: |
+#          make cs-yaml-full
+#  php-cs-fixer-check:
+#    runs-on: ubuntu-latest
+#    name: PHPCSfixer
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+#      - name: Run PHPCSfixer
+#        run: |
+#          make cs-php-fixer-full
+#  php-stan:
+#    runs-on: ubuntu-latest
+#    name: PHPStan
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+#      - name: Run PHPStan
+#        run: |
+#          make cs-php-phpstan-full
+#  test-unit:
+#    runs-on: ubuntu-latest
+#    name: Unit tests
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+#      - name: Run tests
+#        uses: ./.github/actions/run-phpunit
+#        if: ${{ github.ref != 'refs/heads/main' }}
+#        with:
+#          suite: unit
+#          enable_pcov: true
+#          additional_option: --coverage-clover=report/clover.xml
+#      - name: Run tests with HTML coverage
+#        uses: ./.github/actions/run-phpunit-html-coverage
+#        if: ${{ github.ref == 'refs/heads/main' }}
+#        with:
+#          suite: unit
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+#      - name: Send coverage monitor on pull request
+#        if: ${{ github.event_name == 'pull_request'}}
+#        uses: slavcodev/coverage-monitor-action@1.2.0
+#        with:
+#          github_token: ${{ github.token }}
+#          clover_file: report/clover.xml
+#          threshold_alert: 0
+#          threshold_warning: 70
+#  test-behat:
+#    runs-on: ubuntu-latest
+#    name: Behat
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: ./.github/actions/setup-full
+#        with:
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+#      - name: Run BEHAT
+#        uses: ./.github/actions/run-behat
+#        with:
+#          suite: api
+#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+
