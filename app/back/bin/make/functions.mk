@@ -7,11 +7,11 @@ define run-docker-compose
 endef
 
 define run-php
-	@$(call run-in-container, -u www-data:www-data, symfony, php -dmemory_limit=-1 $(1))
+	@$(call run-in-container, symfony, php -dmemory_limit=-1 $(1))
 endef
 
 define run-in-container
-	@$(call run-docker-compose, exec $(1) $(2) $(3))
+	@$(call run-docker-compose, exec $(1) $(2))
 endef
 
 define run-script

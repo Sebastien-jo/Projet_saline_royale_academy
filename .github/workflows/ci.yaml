@@ -2,123 +2,148 @@
 
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "preprod" branch
+  workflow_dispatch:
   push:
     branches:
-      - preprod
+      - dev
       - main
   pull_request:
     branches:
-      - preprod
+      - dev
       - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build-and-push-symfony:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-symfony
+          tags: |
+            latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          file: ./docker/prod/alpine/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-and-push-nginx:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx
+          tags: |
+            latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          file: ./docker/prod/nginx/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  tests-php:
+    needs: build-and-push-symfony
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/sebastien-jo/projet_saline_royale_academy-symfony:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: php-cs-fixer
+        shell: bash
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-#
-#  yaml-validation:
-#    name: Yaml Validation
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/setup-php
-#        with:
-#          SERVER_PASSWORD: ${secrets.SERVER_PASSWORD}
-#          SERVER_ADDRESS: ${secrets.SERVER_ADDRESS}
-#      - name: Yaml validation
-#        run: |
-#          make cs-yaml-full
-#  php-cs-fixer-check:
-#    runs-on: ubuntu-latest
-#    name: PHPCSfixer
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/setup-php
-#        with:
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-#      - name: Run PHPCSfixer
-#        run: |
-#          make cs-php-fixer-full
-#  php-stan:
-#    runs-on: ubuntu-latest
-#    name: PHPStan
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/setup-php
-#        with:
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-#      - name: Run PHPStan
-#        run: |
-#          make cs-php-phpstan-full
-#  test-unit:
-#    runs-on: ubuntu-latest
-#    name: Unit tests
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/setup-php
-#        with:
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-#      - name: Run tests
-#        uses: ./.github/actions/run-phpunit
-#        if: ${{ github.ref != 'refs/heads/main' }}
-#        with:
-#          suite: unit
-#          enable_pcov: true
-#          additional_option: --coverage-clover=report/clover.xml
-#      - name: Run tests with HTML coverage
-#        uses: ./.github/actions/run-phpunit-html-coverage
-#        if: ${{ github.ref == 'refs/heads/main' }}
-#        with:
-#          suite: unit
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-#      - name: Send coverage monitor on pull request
-#        if: ${{ github.event_name == 'pull_request'}}
-#        uses: slavcodev/coverage-monitor-action@1.2.0
-#        with:
-#          github_token: ${{ github.token }}
-#          clover_file: report/clover.xml
-#          threshold_alert: 0
-#          threshold_warning: 70
-#  test-behat:
-#    runs-on: ubuntu-latest
-#    name: Behat
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/setup-full
-#        with:
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-#      - name: Run BEHAT
-#        uses: ./.github/actions/run-behat
-#        with:
-#          suite: api
-#          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-#          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+          cd /var/www/symfony
+          ./vendor/bin/php-cs-fixer fix --diff --config=.php_cs.strict $@
 
+      - name: Rector
+        shell: bash
+        run: |
+          cd /var/www/symfony
+          ./vendor/bin/rector process `git diff --name-only --cached --diff-filter=d | grep "\.php"` --dry-run
+
+      - name: Phpstan
+        shell: bash
+        run: |
+          cd /var/www/symfony
+          php -d memory_limit=-1 ./vendor/bin/phpstan clear-result-cache
+          php -d memory_limit=-1 ./vendor/bin/phpstan
+
+  Deploy:
+    if: |
+      github.ref_name == 'main'
+    needs:
+      - build-and-push-symfony
+      - build-and-push-nginx
+      - tests-php
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull symfony image
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker stop symfony
+            docker rm symfony
+            docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-symfony:latest
+      - name: pull nginx image
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker stop nginx
+            docker rm nginx
+            docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-nginx:latest
