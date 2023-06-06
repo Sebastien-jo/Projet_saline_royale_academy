@@ -51,3 +51,6 @@ fix-permissions-composer: ##@docker Fixes composer cache permissions in PHP cont
 	@echo "${BLUE}Setting composer cache directory and permissions...${RESET}"
 	$(call run-docker-compose, exec -u root symfony mkdir -p /var/www/.composer)
 	$(call run-docker-compose, exec -u root symfony chown -R www-data:www-data /var/www/.composer)
+
+stripe-test-payment:
+	docker-compose exec stripe sh -c 'stripe trigger payment_intent.succeeded'

@@ -7,4 +7,24 @@ fos_elastica:
       password: '%env(ELASTICSEARCH_PASSWORD)%'
     }
   indexes:
-    app: null
+    user:
+      index_name: user_%env(ELASTICSEARCH_SUFFIX)%
+      persistence:
+        provider: ~ # you can set a provider to build your model yourself
+        finder: ~
+        driver: orm
+        model: App\Entity\User
+      # this defines how the domain model is serialized before being commited to elasticsearch
+      # https://symfony.com/doc/5.4/serializer.html#using-serialization-groups-annotations
+#      serializer:
+#        groups: [ search ]
+
+      # these properties are 1:1 the properties for elasticsearchs explicit mapping
+      # https://www.elastic.co/guide/en/elasticsearch/reference/7.17/explicit-mapping.html
+      # this, unintuitively, has nothing to do with serialization
+      properties:
+#        title: { type: text, boost: 2.0 }
+        id: ~
+        lastName: { type: text }
+        firstName: { type: text }
+        email: { type: text }

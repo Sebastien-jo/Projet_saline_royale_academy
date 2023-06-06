@@ -17,6 +17,8 @@ services:
     restart: on-failure
     environment:
       ELASTICSEARCH_USER: elastic
+      STRIPE_SECRET_KEY : ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY : ${STRIPE_PUBLIC_KEY}
       ELASTICSEARCH_PASSWORD: ${ELASTIC_PASSWORD}
       ELASTICSEARCH_HOST: http://elasticsearch:9200/
       DATABASE_URL: mysql://$MYSQL_USER:$MYSQL_PASSWORD@db/$MYSQL_DATABASE?serverVersion=mariadb-$MYSQL_VERSION
@@ -65,7 +67,7 @@ services:
       - acpSymfony
 
   elasticsearch:
-    image: arm64v8/elasticsearch:8.7.1
+    image: arm64v8/elasticsearch:7.17.10
     environment:
       ES_JAVA_OPTS: -Xms1g -Xmx1g
       discovery.type: single-node
@@ -78,7 +80,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - /usr/share/elasticsearch/data
+      - elasticsearch-data:/usr/share/elasticsearch/data
 #      - ./docker/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - 9200:9200
@@ -88,7 +90,7 @@ services:
 
   kibana:
     container_name: kibana-sra
-    image: arm64v8/kibana:8.7.1
+    image: arm64v8/kibana:7.17.10
 #    volumes:
 #      -  ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
@@ -109,6 +111,17 @@ services:
     ports:
       - '8025:8025'
       - '1025:1025'
+
+  stripe:
+    image: stripe/stripe-cli
+    command: ["listen", "--forward-to=symfony:1234/webhook" ]
+    environment:
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY}
+    depends_on:
+      - symfony
+    networks:
+        - acpSymfony
+
 volumes:
   db-data-sra:
     driver: local
