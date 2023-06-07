@@ -48,11 +48,14 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[Groups(['user:create'])]
     private ?string $email = null;
 
-    #[ORM\Column()]
+    /**
+     * @var array<string> $roles
+     */
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
     //    #[Assert\NotBlank(groups: ['user:create'])]
     #[Groups(['user:create'])]
@@ -105,6 +108,11 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return array_unique($roles);
     }
 
+    /**
+     * @param array<string> $roles
+     *
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -115,7 +123,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -140,7 +148,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         $this->plainPassword = null;

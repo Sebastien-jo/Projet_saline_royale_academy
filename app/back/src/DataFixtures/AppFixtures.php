@@ -16,15 +16,14 @@ class AppFixtures extends Fixture
             'lastName' => 'user',
             'roles' => ['STUDENT'],
             'email' => 'user@gmail.com',
-            'password' => 'user'
-            ]);
+            'password' => 'user',
+        ]);
         UserFactory::createOne([
             'firstName' => 'admin',
             'lastName' => 'admin',
             'roles' => ['TEACHER'],
             'email' => 'admin@gmail.com',
-            'password' => 'admin'
-            ]);
-
+            'password' => 'admin',
+        ]);
     }
 }

@@ -1,4 +1,4 @@
-.PHONY: install deploy ps up bash stop build-dev ky
+.PHONY: install deploy ps up bash stop build-dev ky stripe-test-payment
 
 install: up ##@docker First init docker's containers
 		sh bin/install.sh

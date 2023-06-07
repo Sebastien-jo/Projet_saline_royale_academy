@@ -2,6 +2,7 @@
 
 namespace App\Controller\WebHook;
 
+use Stripe\PaymentIntent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,11 @@ class StripeController extends AbstractController
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $event = null;
 
+        if ($payload === false) {
+            // Invalid payload
+            return $this->json(['success' => false], 400);
+        }
+
         try {
             $event = \Stripe\Webhook::constructEvent(
                 $payload,
@@ -38,8 +44,9 @@ class StripeController extends AbstractController
 // Handle the event
         switch ($event->type) {
             case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object;
-                echo var_export($paymentIntent, true);
+                /** @var PaymentIntent $object */
+                $object = $event->data['object'];
+                echo var_export($object, true);
 
                 break;
                 // ... handle other event types

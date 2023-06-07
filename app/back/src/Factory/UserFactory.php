@@ -63,8 +63,9 @@ final class UserFactory extends ModelFactory
     {
         return $this
             ->afterInstantiate(function (User $user): void {
+                $password = $user->getPassword() ?? '';
                 $user
-                    ->setPassword($this->hasher->hashPassword($user, $user->getPassword()))
+                    ->setPassword($this->hasher->hashPassword($user, $password))
                     ->setEmail($user->getFirstName() . '.' . $user->getLastname() . '@gmail.com')
                 ;
             })
