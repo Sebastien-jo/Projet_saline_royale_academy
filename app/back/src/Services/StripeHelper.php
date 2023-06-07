@@ -32,7 +32,7 @@ class StripeHelper
     /**
      * @throws ApiErrorException
      */
-    public static function GetPaymentIntent($id)
+    public static function GetPaymentIntent(mixed $id): object
     {
         return PaymentIntent::retrieve($id);
     }

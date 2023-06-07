@@ -10,19 +10,26 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final readonly class UserPasswordHasher implements ProcessorInterface
 {
-    public function __construct(private ProcessorInterface $processor, private UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+        private ProcessorInterface $processor,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {
     }
 
-    public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
+    /**
+     * @param array<string> $context
+     * @param array<string> $uriVariables
+     */
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): object
     {
         if (!$data->getPlainPassword()) {
             return $this->processor->process($data, $operation, $uriVariables, $context);
         }
 
+        $plainPassword = $data->getPlainPassword();
         $hashedPassword = $this->passwordHasher->hashPassword(
             $data,
-            $data->getPlainPassword()
+            $plainPassword
         );
         $data->setPassword($hashedPassword);
         $data->eraseCredentials();

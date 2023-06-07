@@ -2,15 +2,23 @@
 
 namespace App\Entity;
 
-class AbstractEntity {
-
-    public function __construct(array $array = null) {
+class AbstractEntity
+{
+    /**
+     * @param array<string>|null $array
+     */
+    public function __construct(?array $array)
+    {
         if ($array) {
             $this->hydrate($array);
         }
     }
 
-    public function hydrate(array $donnees): void {
+    /**
+     * @param array<string> $donnees
+     */
+    public function hydrate(array $donnees): void
+    {
         foreach ($donnees as $key => $value) {
             // On récupère le nom du setter correspondant à l'attribut
             $method = 'set' . ucfirst($key);
