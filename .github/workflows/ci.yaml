@@ -116,8 +116,8 @@ jobs:
           php -d memory_limit=-1 ./vendor/bin/phpstan
 
   Deploy:
-    if: |
-      github.ref_name == 'main'
+#    if: |
+#      github.ref_name == 'main'
     needs:
       - build-and-push-symfony
       - build-and-push-nginx

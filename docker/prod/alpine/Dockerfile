@@ -35,7 +35,7 @@ RUN docker-php-ext-enable apcu
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 WORKDIR /
-
+COPY docker/prod/nginx/files/symfony.conf /etc/nginx/http.d/default.conf
 WORKDIR /var/www/symfony
 
 COPY ./app/back .
@@ -49,7 +49,7 @@ RUN chown -R www-data:www-data /var/www/symfony
 
 VOLUME ["/var/www/symfony"]
 
-EXPOSE 9000
+EXPOSE 1234
 
 ENTRYPOINT ["/entrypoint.sh"]
 
