@@ -9,30 +9,37 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
 use App\State\UserPasswordHasher;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(),
-        new Post(denormalizationContext: ['groups' => ['user:create']], processor: UserPasswordHasher::class),
+        new Post(
+            inputFormats: ['multipart' => ['multipart/form-data']],
+            denormalizationContext: ['groups' => ['user:create']],
+            processor: UserPasswordHasher::class
+        ),
         new Get(),
-        new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
         new Delete(),
     ],
     normalizationContext: ['groups' => ['user:read']],
-    elasticsearch: true,
+    //    elasticsearch: true,
     //    denormalizationContext: ['groups' => ['user:create', 'user:update']],
 )]
+#[Vich\Uploadable]
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
@@ -68,6 +75,30 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\Column(length: 255)]
     #[Groups(['user:create'])]
     private ?string $firstName = null;
+
+    #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
+    private Collection $badges;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: QuizResponse::class, orphanRemoval: true)]
+    private Collection $quizResponses;
+
+    #[Groups(['user:read'])]
+    public ?string $contentUrl = null;
+
+    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
+    #[Groups(['user:create'])]
+    public ?File $avatar = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
+    public ?string $avatarPath = null;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->badges = new ArrayCollection();
+        $this->quizResponses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +205,84 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Badge>
+     */
+    public function getBadges(): Collection
+    {
+        return $this->badges;
+    }
+
+    public function addBadge(Badge $badge): self
+    {
+        if (!$this->badges->contains($badge)) {
+            $this->badges->add($badge);
+        }
+
+        return $this;
+    }
+
+    public function removeBadge(Badge $badge): self
+    {
+        $this->badges->removeElement($badge);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizResponse>
+     */
+    public function getQuizResponses(): Collection
+    {
+        return $this->quizResponses;
+    }
+
+    public function addQuizResponse(QuizResponse $quizResponse): self
+    {
+        if (!$this->quizResponses->contains($quizResponse)) {
+            $this->quizResponses->add($quizResponse);
+            $quizResponse->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizResponse(QuizResponse $quizResponse): self
+    {
+        if ($this->quizResponses->removeElement($quizResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($quizResponse->getUser() === $this) {
+                $quizResponse->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAvatarPath(): ?string
+    {
+        return $this->avatarPath;
+    }
+
+    public function setAvatarPath(?string $avatarPath): self
+    {
+        $this->avatarPath = $avatarPath;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?File
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?File $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
