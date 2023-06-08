@@ -5,9 +5,9 @@ namespace App\Entity;
 class AbstractEntity
 {
     /**
-     * @param array<string>|null $array
+     * @param array<mixed> $array
      */
-    public function __construct(?array $array)
+    public function __construct(array $array = [])
     {
         if ($array) {
             $this->hydrate($array);
