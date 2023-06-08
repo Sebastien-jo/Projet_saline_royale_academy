@@ -1,8 +1,18 @@
+FROM node:16-alpine as node
 FROM php:8.2-fpm-alpine3.17
 
-ARG php_memory_limit=2048m
+WORKDIR /var/www/react
 
-ENV PHP_MEMORY_LIMIT=${php_memory_limit}
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
+COPY ./app/front .
+
+RUN npm install -g yarn --force
+RUN yarn install --legacy-peer-deps
+RUN yarn build
 
 RUN apk add --no-cache \
     git \
@@ -34,7 +44,6 @@ RUN docker-php-ext-enable apcu
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-WORKDIR /
 
 WORKDIR /var/www/symfony
 
@@ -46,8 +55,6 @@ RUN chmod a+x /entrypoint.sh
 RUN composer install --no-interaction --no-scripts
 
 RUN chown -R www-data:www-data /var/www/symfony
-
-VOLUME ["/var/www/symfony"]
 
 EXPOSE 9000
 

@@ -1,17 +1,12 @@
 # Configuration Nginx
 server {
     listen 80;
-    server_name saline.academy;
+    server_name back.groupe7.hetic-projects.arcplex.tech;
     index index.php index.html;
     error_log  /var/log/nginx/error.log;
     access_log /var/log/nginx/access.log;
 
     location / {
-        root /var/www/react/build;
-        try_files $uri /index.html;
-    }
-
-    location /back {
         root /var/www/symfony/public;
         try_files $uri /index.php$is_args$args;
 

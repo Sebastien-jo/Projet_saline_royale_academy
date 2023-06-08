@@ -41,7 +41,7 @@ services:
     restart: on-failure
     volumes:
       - "./app/front:/app"
-      - "/app/node_modules"
+      - "node:/app/node_modules"
     ports:
       - "3000:3000"
     environment:
@@ -89,6 +89,8 @@ volumes:
   db-data-sra:
     driver: local
   elasticsearch-data:
+    driver: local
+  node:
     driver: local
 
 networks:
