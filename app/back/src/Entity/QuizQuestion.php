@@ -86,11 +86,9 @@ class QuizQuestion extends AbstractEntity
 
     public function removeOptionQuizQuestion(OptionQuizQuestion $optionQuizQuestion): self
     {
-        if ($this->optionQuizQuestions->removeElement($optionQuizQuestion)) {
-            // set the owning side to null (unless already changed)
-            if ($optionQuizQuestion->getQuestion() === $this) {
-                $optionQuizQuestion->setQuestion(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->optionQuizQuestions->removeElement($optionQuizQuestion) && $optionQuizQuestion->getQuestion() === $this) {
+            $optionQuizQuestion->setQuestion(null);
         }
 
         return $this;
@@ -116,11 +114,9 @@ class QuizQuestion extends AbstractEntity
 
     public function removeQuizResponse(QuizResponse $quizResponse): self
     {
-        if ($this->quizResponses->removeElement($quizResponse)) {
-            // set the owning side to null (unless already changed)
-            if ($quizResponse->getQuestion() === $this) {
-                $quizResponse->setQuestion(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->quizResponses->removeElement($quizResponse) && $quizResponse->getQuestion() === $this) {
+            $quizResponse->setQuestion(null);
         }
 
         return $this;

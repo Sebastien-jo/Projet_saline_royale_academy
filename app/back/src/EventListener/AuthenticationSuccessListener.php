@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\EventListener;
 
 use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
@@ -17,6 +17,8 @@ class AuthenticationSuccessListener
         $data['data'] = [
             'id' => $user->getId(),
             'username' => $user->getUserIdentifier(),
+            'firstname'=> $user->getFirstName(),
+            'lastname' => $user->getLastname(),
             'roles' => $user->getRoles(),
         ];
         $event->setData($data);

@@ -4,12 +4,13 @@ monolog:
 
 when@dev:
     monolog:
+        channels: [ "api" , "import"]
         handlers:
             main:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event"]
+                channels: ["!event", "!sra" ]
             # uncomment to get logging in your browser
             # you may have to allow bigger header sizes in your Web server configuration
             #firephp:
@@ -21,7 +22,17 @@ when@dev:
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: ["!event", "!doctrine", "!console"]
+                channels: ["!event", "!doctrine", "!console", "!sra"]
+            api:
+                type: rotating_file
+                path: "%kernel.logs_dir%/api/api.log"
+                channels: [ "api" ]
+                max_files: 30
+            import:
+                type: rotating_file
+                path: "%kernel.logs_dir%/import/import.log"
+                channels: [ "import" ]
+                max_files: 30
 
 when@test:
     monolog:
@@ -54,8 +65,13 @@ when@prod:
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: ["!event", "!doctrine"]
+                channels: ["!event", "!doctrine", "!sra"]
             deprecation:
                 type: stream
                 channels: [deprecation]
                 path: php://stderr
+            api:
+                type: rotating_file
+                path: "%kernel.logs_dir%/api/api.log"
+                channels: [ "sra" ]
+                max_files: 30

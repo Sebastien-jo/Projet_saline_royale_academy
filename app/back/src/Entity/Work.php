@@ -99,11 +99,9 @@ class Work extends AbstractEntity
 
     public function removeMasterclass(Masterclass $masterclass): self
     {
-        if ($this->masterclasses->removeElement($masterclass)) {
-            // set the owning side to null (unless already changed)
-            if ($masterclass->getWork() === $this) {
-                $masterclass->setWork(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->masterclasses->removeElement($masterclass) && $masterclass->getWork() === $this) {
+            $masterclass->setWork(null);
         }
 
         return $this;
