@@ -1,0 +1,36 @@
+.titleBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #00000010;
+}
+
+.titleBar_start{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.titleBar__back_arrow{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--icon-arrow-back) no-repeat center/contain;
+}
+
+.titleBar__infos__title{
+    font-size: var(--title-corps-size);
+    font-family: var(--title-font-family);
+    color: var(--primary-blue-40)
+}
+
+.titleBar__infos__subtitle{
+    font-size: var(--sub-title-corps-size);
+    font-family: var(--subtitle-font-family);
+    font-weight: 400;
+    color: var(--primary-blue-40);
+}

@@ -1,0 +1,382 @@
+/* Root css file */
+
+/* FONT */
+
+@font-face {
+    font-family: 'Jost Medium';
+    src: url('../assets/fonts/Jost/Jost-Medium.woff2') format('woff2'),
+        url('../assets/fonts/Jost/Jost-Medium.woff') format('woff');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jost Regular';
+    src: url('../assets/fonts/Jost/Jost-Regular.woff2') format('woff2'),
+        url('../assets/fonts/Jost/Jost-Regular.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito Light';
+    src: url('../assets/fonts/Nunito/Nunito-Light.woff2') format('woff2'),
+        url('../assets/fonts/Nunito/Nunito-Light.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito Regular';
+    src: url('../assets/fonts/Nunito/Nunito-Regular.woff2') format('woff2'),
+        url('../assets/fonts/Nunito/Nunito-Regular.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito SemiBold';
+    src: url('../assets/fonts/Nunito/Nunito-SemiBold.woff2') format('woff2'),
+        url('../assets/fonts/Nunito/Nunito-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito ExtraBold';
+    src: url('../assets/fonts/Nunito/Nunito-ExtraBold.woff2') format('woff2'),
+        url('../assets/fonts/Nunito/Nunito-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-display: swap;
+}
+
+
+
+
+
+
+/* Variables */
+
+.dark-mode{
+
+
+}
+
+:root{
+
+    /* COLORS */
+    --primary-blue-dark-100: #161C3D;
+    --primary-blue-40: #55648B;
+    --secondary-blue-dark-100: #303B56;
+    --secondary-blue-dark-hover: #222C44;
+    --tertiary-blue-dark-100: #8797B2;
+    --quaternary-blue-dark-100: #7B86A9;
+    --primary-blue-light-100: #d6e4ff;
+    --background-color: #F8FAFF;
+
+    --primary-red-100: #FF715A;
+    --primary-red-hover-100: #FF816C;
+    --secondary-red-100: #FF8E7C;
+
+    --primary-white-100: #FFFFFF;
+    --secondary-white-100: #F5F5F5;
+
+    --primary-black-100: #000000;
+
+
+    /* FLEX */
+    --flex-gap-section: 30px;
+
+    /* FONT SIZE */
+    --text-font-family-light: 'Nunito Light', sans-serif;
+    --text-font-family-regular: 'Nunito Regular', sans-serif;
+    --text-font-family-semi-bold: 'Nunito SemiBold', sans-serif;
+    --text-font-family-extra-bold: 'Nunito ExtraBold', sans-serif;
+
+    --title-font-family: 'Jost Medium', sans-serif;
+    --bouton-font-family: 'Jost Medium', sans-serif;
+    --subtitle-font-family: 'Jost Regular', sans-serif;
+
+    --text-corps-size: 15px;
+    --title-corps-size: 24px;
+    --title-small-corps-size: 18px;
+    --bouton-corps-size: 17px;
+    --nav-link-corps-size: 17px;
+    --sub-title-corps-size: 12px;
+    --sub-title-big-size: 14px;
+
+    /* ICONE */
+    --icon-arrow-blue-full: url('../assets/icones/icon-arrow-Blue-full.svg');
+    --icon-arrow-black: url('../assets/icones/icon-arrow-Default.svg');
+    --icon-arrow-Grey: url('../assets/icones/icon-arrow-Grey.svg');
+    --icon-arrow-red: url('../assets/icones/icon-arrow-Red.svg');
+    --icon-arrow-White: url('../assets/icones/icon-arrow-White.svg');
+
+    --icon-backward-blue-full: url('../assets/icones/icon-backward-Blue-full.svg');
+    --icon-backward-black: url('../assets/icones/icon-backward-Default.svg');
+    --icon-backward-grey: url('../assets/icones/icon-backward-Grey.svg');
+
+    --icon-bell-blue-full: url('../assets/icones/icon-bell-Blue-full.svg');
+    --icon-bell-black: url('../assets/icones/icon-bell-Default.svg');
+    --icon-bell-grey: url('../assets/icones/icon-bell-Grey.svg');
+
+    --icon-books-blue-full: url('../assets/icones/icon-books-Blue-full.svg');
+    --icon-books-blue-stroke: url('../assets/icones/icon-books-Blue-stroke.svg');
+    --icon-books-black: url('../assets/icones/icon-books-Default.svg');
+    --icon-books-grey: url('../assets/icones/icon-books-Grey.svg');
+    --icon-books-white-stroke: url('../assets/icones/icon-books-White-stroke.svg');
+
+    --icon-chevron-blue-full: url('../assets/icones/icon-chevron-Blue-full.svg');
+    --icon-chevron-black: url('../assets/icones/icon-chevron-Default.svg');
+    --icon-chevron-grey: url('../assets/icones/icon-chevron-Grey.svg');
+    --icon-chevron-white-stroke: url('../assets/icones/icon-chevron-White-stroke.svg');
+    --icon-chevron-red: url('../assets/icones/icon-chevron-Red.svg');
+
+    --icon-cross-blue-full: url('../assets/icones/icon-cross-Blue-full.svg');
+    --icon-cross-black: url('../assets/icones/icon-cross-Default.svg');
+    --icon-cross-grey: url('../assets/icones/icon-cross-Grey.svg');
+
+    --icon-crown-blue-full: url('../assets/icones/icon-crown-Blue-full.svg');
+    --icon-crown-black: url('../assets/icones/icon-crown-Default.svg');
+    --icon-crown-grey: url('../assets/icones/icon-crown-Grey.svg');
+
+    --icon-edit-blue-full: url('../assets/icones/icon-edit-Blue-full.svg');
+    --icon-edit-black: url('../assets/icones/icon-edit-Default.svg');
+    --icon-edit-grey: url('../assets/icones/icon-edit-Grey.svg');
+    --icon-edit-blues-stroke: url('../assets/icones/icon-edit-Blue-stroke.svg');
+    --icon-edit-white-stroke: url('../assets/icones/icon-edit-White-stroke.svg');
+    --icon-edit-red: url('../assets/icones/icon-edit-Red.svg');
+
+    --icon-file-blue-full: url('../assets/icones/icon-file-Blue-full.svg');
+    --icon-file-black: url('../assets/icones/icon-file-Default.svg');
+    --icon-file-blue-stroke: url('../assets/icones/icon-file-Blue-stroke.svg');
+    --icon-file-white: url('../assets/icones/icon-file-white.svg');
+    --icon-file-red: url('../assets/icones/icon-file-red.svg');
+
+    --icon-forward-blue-full: url('../assets/icones/icon-forward-Blue-full.svg');
+    --icon-forward-black: url('../assets/icones/icon-forward-Default.svg');
+    --icon-forward-grey: url('../assets/icones/icon-forward-Grey.svg');
+
+    --icon-heart-blue-full: url('../assets/icones/icon-heart-Blue-full.svg');
+    --icon-heart-black: url('../assets/icones/icon-heart-Default.svg');
+    --icon-heart-grey: url('../assets/icones/icon-heart-Grey.svg');
+
+    --icon-home-blue-full: url('../assets/icones/icon-home-Blue-full.svg');
+    --icon-home-black: url('../assets/icones/icon-home-Default.svg');
+    --icon-home-grey : url('../assets/icones/icon-home-Grey.svg');
+    --icon-home-blue-stroke: url('../assets/icones/icon-home-Blue-stroke.svg');
+    --icon-home-white-stroke: url('../assets/icones/icon-home-White-stroke.svg');
+
+    --icon-infos-blue-full: url('../assets/icones/icon-infos-Blue-full.svg');
+    --icon-infos-black: url('../assets/icones/icon-infos-Default.svg');
+    --icon-infos-grey: url('../assets/icones/icon-infos-Grey.svg');
+
+    --icon-moon-blue-full: url('../assets/icones/icon-moon-Blue-full.svg');
+    --icon-moon-black: url('../assets/icones/icon-moon-Default.svg');
+    --icon-moon-grey: url('../assets/icones/icon-moon-Grey.svg');
+
+    --icon-music-blue-full: url('../assets/icones/icon-music-Blue-full.svg');
+    --icon-music-black: url('../assets/icones/icon-music-Default.svg');
+    --icon-music-grey: url('../assets/icones/icon-music-Grey.svg');
+    --icon-music-red: url('../assets/icones/icon-music-Red.svg');
+    --icon-music-white: url('../assets/icones/icon-music-white.svg');
+
+    --icon-params-blue-full: url('../assets/icones/icon-params-Blue-full.svg');
+    --icon-params-black: url('../assets/icones/icon-params-Default.svg');
+    --icon-params-grey: url('../assets/icones/icon-params-Grey.svg');
+    --icon-params-blue-stroke: url('../assets/icones/icon-params-Blue-stroke.svg');
+    --icon-params-white-stroke: url('../assets/icones/icon-params-White-stroke.svg');
+
+    --icon-pause-blue-full: url('../assets/icones/icon-pause-Blue-full.svg');
+    --icon-pause-black: url('../assets/icones/icon-pause-Default.svg');
+    --icon-pause-grey: url('../assets/icones/icon-pause-Grey.svg');
+    --icon-pause-white-stroke: url('../assets/icones/icon-pause-White-stroke.svg');
+
+    --icon-person-blue-full: url('../assets/icones/icon-person-Blue-full.svg');
+    --icon-person-black: url('../assets/icones/icon-person-Default.svg');
+    --icon-person-grey: url('../assets/icones/icon-person-Grey.svg');
+
+    --icon-play-blue-full: url('../assets/icones/icon-play-Blue-full.svg');
+    --icon-play-black: url('../assets/icones/icon-play-Default.svg');
+    --icon-play-grey: url('../assets/icones/icon-play-Grey.svg');
+    --icon-play-white-stroke: url('../assets/icones/icon-play-White-stroke.svg');
+
+    --icon-search-blue-full: url('../assets/icones/icon-search-Blue-full.svg');
+    --icon-search-black: url('../assets/icones/icon-search-Default.svg');
+    --icon-search-grey: url('../assets/icones/icon-search-Grey.svg');
+    --icon-search-blue-stroke: url('../assets/icones/icon-search-Blue-stroke.svg');
+    --icon-search-red: url('../assets/icones/icon-search-Red.svg');
+
+    --icon-signet-blue-full: url('../assets/icones/icon-signet-Blue-full.svg');
+    --icon-signet-black: url('../assets/icones/icon-signet-Default.svg');
+    --icon-signet-grey: url('../assets/icones/icon-signet-Grey.svg');
+    --icon-signet-blue-stroke: url('../assets/icones/icon-signet-Blue-stroke.svg');
+    --icon-signet-white-stroke: url('../assets/icones/icon-signet-white-stroke.svg');
+    --icon-signet-white: url('../assets/icones/icon-signet-white-full.svg');
+
+    --icon-sound-blue-full: url('../assets/icones/icon-sound-Blue-full.svg');
+    --icon-sound-black: url('../assets/icones/icon-sound-Default.svg');
+    --icon-sound-grey: url('../assets/icones/icon-sound-Grey.svg');
+    --icon-sound-white: url('../assets/icones/icon-sound-white.svg');
+    --icon-sound-red: url('../assets/icones/icon-sound-Red.svg');
+
+    --icon-star-blue-full: url('../assets/icones/icon-star-Blue-full.svg');
+    --icon-star-black: url('../assets/icones/icon-star-Default.svg');
+    --icon-star-grey: url('../assets/icones/icon-star-Grey.svg');
+
+    --icon-study-blue-full: url('../assets/icones/icon-study-Blue-full.svg');
+    --icon-study-black: url('../assets/icones/icon-study-Default.svg');
+    --icon-study-grey: url('../assets/icones/icon-study-Grey.svg');
+    --icon-study-blue-stroke: url('../assets/icones/icon-study-Blue-stroke.svg');
+    --icon-study-white-stroke: url('../assets/icones/icon-study-White-stroke.svg');
+
+    --icon-sun-blue-full: url('../assets/icones/icon-sun-Blue-full.svg');
+    --icon-sun-black: url('../assets/icones/icon-sun-Default.svg');
+    --icon-sun-grey: url('../assets/icones/icon-sun-Grey.svg');
+
+
+    --icon-time-blue-full: url('../assets/icones/icon-time-Blue-full.svg');
+    --icon-time-black: url('../assets/icones/icon-time-Default.svg');
+    --icon-time-grey: url('../assets/icones/icon-time-grey.svg');
+
+    --icon-trash-blue-full: url('../assets/icones/icon-trash-Blue-full.svg');
+    --icon-trash-black: url('../assets/icones/icon-trash-Default.svg');
+    --icon-trash-grey: url('../assets/icones/icon-trash-Grey.svg');
+
+    --icon-validate-blue-full: url('../assets/icones/icon-validate-Blue-full.svg');
+    --icon-validate-black: url('../assets/icones/icon-validate-Default.svg');
+    --icon-validate-grey: url('../assets/icones/icon-validate-Grey.svg');
+    --icon-validate-white: url('../assets/icones/icon-validate-White.svg');
+
+    --icon-video-blue-full: url('../assets/icones/icon-video-Blue-full.svg');
+    --icon-video-grey: url('../assets/icones/icon-video-Grey.svg');
+    --icon-video-blue-stroke: url('../assets/icones/icon-video-Blue-stroke.svg');
+    --icon-video-white-stroke: url('../assets/icones/icon-video-White-stroke.svg');
+    --icon-video-red: url('../assets/icones/icon-video-Red.svg');
+
+    --icon-arrow-back: url('../assets/icones/icon-arrow-back.svg');
+
+}
+
+.dark-mode{
+    /* COLORS */
+    --primary-blue-dark-100: #161C3D;
+    --primary-blue-40: #55648B;
+    --secondary-blue-dark-100: #303B56;
+    --secondary-blue-dark-hover: #222C44;
+    --tertiary-blue-dark-100: #8797B2;
+    --quaternary-blue-dark-100: #7B86A9;
+    --primary-blue-light-100: #d6e4ff;
+    --background-color: #182235;
+
+    --primary-red-100: #FF715A;
+    --primary-red-hover-100: #FF816C;
+    --secondary-red-100: #FF8E7C;
+
+    --primary-white-100: #101723;
+    --secondary-white-100: #10101;
+
+    --primary-black-100: #000000;
+}
+
+/* ----------------------------- */
+
+body, html, #root, .App{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+.main{
+    margin-left: 6vw;
+    height: 100%;
+}
+
+h1{
+    font-size: var(--title-corps-size);
+    color: var(--secondary-blue-dark-100);
+    font-family: var(--title-font-family);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+h2{
+    font-size: var(--title-small-corps-size);
+    color: var(--secondary-blue-dark-100);
+    font-family: var(--title-font-family);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+h3{
+    font-size: var(--title-small-corps-size);
+    color: var(--secondary-blue-dark-100);
+    font-family: var(--title-font-family);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+p{
+    font-size: var(--text-corps-size);
+    color: var(--secondary-blue-dark-100);
+    font-family: var(--text-font-family-regular);
+    margin: 0;
+}
+
+.main-container{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.second-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+}
+
+.main-content{
+    padding: 30px;
+    background: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+    gap: 30px;
+    width: inherit;
+}
+
+.isSidebar{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+
+.container__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+

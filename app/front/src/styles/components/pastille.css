@@ -1,0 +1,13 @@
+.pastille{
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 6px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-family: var(--text-font-family-light);
+    font-size: 14px;
+    font-weight: 600;
+}
