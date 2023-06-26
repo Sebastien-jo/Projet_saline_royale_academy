@@ -1,16 +1,26 @@
 import React, {useState} from "react";
 import { Login } from "../api/endpoints/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../store/Slice/authSlice";
+
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const naviguate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const handleLogin = async (email, password) => {
         setLoading(true);
 
         try {
             const response = await Login(email, password);
-            console.log(response);
+            dispatch(login({ user: response.data, token: response.token }));
+            naviguate("/");
+
         } catch (e) {
             setError(e);
         } finally {

@@ -1,8 +1,12 @@
 import React, {useEffect} from "react";
 import DarkLightSwitch from "./DarkLightSwitch";
 import "../../styles/components/titlebar.css";
+import {useAuth} from "../../hooks/useAuth";
 
-const titleBar = ({title}) => {
+
+const TitleBar = ({title}) => {
+
+    const {handleLogout} = useAuth();
 
     return (
         <div className="titleBar">
@@ -16,10 +20,11 @@ const titleBar = ({title}) => {
 
             <div className="titleBar__end">
                <DarkLightSwitch />
+                <button className="logout" onClick={handleLogout}>Logout</button>
             </div>
 
         </div>
     );
 }
 
-export default titleBar;
+export default TitleBar;

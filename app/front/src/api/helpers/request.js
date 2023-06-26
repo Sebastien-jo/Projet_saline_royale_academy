@@ -18,6 +18,7 @@ export const getRequests = async (url, params = {}) => {
 
 export const postRequest = async (url, body) => {
     try{
+        console.log(url);
         const response = await httpClient.post(url, body);
         return response.data;
     }catch (error){

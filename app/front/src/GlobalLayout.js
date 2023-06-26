@@ -1,17 +1,10 @@
 import React from 'react';
+import {Outlet} from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import TitleBar from "./components/titleBar/titleBar";
+import TitleBar from "./components/titleBar/TitleBar";
 
 
 function GlobalLayout({children}) {
-
-    children = React.Children.map(children, child => {
-        return React.cloneElement(child, {
-            title: child.props.title
-        });
-    });
-
-
 
   return (
     <div className="App">
@@ -19,7 +12,7 @@ function GlobalLayout({children}) {
         <Navbar />
         <div className="main">
             <TitleBar title="Home" />
-            {children}
+            <Outlet />
         </div>
     </div>
   );

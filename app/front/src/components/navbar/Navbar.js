@@ -4,11 +4,15 @@ import logo from "../../assets/logo/logo-full.svg";
 import logo_small from "../../assets/logo/logo-small.svg";
 import "../../styles/components/navbar.css"
 import PopupParametre from "../popup/popupParametre";
+import {useSelector} from "react-redux";
 
 const Navbar = () => {
 
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [activeLink, setActiveLink] = useState("");
+
+    const user = useSelector(state => state.auth.user);
+
 
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -37,7 +41,7 @@ const Navbar = () => {
                 <Link to="/account" className="navbar__user__avatar">
                     <div className="navbar__user__avatar__img"></div>
                     <div className="navbar__user__infos">
-                        <div className="navbar__user__name">John Doe</div>
+                        <div className="navbar__user__name">{ user.username }</div>
                         <div className="navbar__user__status">Student</div>
                     </div>
                 </Link>
