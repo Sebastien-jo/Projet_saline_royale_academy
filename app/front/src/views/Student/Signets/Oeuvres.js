@@ -1,7 +1,7 @@
 import React from "react";
-import MenuBar from "../../components/navbar/MenuBar";
-import ListLibrary from "../../components/list/listLibrary";
-import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
+import MenuBar from "../../../components/navbar/MenuBar";
+import ListLibrary from "../../../components/list/listLibrary";
+import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 
 const Oeuvres = () => {
 

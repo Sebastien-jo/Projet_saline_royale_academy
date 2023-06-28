@@ -1,10 +1,10 @@
 import React from "react";
-import SidebarLibrary from "../components/sidebar/sidebarLibrary";
-import CardFull from "../components/card/cardFull";
-import Pastille from "../components/pastille/pastille";
-import CardMyStudy from "../components/card/cardMyStudy";
-import CardFullSmall from "../components/card/cardFullSmall";
-import "../styles/myStudy.css";
+import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
+import CardFull from "../../components/card/cardFull";
+import Pastille from "../../components/pastille/pastille";
+import CardMyStudy from "../../components/card/cardMyStudy";
+import CardFullSmall from "../../components/card/cardFullSmall";
+import "../../styles/myStudy.css";
 
 
 const MyStudy = () => {

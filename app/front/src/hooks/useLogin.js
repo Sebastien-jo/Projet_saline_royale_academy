@@ -22,7 +22,12 @@ const useLogin = () => {
             naviguate("/");
 
         } catch (e) {
-            setError(e);
+            console.log(e);
+            if(e.response === 401) {
+                setError("Email ou mot de passe incorrect");
+            } else {
+                setError(e);
+            }
         } finally {
             setLoading(false);
         }

@@ -23,6 +23,13 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
+}
+
+label{
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-blue-dark-100);
+    font-family: var(--text-font-family-regular);
 
 }
 
@@ -72,3 +79,75 @@ input{
         border-color: #333;
     }
 }
+
+.error{
+    color: var(--primary-red-100);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--text-font-family-regular);
+}
+
+
+/* INSTRUMENTS FORM */
+.form-first{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+}
+
+.form-first.closed{
+    display: none;
+}
+
+.instruments-container{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.instruments-container.open{
+    display: flex;
+}
+
+.instruments{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.instrument-item{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    border: 1px solid var(--secondary-red-100);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.instrument-item input{
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.instrument-item.check{
+    background: rgba(255, 129, 108, 0.15);
+    border: none;
+
+}
+

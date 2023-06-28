@@ -1,8 +1,8 @@
 import React from "react";
-import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
-import Badge from "../../components/badge/badge";
-import "../../styles/progress.css";
-import SidebarProgress from "../../components/sidebar/sidebarProgress";
+import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import Badge from "../../../components/badge/badge";
+import "../../../styles/progress.css";
+import SidebarProgress from "../../../components/sidebar/sidebarProgress";
 
 const Progress = () => {
 

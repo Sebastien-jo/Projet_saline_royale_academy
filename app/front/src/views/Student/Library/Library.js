@@ -1,28 +1,25 @@
 import React from "react";
-import MenuBar from "../../components/navbar/MenuBar";
-import ListLibrary from "../../components/list/listLibrary";
-import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
+import MenuBar from "../../../components/navbar/MenuBar";
+import ListLibrary from "../../../components/list/listLibrary";
+import "../../../styles/library.css";
+import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 
-const Compositeurs = () => {
+const Library = () => {
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
                 <MenuBar items={[
                     {
                         name: "Masterclass",
-                        link: "/signets/masterclass",
-                        isLinkActive: false,
+                        link: "masterclass"
                     },
                     {
                         name: "Oeuvres",
-                        link: "/signets/oeuvres",
-                        isLinkActive: false,
+                        link: "oeuvres"
                     },
                     {
                         name: "Compositeur",
-                        link: "/signets/compositeur",
-                        isLinkActive: true,
-
+                        link: "compositeur"
                     }]}/>
                 <ListLibrary/>
             </div>
@@ -31,4 +28,4 @@ const Compositeurs = () => {
     );
 }
 
-export default Compositeurs;
+export default Library;

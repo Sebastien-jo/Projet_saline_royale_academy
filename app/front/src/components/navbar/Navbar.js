@@ -26,13 +26,22 @@ const Navbar = () => {
 
             <div className="navbar__line"></div>
 
-            <div className="navbar__links">
-                <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span><p>Home</p></Link>
-                <Link to="/masterclass" className={activeLink === "masterclass" ? "active" : ""} onClick={() => handleLinkClick("masterclass")}><span className="navbar__icon masterclass"></span><p>Masterclass</p></Link>
-                <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>MyStudy</p></Link>
-                <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span><p>Signets</p></Link>
-                <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span><p>Library</p></Link>
-            </div>
+            {
+                user.roles[0] !== "TEACHER" ?
+                <div className="navbar__links">
+                    <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span><p>Home</p></Link>
+                    <Link to="/masterclass" className={activeLink === "masterclass" ? "active" : ""} onClick={() => handleLinkClick("masterclass")}><span className="navbar__icon masterclass"></span><p>Masterclass</p></Link>
+                    <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>MyStudy</p></Link>
+                    <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span><p>Signets</p></Link>
+                    <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span><p>Library</p></Link>
+                </div>
+                :
+                <div className="navbar__links">
+                    <Link to="/" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>My Course</p></Link>
+                    <Link to="/notations" className={activeLink === "notation" ? "active" : ""} onClick={() => handleLinkClick("notation")}><span className="navbar__icon notation"></span><p>Notations</p></Link>
+                    <Link to="/gestion" className={activeLink === "gestion" ? "active" : ""} onClick={() => handleLinkClick("gestion")}><span className="navbar__icon gestion"></span><p>Gestion</p></Link>
+                </div>
+            }
 
             <div className="navbar__line"></div>
 
@@ -42,7 +51,12 @@ const Navbar = () => {
                     <div className="navbar__user__avatar__img"></div>
                     <div className="navbar__user__infos">
                         <div className="navbar__user__name">{ user.username }</div>
-                        <div className="navbar__user__status">Student</div>
+                        {
+                            user.roles[0] !== "TEACHER" ?
+                                <div className="navbar__user__status">Student</div>
+                                :
+                                <div className="navbar__user__status">Teacher</div>
+                        }
                     </div>
                 </Link>
             </div>

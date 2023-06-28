@@ -261,14 +261,13 @@
 .dark-mode{
     /* COLORS */
     --primary-blue-dark-100: #161C3D;
-    --primary-blue-40: #55648B;
-    --secondary-blue-dark-100: #303B56;
+    --primary-blue-40: #7084b7;
+    --secondary-blue-dark-100: #5f74a9;
     --secondary-blue-dark-hover: #222C44;
     --tertiary-blue-dark-100: #8797B2;
     --quaternary-blue-dark-100: #7B86A9;
-    --primary-blue-light-100: #d6e4ff;
+    --primary-blue-light-100: #90a3ca;
     --background-color: #182235;
-
     --primary-red-100: #FF715A;
     --primary-red-hover-100: #FF816C;
     --secondary-red-100: #FF8E7C;

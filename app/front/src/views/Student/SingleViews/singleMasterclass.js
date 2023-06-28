@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../../components/button/button";
-import VideoPlayer from "../../components/video/videoPlayer";
-import "../../styles/singleMasterclass.css";
+import Button from "../../../components/button/button";
+import VideoPlayer from "../../../components/video/videoPlayer";
+import "../../../styles/singleMasterclass.css";
 
 const SingleMasterclass = () => {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
-import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
-import Button from "../../components/button/button";
-import "../../styles/signets.css";
+import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import Button from "../../../components/button/button";
+import "../../../styles/signets.css";
 
 const Signets = () => {
     return (

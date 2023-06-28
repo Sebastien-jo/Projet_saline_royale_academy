@@ -1,9 +1,9 @@
 import React from "react";
-import CardFull from "../components/card/cardFull";
-import ListHome from "../components/list/listHome";
-import "../styles/home.css";
-import ListLibrary from "../components/list/listLibrary";
-import SidebarLibrary from "../components/sidebar/sidebarLibrary";
+import CardFull from "../../components/card/cardFull";
+import ListHome from "../../components/list/listHome";
+import "../../styles/home.css";
+import ListLibrary from "../../components/list/listLibrary";
+import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
 
 const Home = () => {
     return (

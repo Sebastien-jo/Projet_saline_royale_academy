@@ -1,10 +1,10 @@
 import React from 'react';
-import MenuBar from "../../components/navbar/MenuBar";
-import ListLibrary from "../../components/list/listLibrary";
-import "../../styles/library.css";
-import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
+import MenuBar from "../../../components/navbar/MenuBar";
+import ListLibrary from "../../../components/list/listLibrary";
+import "../../../styles/library.css";
+import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 
-const CompositeurLibrary = () => {
+const OeuvresLibrary = () => {
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
@@ -17,13 +17,12 @@ const CompositeurLibrary = () => {
                     {
                         name: "Oeuvres",
                         link: "/library/oeuvres",
-                        isLinkActive: false,
+                        isLinkActive: true,
                     },
                     {
                         name: "Compositeur",
                         link: "/library/compositeur",
-                        isLinkActive: true,
-
+                        isLinkActive: false,
                     }]}/>
                 <ListLibrary/>
             </div>
@@ -32,4 +31,4 @@ const CompositeurLibrary = () => {
     );
 }
 
-export default CompositeurLibrary;
+export default OeuvresLibrary;

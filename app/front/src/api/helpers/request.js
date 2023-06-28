@@ -16,10 +16,18 @@ export const getRequests = async (url, params = {}) => {
     }
 };
 
-export const postRequest = async (url, body) => {
+export const postRequestJson = async (url, body) => {
     try{
-        console.log(url);
         const response = await httpClient.post(url, body);
+        return response.data;
+    }catch (error){
+        throw new Error(error);
+    }
+}
+
+export const postRequestFormData = async (url, body) => {
+    try{
+        const response = await httpClient.post(url, body, { headers: { 'Content-Type': 'multipart/form-data' }});
         return response.data;
     }catch (error){
         throw new Error(error);
@@ -44,4 +52,4 @@ export const deleteRequest = async (url) => {
     }
 }
 
-export default { httpClient, getRequests, postRequest, putRequest, deleteRequest };
+export default { httpClient, getRequests, postRequestJson, postRequestFormData, putRequest, deleteRequest };

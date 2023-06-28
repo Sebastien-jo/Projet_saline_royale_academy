@@ -1,6 +1,6 @@
 import React from "react";
 
-import {postRequest} from "../helpers/request";
+import {postRequestFormData, postRequestJson} from "../helpers/request";
 
 export const Login = (email, password) => {
     const credentials = {
@@ -8,11 +8,12 @@ export const Login = (email, password) => {
         password
     };
 
-    return postRequest("/login", credentials);
+    return postRequestJson("/login", credentials);
 }
 
 export const Register = (userData) => {
-    return postRequest("/register", userData);
+    console.log(userData);
+    return postRequestFormData("/users", userData);
 }
 
 

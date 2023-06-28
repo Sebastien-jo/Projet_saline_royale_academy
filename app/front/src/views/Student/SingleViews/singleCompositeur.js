@@ -1,10 +1,10 @@
 import React from "react";
-import Button from "../../components/button/button";
-import CardFull from "../../components/card/cardFull";
+import Button from "../../../components/button/button";
+import CardFull from "../../../components/card/cardFull";
 
-import "../../styles/singleOeuvre.css";
+import "../../../styles/singleOeuvre.css";
 
-const SingleOeuvre = () => {
+const SingleCompositeur = () => {
 
     const test = [1,2,3,4,5];
 
@@ -51,4 +51,4 @@ const SingleOeuvre = () => {
     );
 }
 
-export default SingleOeuvre;
+export default SingleCompositeur;
