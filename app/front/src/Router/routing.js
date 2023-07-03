@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Router, useNavigate } from "react-router-dom";
+import {BrowserRouter, Routes, Route, Router, useNavigate, HashRouter} from "react-router-dom";
 import "../index.css";
 import { useAuth } from "../hooks/useAuth";
 
@@ -44,7 +44,7 @@ const Routing = () => {
 
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signin" element={<SignIn />}/>
@@ -97,7 +97,7 @@ const Routing = () => {
                     )
                 }
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

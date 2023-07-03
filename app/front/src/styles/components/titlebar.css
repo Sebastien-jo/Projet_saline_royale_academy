@@ -34,3 +34,27 @@
     font-weight: 400;
     color: var(--primary-blue-40);
 }
+
+.titleBar__end{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.logout{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: var(--icon-logout-red) no-repeat center/50%;
+    border: 1.2px solid var(--primary-red-100);
+    border-radius: 100%;
+    padding: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logout:hover{
+    background: var(--primary-red-100) var(--icon-logout-white) no-repeat center/50%;
+
+}
