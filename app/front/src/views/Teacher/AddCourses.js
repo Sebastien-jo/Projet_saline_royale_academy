@@ -1,14 +1,13 @@
 import React from "react";
-import ListNotations from "../../components/list/listNotations";
 
-const Notations = () => {
+const Courses = () => {
     return (
         <div className="main-container">
             <div className="main-content">
-                <ListNotations/>
+                <h2>Mes cours</h2>
             </div>
         </div>
     );
 }
 
-export default Notations;
+export default Courses;

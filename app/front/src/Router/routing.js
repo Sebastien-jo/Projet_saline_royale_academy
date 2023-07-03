@@ -36,6 +36,7 @@ import SingleCompositeur from "../views/Student/SingleViews/singleCompositeur";
 import Courses from "../views/Teacher/Courses";
 import Notations from "../views/Teacher/Notations";
 import Gestion from "../views/Teacher/Gestion";
+import AddCourses from "../views/Teacher/AddCourses";
 
 
 const Routing = () => {
@@ -82,6 +83,7 @@ const Routing = () => {
                                         <Route path="/" exact element={<Courses />} title="MyCourses" />
                                         <Route path="/notations" element={<Notations />} title="Notations" />
                                         <Route path={"/gestion"} element={<Gestion />} title="Gestion" />
+                                        <Route path={"/gestion/ajout"} element={<AddCourses />} title="Gestion" />
                                         <Route path="/account">
                                             <Route index element={<Informations />} title="Informations" />
                                             <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
