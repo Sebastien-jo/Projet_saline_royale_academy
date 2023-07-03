@@ -1,0 +1,60 @@
+.titleBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #00000010;
+}
+
+.titleBar_start{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.titleBar__back_arrow{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--icon-arrow-back) no-repeat center/contain;
+}
+
+.titleBar__infos__title{
+    font-size: var(--title-corps-size);
+    font-family: var(--title-font-family);
+    color: var(--primary-blue-40)
+}
+
+.titleBar__infos__subtitle{
+    font-size: var(--sub-title-corps-size);
+    font-family: var(--subtitle-font-family);
+    font-weight: 400;
+    color: var(--primary-blue-40);
+}
+
+.titleBar__end{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.logout{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: var(--icon-logout-red) no-repeat center/50%;
+    border: 1.2px solid var(--primary-red-100);
+    border-radius: 100%;
+    padding: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logout:hover{
+    background: var(--primary-red-100) var(--icon-logout-white) no-repeat center/50%;
+
+}

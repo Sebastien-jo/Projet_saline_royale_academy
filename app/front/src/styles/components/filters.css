@@ -1,0 +1,116 @@
+.filters-container{
+    position: relative;
+}
+.filter-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 15px;
+    gap: 10px;
+
+    background: var(--primary-white-100);
+    border-radius: 20px;
+
+    font-family: var(--text-font-family-semi-bold);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+}
+
+.filter-button:hover{
+    background: var(--primary-blue-40);
+    color: var(--primary-white-100);
+}
+
+.filter-icon{
+    width: 13px;
+    height: 13px;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    background: url('../../assets/icones/icon-params-Default.svg') no-repeat center/contain;
+}
+
+.filter-button:hover .filter-icon{
+    background: url('../../assets/icones/icon-params-White-stroke.svg') no-repeat center/contain;
+}
+
+.filters-card{
+    position: absolute;
+    top: 40px;
+    right: 0;
+    z-index: 999;
+
+    min-width: 200px;
+
+    background: var(--primary-white-100);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 29px;
+    gap: 20px;
+
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.filters-card__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.close-icon{
+    width: 13px;
+    height: 13px;
+    background: url('../../assets/icones/icon-cross-Default.svg') no-repeat center/contain;
+    cursor: pointer;
+}
+
+.filters-card__content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.filters-card__content__item{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.item__list{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+    width: 100%;
+}
+
+.item__list__item, .other__list__item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    width: 100%;
+    gap: 14px;
+    color: var(--primary-blue-40);
+    font-family: var(--text-font-family-regular);
+    font-size: var(--text-corps-size);
+}
+
+.filters-card input{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--primary-blue-40);
+    border-radius: 5px;
+}

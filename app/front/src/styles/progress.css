@@ -1,0 +1,51 @@
+.progress-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.progress{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.progress-badge{
+    background: var(--primary-white-100);
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+}
+
+.progress-badge-item-level{
+    width: 39px;
+    height: 39px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--primary-blue-light-100);
+    color: var(--secondary-blue-dark-100);
+    font-size: var(--text-corps-size);
+    font-family: var(--text-font-family-regular);
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.progress-infos{
+    color: var(--secondary-blue-dark-100);
+    font-size: var(--text-corps-size);
+    font-family: var(--text-font-family-regular);
+}
+
+.progress-infos-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+

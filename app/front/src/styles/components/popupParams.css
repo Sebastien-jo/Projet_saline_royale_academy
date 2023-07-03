@@ -1,0 +1,88 @@
+.popup-container{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #00000060;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-container.close{
+    display: none;
+}
+
+.popup-content{
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+    background: var(--primary-white-100);
+    border-radius: 20px;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.popup-close{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: url("../../assets/icones/icon-cross-Default.svg") no-repeat center/contain;
+}
+
+.popup-header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-header span{
+    font-size: var(--text-corps-size);
+    font-family: var(--text-font-family-regular);
+    color: var(--primary-blue-40);
+}
+
+.popup-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.popup-body-row{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+}
+
+.popup-body-select{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 10px;
+    height: 40px;
+    text-align: center;
+    font-size: var(--text-corps-size);
+    font-family: var(--text-font-family-regular);
+    color: var(--primary-blue-40);
+}
