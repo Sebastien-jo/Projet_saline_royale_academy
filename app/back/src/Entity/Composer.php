@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ComposerRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -36,6 +38,15 @@ class Composer extends AbstractEntity
 
     #[ORM\Column(type: 'date')]
     private DateTimeInterface $death;
+
+    #[ORM\OneToMany(mappedBy: 'composer', targetEntity: Work::class)]
+    private Collection $works;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->works = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -94,5 +105,33 @@ class Composer extends AbstractEntity
     public function setDeath(DateTimeInterface $death): void
     {
         $this->death = $death;
+    }
+
+    /**
+     * @return Collection<int, Work>
+     */
+    public function getWorks(): Collection
+    {
+        return $this->works;
+    }
+
+    public function addWork(Work $work): static
+    {
+        if (!$this->works->contains($work)) {
+            $this->works->add($work);
+            $work->setComposer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWork(Work $work): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->works->removeElement($work) && $work->getComposer() === $this) {
+            $work->setComposer(null);
+        }
+
+        return $this;
     }
 }
