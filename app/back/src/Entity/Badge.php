@@ -3,76 +3,103 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Translation\BadgeTranslation;
+use App\Enum\BadgeCategory;
 use App\Repository\BadgeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(),
+        new Get(),
+        new Patch(normalizationContext: ['groups' => ['translations']]),
+        new Delete(),
+    ],
+    normalizationContext: ['groups' => ['badge:read']],
+    denormalizationContext: ['groups' => ['badge:post:write']],
+    filters: ['translation.groups'],
+)]
 class Badge extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdentifiableTrait;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[Groups(['badge:post:write', 'badge:read'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
+    private string $imagePath;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $image_path = null;
-
+    #[Groups(['badge:post:write', 'badge:read'])]
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badges')]
     private Collection $users;
+
+    #[Groups(['badge:post:write', 'translations'])]
+    #[ORM\OneToMany(mappedBy: 'translatable', targetEntity: BadgeTranslation::class, cascade: ['persist'], fetch: 'EXTRA_LAZY', orphanRemoval: true)]
+    protected Collection $translations;
+
+    #[Groups(['badge:post:write', 'badge:read'])]
+    #[ORM\Column(length: 255, enumType: BadgeCategory::class)]
+    private BadgeCategory $category;
 
     public function __construct($array = [])
     {
         parent::__construct($array);
         $this->users = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->translations = new ArrayCollection();
     }
 
     public function getName(): ?string
     {
-        return $this->name;
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation('fr');
+
+        return $translation->getName();
     }
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+        $translation->setName($name);
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation('fr');
+
+        return $translation->getDescription();
     }
 
     public function setDescription(string $description): self
     {
-        $this->description = $description;
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+        $translation->setDescription($description);
 
         return $this;
     }
 
     public function getImagePath(): ?string
     {
-        return $this->image_path;
+        return $this->imagePath;
     }
 
-    public function setImagePath(string $image_path): self
+    public function setImagePath(string $imagePath): self
     {
-        $this->image_path = $image_path;
+        $this->imagePath = $imagePath;
 
         return $this;
     }
@@ -100,6 +127,18 @@ class Badge extends AbstractEntity
         if ($this->users->removeElement($user)) {
             $user->removeBadge($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): BadgeCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(BadgeCategory $catogry): self
+    {
+        $this->category = $catogry;
 
         return $this;
     }

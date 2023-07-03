@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,15 @@ class Section extends AbstractEntity
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, orphanRemoval: true)]
+    private Collection $lessons;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->lessons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -63,6 +74,34 @@ class Section extends AbstractEntity
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lesson $lesson): self
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons->add($lesson);
+            $lesson->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lesson $lesson): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->lessons->removeElement($lesson) && $lesson->getSection() === $this) {
+            $lesson->setSection(null);
+        }
 
         return $this;
     }

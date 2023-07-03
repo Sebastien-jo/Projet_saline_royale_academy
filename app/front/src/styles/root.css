@@ -256,10 +256,9 @@
 
     --icon-arrow-back: url('../assets/icones/icon-arrow-back.svg');
 
-    --icon-logout-black: url('../assets/icones/icon-logout-Default.svg');
-    --icon-logout-white: url('../assets/icones/icon-logout-White.svg');
-    --icon-logout-red: url('../assets/icones/icon-logout-Red.svg');
-
+    /*--icon-logout-black: url('../assets/icones/icon-logout-Default.svg');*/
+    /*--icon-logout-white: url('../assets/icones/icon-logout-White.svg');*/
+    /*--icon-logout-red: url('../assets/icones/icon-logout-Red.svg');*/
 }
 
 .dark-mode{

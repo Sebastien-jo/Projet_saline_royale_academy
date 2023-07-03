@@ -9,11 +9,11 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY ./app/front/package.json ./
-RUN npm install --legacy-peer-deps
-RUN npm install react-scripts -g
+RUN yarn install --legacy-peer-deps
+#RUN npm install react-scripts -g
 
 ## add app
 #COPY /app/front/ ./
 
 # start app
-CMD ["npm", "start"]
+CMD ["yarn", "watch"]

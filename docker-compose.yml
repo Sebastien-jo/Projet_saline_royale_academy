@@ -27,8 +27,9 @@ services:
     volumes:
       - ./app/back:/var/www/symfony:delegated
       - ./docker/dev/nginx/symfony.conf:/etc/nginx/http.d/default.conf
+      - ./app/front/public/build:/var/www/symfony/public/build
+
     networks:
-      - elasticsearch
       - web
       - acpSymfony
 
@@ -66,44 +67,6 @@ services:
     networks:
       - acpSymfony
 
-  elasticsearch:
-    image: arm64v8/elasticsearch:7.17.10
-    environment:
-      ES_JAVA_OPTS: -Xms1g -Xmx1g
-      discovery.type: single-node
-      ELASTIC_PASSWORD : ${ELASTIC_PASSWORD}
-      KIBANA_PASSWORD: ${KIBANA_PASSWORD}
-#      USERNAME: ${USERNAME_ELASTIC}:elastica
-#      PASSWORD: ${PASSWORD_ELASTIC}:elastica
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-#      - ./docker/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    ports:
-      - 9200:9200
-      - 9300:9300
-    networks:
-      - elasticsearch
-
-  kibana:
-    container_name: kibana-sra
-    image: arm64v8/kibana:7.17.10
-#    volumes:
-#      -  ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    environment:
-      ELASTICSEARCH_USERNAME: kibana_system
-      ELASTICSEARCH_PASSWORD: kibana_system
-      ELASTICSEARCH_HOSTS: 'http://elasticsearch:9200'
-    depends_on:
-      - elasticsearch
-    ports:
-      - 5601:5601
-    networks:
-        - elasticsearch
-
   mailhog:
     image: mailhog/mailhog
     networks:
@@ -133,5 +96,4 @@ networks:
     driver: bridge
   acpSymfony:
     driver: bridge
-  elasticsearch:
-    driver: bridge
+

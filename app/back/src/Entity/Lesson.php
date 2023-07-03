@@ -38,6 +38,10 @@ class Lesson extends AbstractEntity
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
 
+    #[ORM\ManyToOne(inversedBy: 'lessons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Section $section = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +91,18 @@ class Lesson extends AbstractEntity
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
 
         return $this;
     }

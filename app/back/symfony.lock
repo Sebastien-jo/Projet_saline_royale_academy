@@ -111,6 +111,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "locastic/api-platform-translation-bundle": {
+        "version": "v1.3.5"
+    },
     "nelmio/cors-bundle": {
         "version": "2.3",
         "recipe": {
@@ -273,6 +276,22 @@
         "files": [
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
+        ]
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "13ebe04e25085e2ff0bcb0f9218b561d8b5089f3"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
         ]
     },
     "vich/uploader-bundle": {

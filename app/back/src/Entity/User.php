@@ -10,11 +10,13 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\TimestampableTrait;
+use App\Enum\BadgeCategory;
 use App\Repository\UserRepository;
 use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -25,22 +27,26 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
+        new GetCollection(
+            uriTemplate: '/users/stats',
+            routeName: 'api:user:stat',
+            normalizationContext: ['groups' => ['user:read']],
+            name: 'api:user:stat'
+        ),
         new GetCollection(),
         new Post(
-            inputFormats: ['multipart' => ['multipart/form-data']],
             denormalizationContext: ['groups' => ['user:create']],
             processor: UserPasswordHasher::class
         ),
-        new Get(),
-        new Patch(processor: UserPasswordHasher::class),
+        new Get(uriTemplate: '/users/{id}', requirements: ['id' => '\d+']),
+        new Patch(denormalizationContext: ['groups' => ['user:update']], processor: UserPasswordHasher::class),
         new Delete(),
     ],
+    inputFormats: ['multipart' => ['multipart/form-data']],
     normalizationContext: ['groups' => ['user:read']],
-    //    elasticsearch: true,
-    //    denormalizationContext: ['groups' => ['user:create', 'user:update']],
 )]
 #[Vich\Uploadable]
-class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
+class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
 {
     use TimestampableTrait;
 
@@ -69,14 +75,15 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $firstName = null;
 
     #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
+    #[Groups(['user:update'])]
     private Collection $badges;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: QuizResponse::class, orphanRemoval: true)]
@@ -93,11 +100,19 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[Groups(['user:read'])]
     public ?string $avatarPath = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassUser::class, orphanRemoval: true)]
+    private Collection $masterclassUsers;
+
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Masterclass::class, orphanRemoval: true)]
+    private Collection $masterclass;
+
     public function __construct()
     {
         parent::__construct();
         $this->badges = new ArrayCollection();
         $this->quizResponses = new ArrayCollection();
+        $this->masterclass = new ArrayCollection();
+        $this->masterclassUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,11 +268,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     public function removeQuizResponse(QuizResponse $quizResponse): self
     {
-        if ($this->quizResponses->removeElement($quizResponse)) {
-            // set the owning side to null (unless already changed)
-            if ($quizResponse->getUser() === $this) {
-                $quizResponse->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->quizResponses->removeElement($quizResponse) && $quizResponse->getUser() === $this) {
+            $quizResponse->setUser(null);
         }
 
         return $this;
@@ -285,5 +298,82 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->avatar = $avatar;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, MasterclassUser>
+     */
+    public function getMasterclassUsers(): Collection
+    {
+        return $this->masterclassUsers;
+    }
+
+    public function addMasterclassUsers(MasterclassUser $masterclassUsers): static
+    {
+        if (!$this->masterclassUsers->contains($masterclassUsers)) {
+            $this->masterclassUsers->add($masterclassUsers);
+            $masterclassUsers->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMasterclassUsers(MasterclassUser $masterclassUsers): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->masterclassUsers->removeElement($masterclassUsers) && $masterclassUsers->getUser() === $this) {
+            $masterclassUsers->setUser(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Masterclass>
+     */
+    public function getMasterclass(): Collection
+    {
+        return $this->masterclass;
+    }
+
+    public function addMasterclass(Masterclass $masterclass): static
+    {
+        if (!$this->masterclass->contains($masterclass)) {
+            $this->masterclass->add($masterclass);
+            $masterclass->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMasterclass(Masterclass $masterclass): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->masterclass->removeElement($masterclass) && $masterclass->getTeacher() === $this) {
+            $masterclass->setTeacher(null);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    #[Groups(['user:stats'])]
+    public function getStats(): array
+    {
+        return [
+            'nbQuiz' => $this->quizResponses->count(),
+            'nbMasterclass' => $this->masterclassUsers->count(),
+            'nbBadge' => $this->badges->count(),
+            'nbInstrument' => $this->badges->filter(fn (
+                Badge $badge
+            ) => $badge->getCategory() === BadgeCategory::Instrument)->count(),
+        ];
     }
 }

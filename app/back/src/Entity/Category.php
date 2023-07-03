@@ -64,11 +64,9 @@ class Category extends AbstractEntity
 
     public function removeWork(Work $work): self
     {
-        if ($this->works->removeElement($work)) {
-            // set the owning side to null (unless already changed)
-            if ($work->getCategory() === $this) {
-                $work->setCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->works->removeElement($work) && $work->getCategory() === $this) {
+            $work->setCategory(null);
         }
 
         return $this;
