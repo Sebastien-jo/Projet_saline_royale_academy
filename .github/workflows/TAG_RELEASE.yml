@@ -40,8 +40,8 @@ jobs:
 
       - name: Release
         id: release
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ github.token}}
         run: |
           yarn semantic-release
           echo "::set-output name=version::$([ -f version ] && sed 's/v//' version || echo)"
