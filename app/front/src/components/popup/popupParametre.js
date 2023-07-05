@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import "../../styles/components/popup.css";
-import { useTranslation } from 'react-i18next';
+import "../../styles/components/popupParams.css";
 
 import Button from "../button/button";
 
