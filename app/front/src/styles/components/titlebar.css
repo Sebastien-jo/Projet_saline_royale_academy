@@ -8,6 +8,7 @@
     position: fixed;
     width: -webkit-fill-available;
     background-color: var(--background-color-light);
+    z-index: 50;
 }
 
 .titleBar_start{

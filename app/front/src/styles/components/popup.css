@@ -1,3 +1,5 @@
+/* POPUP PARAMS */
+
 .popup-container{
     width: 100vw;
     height: 100vh;
@@ -10,6 +12,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 100;
 }
 
 .popup-container.close{
@@ -36,6 +39,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
+    cursor: pointer;
     background: url("../../assets/icones/icon-cross-Default.svg") no-repeat center/contain;
 }
 
@@ -85,4 +89,36 @@
     font-size: var(--text-corps-size);
     font-family: var(--text-font-family-regular);
     color: var(--primary-blue-40);
+}
+
+
+
+/* POPUP EVENTS */
+
+.popup-title{
+    color: var(--primary-blue-dark-100)!important;
+}
+
+.popup-content{
+    width: 60%;
+    height: 70%;
+}
+
+.popup-body{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.popup-body-grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.popup-body-grid .card-full-small{
+    width: auto;
 }
