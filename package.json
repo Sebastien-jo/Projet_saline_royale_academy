@@ -1,0 +1,32 @@
+{
+  "name": "projet-saline-academy",
+  "version": "0.0.1",
+  "description": "Only for Semantic-release",
+  "homepage": "https://github.com/Sebastien-jo/Projet_saline_royale_academy#readme",
+  "license": "UNLICENSED",
+  "private": false,
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sebastien-jo/Projet_saline_royale_academy.git"
+  },
+  "scripts": {
+    "behat-report-generator": "node bin/behat-report-generator.js",
+    "release": "semantic-release"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "conventional-changelog-conventionalcommits": "^4.3.0",
+    "multiple-cucumber-html-reporter": "^1.18.0",
+    "semantic-release": "^19.0.5"
+  }
+}
