@@ -1,52 +1,83 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
 import play from "../../assets/icones/icon-play-White-stroke.svg";
 import pause from "../../assets/icones/icon-pause-White-stroke.svg";
-import backward from "../../assets/icones/icon-backward-Default.svg";
-import forward from "../../assets/icones/icon-forward-Default.svg";
+import backward from "../../assets/icones/icon-backward-White.svg";
+import forward from "../../assets/icones/icon-forward-White.svg";
+import unmute from "../../assets/icones/icon-sound-Default.svg";
 import "../../styles/components/videoPlayer.css";
+import useVideoPlayer from "../../hooks/useVideoPlayer";
 
 const VideoPlayer = () => {
 
-    const [playing, setPlaying] = useState(false);
+    const videoElement = useRef(null);
+    const {
+        playing,
+        progress,
+        speed,
+        muted,
+        togglePlay,
+        handleOnTimeUpdate,
+        handleVideoProgress,
+        handleVideoSpeed,
+        handleVideoBackward,
+        handleVideoForward,
+        toggleMute,
+    } = useVideoPlayer(videoElement);
 
     return (
         <div className="container-player">
-            <video id="video-player" className="video" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+            <video id="video-player" ref={videoElement} onTimeUpdate={handleOnTimeUpdate} className="video" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
 
 
             <div className="controlsContainer">
-                <div className="controls">
-                    <img className="controlsIcon--small" alt="" src={backward}/>
+                <div className={"actions"}>
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={progress}
+                        onChange={(e) => handleVideoProgress(e)}
+                    />
 
-                    {
-                        playing ? (
-                        <img className="controlsIcon--small" alt="" src={pause}/>
-                    ) : (
-                        <img className="controlsIcon--small" alt="" src={play}/>
-                    )}
-                    <img className="controlsIcon--small"  alt="" src={forward}/>
+                    <div className="controls-row">
+
+                        <button className="mute-btn" onClick={toggleMute}>
+                            {!muted ? (
+                                <img className="controlsIcon--small" alt="" src={unmute}/>
+                            ) : (
+                                <img className="controlsIcon--small" alt="" src={unmute}/>
+                            )}
+                        </button>
+
+                        <div className="controls">
+                            <img className="controlsIcon--small" alt="" src={backward} onClick={handleVideoBackward}/>
+                            {
+                                playing ? (
+                                    <img className="controlsIcon--small" alt="" src={pause} onClick={togglePlay}/>
+                                ) : (
+                                    <img className="controlsIcon--small" alt="" src={play} onClick={togglePlay}/>
+                                )}
+                            <img className="controlsIcon--small"  alt="" src={forward} onClick={handleVideoForward}/>
+                        </div>
+
+
+                        <select
+                            className="velocity"
+                            value={speed}
+                            onChange={(e) => handleVideoSpeed(e)}
+                        >
+                            <option value="0.50">0.50x</option>
+                            <option value="1">1x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="2">2x</option>
+                        </select>
+
+
+                    </div>
                 </div>
+
             </div>
-
-            {/* <div className="timecontrols">
-                <p className="controlsTime">
-                    {Math.floor(currentTime / 60) +
-                        ":" +
-                        ("0" + Math.floor(currentTime % 60)).slice(-2)}
-                </p>
-                <div className="time_progressbarContainer">
-                    <div
-                        style={{ width: `${progress}%` }}
-                        className="time_progressBar"
-                    ></div>
-                </div>
-                <p className="controlsTime">
-                    {Math.floor(videoTime / 60) +
-                        ":" +
-                        ("0" + Math.floor(videoTime % 60)).slice(-2)}
-                </p>
-            </div> */}
         </div>
     );
 }

@@ -5,6 +5,9 @@
     justify-content: space-between;
     padding: 15px 20px;
     border-bottom: 1px solid #00000010;
+    position: fixed;
+    width: -webkit-fill-available;
+    background-color: var(--background-color-light);
 }
 
 .titleBar_start{

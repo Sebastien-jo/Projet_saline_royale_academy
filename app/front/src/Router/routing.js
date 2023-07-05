@@ -57,22 +57,22 @@ const Routing = () => {
                                         <Route path="/" exact element={<Home />} title="Home" />
                                         <Route path="/masterclass" element={<Masterclass />} title="Masterclass" />
                                         <Route path="/mystudy" element={<MyStudy />} title="MyStudy"  />
-                                        <Route path="/signets">
+                                        <Route path="/signets/*">
                                             <Route index element={<Signets />} title="Signets" />
                                             <Route path="masterclass" element={<MasterclassSignets/>}/>
                                             <Route path="oeuvres" element={<OeuvresSignets/>}/>
                                             <Route path="compositeur" element={<CompositeurSignets/>}/>
                                         </Route>
-                                        <Route path="/library">
+                                        <Route path="/library/*">
                                             <Route index element={<Library />} title="Library" />
                                             <Route path="masterclass" element={<MasterclassLibrary/>} />
-                                            <Route path="masterclass/:id" element={<SingleMasterclass/>}/>
                                             <Route path="oeuvres" element={<OeuvresLibrary />}/>
-                                            <Route path="oeuvre/:id" element={<SingleOeuvre />}/>
                                             <Route path="compositeur" element={<CompositeurLibrary />}/>
-                                            <Route path={"compositeur/:id"} element={<SingleCompositeur />}/>
                                         </Route>
-                                        <Route path="/account">
+                                        <Route path="masterclass/:id" element={<SingleMasterclass/>}/>
+                                        <Route path="oeuvre/:id" element={<SingleOeuvre />}/>
+                                        <Route path={"compositeur/:id"} element={<SingleCompositeur />}/>
+                                        <Route path="/account/*">
                                             <Route index element={<Informations />} title="Informations" />
                                             <Route path={"progression"} element={<Progress />} title="Progression" />
                                             <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />

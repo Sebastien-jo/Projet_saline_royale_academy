@@ -4,21 +4,26 @@ import ListHome from "../../components/list/listHome";
 import "../../styles/home.css";
 import ListLibrary from "../../components/list/listLibrary";
 import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
+import {useTranslation} from "react-i18next";
 
 const Home = () => {
+
+    const { i18n, t } = useTranslation();
+
+
     return (
         <div className="main-container">
             <div className="main-content">
                 <div className={"row-container"}>
-                    <CardFull title={"Découvrez et suivez notre nouvelle masterclass "} bouton={"Découvrir"} link={"/masterclass"} background={"https://picsum.photos/900/1000"}/>
-                    <CardFull title={"Évènement"} bouton={"Participez"} link={"#"} background={"https://picsum.photos/900/1000"}/>
+                    <CardFull title={ t('home.card_new_masterclass') } bouton={ t('bouton.découvrir') } link={"/masterclass"} background={"https://picsum.photos/900/1000"}/>
+                    <CardFull title={ t('home.card_new_events') } bouton={ t('bouton.participer') } link={"#"} background={"https://picsum.photos/900/1000"}/>
                 </div>
 
                 <div className={"column-container"}>
 
-                    <ListHome title={"Récemment ajoutés"} isFilter={true}/>
+                    <ListHome title={ t('home.section_masterclass') } isFilter={true}/>
 
-                    <ListHome title={"Sélectionnez pour vous "}/>
+                    <ListHome title={ t('home.section_selection') }/>
                 </div>
 
                 <div className={"column-container"}>

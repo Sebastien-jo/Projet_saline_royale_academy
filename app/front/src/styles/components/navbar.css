@@ -1,5 +1,5 @@
 .navbar{
-    background-color: var(--primary-white-100);
+    background-color: var(--background-color-light);
     height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
@@ -227,6 +227,10 @@
     font-size: 14px;
     font-weight: 300;
     color: var(--primary-blue-40);
+}
+
+@media screen and (max-width: 991px) {
+
 }
 
 
