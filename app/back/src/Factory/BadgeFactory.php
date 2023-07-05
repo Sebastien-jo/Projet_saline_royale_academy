@@ -56,6 +56,7 @@ final class BadgeFactory extends ModelFactory
             'description' => self::faker()->text(),
             'image_path' => self::faker()->imageUrl(80, 80),
             'name' => self::faker()->userName(),
+            'currentLocale' => self::faker()->locale(),
         ];
     }
 
@@ -65,7 +66,9 @@ final class BadgeFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this;
-            // ->afterInstantiate(function(Badge $badge): void {})
+        //             ->afterInstantiate(function(Badge $badge): void {
+        //                 $badge->setCurrentLocale(self::faker()->locale());
+        //    });
     }
 
     protected static function getClass(): string

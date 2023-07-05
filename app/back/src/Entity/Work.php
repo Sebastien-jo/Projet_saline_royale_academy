@@ -32,6 +32,10 @@ class Work extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'work', targetEntity: Masterclass::class)]
     private Collection $masterclasses;
 
+    #[ORM\ManyToOne(inversedBy: 'works')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Composer $composer = null;
+
     public function __construct($array = [])
     {
         parent::__construct($array);
@@ -103,6 +107,18 @@ class Work extends AbstractEntity
         if ($this->masterclasses->removeElement($masterclass) && $masterclass->getWork() === $this) {
             $masterclass->setWork(null);
         }
+
+        return $this;
+    }
+
+    public function getComposer(): ?Composer
+    {
+        return $this->composer;
+    }
+
+    public function setComposer(?Composer $composer): static
+    {
+        $this->composer = $composer;
 
         return $this;
     }

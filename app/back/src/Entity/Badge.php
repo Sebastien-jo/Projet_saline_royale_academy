@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(),
-        new Post(),
+        new Post(normalizationContext: ['groups' => ['translations']]),
         new Get(),
         new Patch(normalizationContext: ['groups' => ['translations']]),
         new Delete(),
@@ -39,7 +39,7 @@ class Badge extends AbstractEntity
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     private string $imagePath;
 
-    #[Groups(['badge:post:write', 'badge:read'])]
+    //    #[Groups(['badge:read'])]
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badges')]
     private Collection $users;
 
@@ -56,40 +56,6 @@ class Badge extends AbstractEntity
         parent::__construct($array);
         $this->users = new ArrayCollection();
         $this->translations = new ArrayCollection();
-    }
-
-    public function getName(): ?string
-    {
-        /** @var BadgeTranslation $translation */
-        $translation = $this->getTranslation('fr');
-
-        return $translation->getName();
-    }
-
-    public function setName(string $name): self
-    {
-        /** @var BadgeTranslation $translation */
-        $translation = $this->getTranslation();
-        $translation->setName($name);
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        /** @var BadgeTranslation $translation */
-        $translation = $this->getTranslation('fr');
-
-        return $translation->getDescription();
-    }
-
-    public function setDescription(string $description): self
-    {
-        /** @var BadgeTranslation $translation */
-        $translation = $this->getTranslation();
-        $translation->setDescription($description);
-
-        return $this;
     }
 
     public function getImagePath(): ?string
@@ -139,6 +105,49 @@ class Badge extends AbstractEntity
     public function setCategory(BadgeCategory $catogry): self
     {
         $this->category = $catogry;
+
+        return $this;
+    }
+
+    // Virtuals
+    #[Groups(['badge:read'])]
+    /* @phpstan-ignore-next-line */
+    private string $name;
+
+    #[Groups(['badge:read'])]
+    /* @phpstan-ignore-next-line */
+    private string $description;
+
+    public function getName(): ?string
+    {
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+
+        return $translation->getName();
+    }
+
+    public function setName(string $name): self
+    {
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+        $translation->setName($name);
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+
+        return $translation->getDescription();
+    }
+
+    public function setDescription(string $description): self
+    {
+        /** @var BadgeTranslation $translation */
+        $translation = $this->getTranslation();
+        $translation->setDescription($description);
 
         return $this;
     }

@@ -56,3 +56,4 @@
 
 /.php-cs-fixer.cache!
 /app/front/public/build/*
+/.php-cs-fixer.cache

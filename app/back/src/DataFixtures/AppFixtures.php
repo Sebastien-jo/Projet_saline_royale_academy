@@ -2,11 +2,14 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\BadgeFactory;
 use App\Factory\CategoryFactory;
+use App\Factory\ComposerFactory;
 use App\Factory\ForumFactory;
 use App\Factory\ForumMessageFactory;
 use App\Factory\UserFactory;
+use App\Factory\WorkFactory;
+use App\Story\BadgeStory;
+use App\Story\MasterClassStory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -14,7 +17,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        UserFactory::createMany(10);
+        UserFactory::createMany(2);
         UserFactory::createOne([
             'firstName' => 'user',
             'lastName' => 'user',
@@ -30,8 +33,13 @@ class AppFixtures extends Fixture
             'password' => 'admin',
         ]);
         CategoryFactory::createMany(5);
-        BadgeFactory::createMany(5);
+        //        BadgeStory::load();
         ForumFactory::createMany(10);
         ForumMessageFactory::createMany(10);
+
+        ComposerFactory::createMany(10);
+        WorkFactory::createMany(30);
+
+        MasterClassStory::load();
     }
 }
