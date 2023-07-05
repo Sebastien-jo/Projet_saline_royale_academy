@@ -7,7 +7,7 @@
     justify-content: space-between;
     transition: 0.2s ease-in;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 51;
     position: fixed;
     top: 0;
     left: 0;
