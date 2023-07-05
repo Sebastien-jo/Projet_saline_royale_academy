@@ -1,0 +1,62 @@
+name: CI Production
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  release:
+    types: created
+
+jobs:
+  Deploy:
+    if: |
+      github.ref_name == 'main'
+    needs:
+      - build-and-push-symfony
+      - build-and-push-nginx
+      - tests-php
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull newest images
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker stop docker_symfony_1
+            docker rm docker_symfony_1
+            docker stop docker_nginx_1
+            docker rm docker_nginx_1
+            docker volume ls
+            docker volume rm docker_symfony-sra
+            docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-symfony:latest
+            docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-nginx:latest
+      - name: Up containers
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            cd .docker
+            docker-compose up -d
+            docker cp docker_symfony_1:/var/www/react/public/build /tmp
+            docker cp /tmp/build/ docker_symfony_1:/var/www/symfony/public/build
+            rm -rf /tmp/build
+      - name: Launch migrations
+        id: migration
+        if: steps.migration.outputs.migrations == 'true'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker exec -ti docker-symfony-1 bash
+            bin/console doctrine:migration:migrate
