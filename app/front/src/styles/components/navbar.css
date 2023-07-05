@@ -165,6 +165,16 @@
     background: var(--icon-books-white-stroke) no-repeat center/contain;
 }
 
+.forum{
+    background: var(--icon-forum-grey) no-repeat center/contain;
+}
+.navbar__links a:hover .forum{
+    background: var(--icon-forum-blue-stroke) no-repeat center/contain;
+}
+.navbar__links a.active .forum{
+    background: var(--icon-forum-white-stroke) no-repeat center/contain;
+}
+
 .parameters {
     background: var(--icon-params-grey) no-repeat center/contain;
 }

@@ -4,12 +4,13 @@
       { "text": "Accueil", "href": "/" },
       { "text": "Masterclass", "href": "/masterclass" },
       { "text": "MyStudy", "href": "/mystudy" },
+      { "text": "Forum", "href": "/forum" },
       { "text": "Favoris", "href": "/signets" },
       { "text": "Bibliothèque", "href": "/library" },
-      { "text": "Paramètres", "href": "/parametre" },
         { "text": "Mes cours", "href": "/" },
       { "text": "Notations", "href": "/notations" },
-        { "text": "Gestion", "href": "/gestion" }
+        { "text": "Gestion", "href": "/gestion" },
+      { "text": "Paramètres", "href": "/parametre" }
     ],
     "roles": [
       "Étudiant",

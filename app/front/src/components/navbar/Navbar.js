@@ -40,10 +40,10 @@ const Navbar = () => {
                 user.roles[0] !== "TEACHER" ?
                 <div className="navbar__links">
                     <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span><p>{t('navbar.links.0.text')}</p></Link>
-                    <Link to="/masterclass" className={activeLink === "masterclass" ? "active" : ""} onClick={() => handleLinkClick("masterclass")}><span className="navbar__icon masterclass"></span><p>{t('navbar.links.1.text')}</p></Link>
                     <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>{t('navbar.links.2.text')}</p></Link>
-                    <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span><p>{t('navbar.links.3.text')}</p></Link>
-                    <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span><p>{t('navbar.links.4.text')}</p></Link>
+                    <Link to="/forum" className={activeLink === "forum" ? "active" : ""} onClick={() => handleLinkClick("forum")}><span className="navbar__icon forum"></span><p>{t('navbar.links.3.text')}</p></Link>
+                    <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span><p>{t('navbar.links.4.text')}</p></Link>
+                    <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span><p>{t('navbar.links.5.text')}</p></Link>
                 </div>
                 :
                 <div className="navbar__links">
@@ -56,7 +56,7 @@ const Navbar = () => {
             <div className="navbar__line"></div>
 
             <div className="navbar__user">
-                <div className={`navbar__links_link ${activeLink === "params" ? "active" : ""}`} onClick={() => handleLinkClick("params")}><span className="navbar__icon parameters"></span><p>{t('navbar.links.5.text')}</p></div>
+                <div className={`navbar__links_link ${activeLink === "params" ? "active" : ""}`} onClick={() => handleLinkClick("params")}><span className="navbar__icon parameters"></span><p>{t('navbar.links.9.text')}</p></div>
                 <Link to="/account" className="navbar__user__avatar">
                     <div className="navbar__user__avatar__img"></div>
                     <div className="navbar__user__infos">

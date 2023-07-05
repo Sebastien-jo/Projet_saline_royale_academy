@@ -7,7 +7,18 @@
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    font-family: var(--text-font-family-light);
+    font-family: var(--text-font-family-regular);
     font-size: 14px;
     font-weight: 600;
 }
+
+.green{
+    background-color: #e6f5f3;
+    color: #00bfa5;
+}
+
+.red{
+    background-color: #ffebee;
+    color: #f44336;
+}
+

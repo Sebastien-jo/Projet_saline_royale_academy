@@ -130,11 +130,12 @@
     align-items: flex-start;
     padding: 10px;
     gap: 10px;
-    width: auto;
+    width: 100%;
     min-width: 18rem;
     background: var(--primary-white-100);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
+    border: 2px solid var(--primary-white-100);
 }
 .card-row__image{
     width: 100%;
@@ -199,6 +200,113 @@
     align-items: flex-start;
     padding: 0px;
     gap: 10px;
+    width: 100%;
+}
+
+
+/* CARD FORUM */
+.selected{
+    border: 2px solid var(--primary-blue-40);
+    color: var(--primary-white-100);
+}
+.card-row_container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+.card_avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card_avatar img{
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.infos{
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.answer_action{
+    margin: 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_crow_col{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    width: auto;
+}
+
+.line{
+    width: 100%;
+    height: 1px;
+    background-color: #e3e3e3;
+}
+
+.card-icon{
+    font-size: var(--text-corps-size);
+    color: var(--secondary-blue-dark-100);
+    font-family: var(--text-font-family-regular);
+    margin: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+
+    cursor: pointer;
+}
+
+.like{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: var(--icon-heart-grey) no-repeat center/contain;
+    cursor: pointer;
+}
+
+.isLike{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: var(--icon-heart-blue-full) no-repeat center/contain;
+}
+
+.answer{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: var(--icon-edit-grey) no-repeat center/contain;
+}
+
+.card_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+}
+.card_content_header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
     width: 100%;
 }
 

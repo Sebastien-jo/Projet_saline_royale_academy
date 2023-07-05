@@ -9,15 +9,20 @@
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
     font-family: var(--bouton-font-family);
     font-size: var(--bouton-corps-size);
     letter-spacing: 0.7px;
 }
 
 .button .isArrow{
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+}
+
+.button > img{
+    width: 18px;
+    height: 18px;
 }
 
 .red-full{

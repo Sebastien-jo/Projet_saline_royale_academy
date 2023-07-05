@@ -94,3 +94,64 @@
     height: 100%;
     padding: 20px
 }
+
+/* SIDE BAR FORUM */
+
+.isForum{
+    max-width: 40vw;
+}
+
+.form_forum{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.card-forum-answer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.isForum .card_avatar{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
+}
+
+.isForum .card_avatar img{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+.isForum .infos{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.card_sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.card_crow_col{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+

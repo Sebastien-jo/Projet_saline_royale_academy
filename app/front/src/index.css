@@ -1,7 +1,7 @@
 html{
-  height: 100%;
+  height: fit-content!important;
 }
-body, html, #root, .App{
+body, #root, .App{
   margin: 0;
   padding: 0;
   width: 100vw;

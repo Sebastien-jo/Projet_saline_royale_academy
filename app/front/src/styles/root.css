@@ -89,7 +89,7 @@
     --text-corps-size: 15px;
     --title-corps-size: 24px;
     --title-small-corps-size: 18px;
-    --bouton-corps-size: 17px;
+    --bouton-corps-size: 15px;
     --nav-link-corps-size: 17px;
     --sub-title-corps-size: 12px;
     --sub-title-big-size: 14px;
@@ -245,9 +245,16 @@
 
     --icon-arrow-back: url('../assets/icones/icon-arrow-back.svg');
 
-    /*--icon-logout-black: url('../assets/icones/icon-logout-Default.svg');*/
-    /*--icon-logout-white: url('../assets/icones/icon-logout-White.svg');*/
-    /*--icon-logout-red: url('../assets/icones/icon-logout-Red.svg');*/
+    --icon-logout-black: url('../assets/icones/icon-logout-Default.svg');
+    --icon-logout-white: url('../assets/icones/icon-logout-White.svg');
+    --icon-logout-red: url('../assets/icones/icon-logout-Red.svg');
+
+    --icon-forum-black: url('../assets/icones/icon-forum-Default.svg');
+    --icon-forum-white-stroke: url('../assets/icones/icon-forum-White.svg');
+    --icon-forum-red: url('../assets/icones/icon-forum-Red.svg');
+    --icon-forum-blue-stroke: url('../assets/icones/icon-forum-Blue-full.svg');
+    --icon-forum-grey: url('../assets/icones/icon-forum-Grey.svg');
+
 }
 
 .dark-mode{
@@ -273,8 +280,7 @@
 }
 
 /* ----------------------------- */
-
-body, html, #root, .App{
+body, #root, .App{
     margin: 0;
     padding: 0;
     width: 100vw;

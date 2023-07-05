@@ -33,6 +33,8 @@ import SingleMasterclass from "../views/Student/SingleViews/singleMasterclass";
 import SingleOeuvre from "../views/Student/SingleViews/singleOeuvre";
 import SingleCompositeur from "../views/Student/SingleViews/singleCompositeur";
 
+import Forum from "../views/Student/Forum";
+
 import Courses from "../views/Teacher/Courses";
 import Notations from "../views/Teacher/Notations";
 import Gestion from "../views/Teacher/Gestion";
@@ -55,8 +57,8 @@ const Routing = () => {
                                 user.roles[0] !== "TEACHER" ?
                                     <Route path="/" element={<GlobalLayout />}>
                                         <Route path="/" exact element={<Home />} title="Home" />
-                                        <Route path="/masterclass" element={<Masterclass />} title="Masterclass" />
                                         <Route path="/mystudy" element={<MyStudy />} title="MyStudy"  />
+                                        <Route path="/forum" element={<Forum />} title={"Forum"}/>
                                         <Route path="/signets/*">
                                             <Route index element={<Signets />} title="Signets" />
                                             <Route path="masterclass" element={<MasterclassSignets/>}/>
