@@ -1,0 +1,52 @@
+{
+  "navbar": {
+    "links": [
+      { "text": "Home", "href": "/" },
+      { "text": "Masterclass", "href": "/masterclass" },
+      { "text": "MyStudy", "href": "/mystudy" },
+      { "text": "Signets", "href": "/signets" },
+      { "text": "Library", "href": "/library" },
+      { "text": "Settings", "href": "/" },
+      { "text": "My Courses", "href": "/" },
+      { "text": "Notations", "href": "/notations" },
+      { "text": "Gestion", "href": "/gestion" }
+
+    ],
+    "roles": [
+       "Student",
+       "Teacher"
+    ]
+  },
+  "home": {
+    "card_new_masterclass": "DISCOVER AND FOLLOW OUR NEW MASTERCLASS",
+    "card_new_events": "UPCOMING EVENTS",
+    "section_masterclass": "Recently Added",
+    "section_selection": "Selected for You"
+  },
+  "bouton": {
+    "découvrir": "Discover",
+    "participer": "Participate",
+    "voir_plus": "See More",
+    "voir": "See",
+    "voir_tout": "See All"
+  },
+  "parametre": {
+    "title": "Settings",
+    "subtitle": "Modify the application settings",
+    "langue": "Language",
+    "français": "French",
+    "anglais": "English",
+    "theme": "Theme",
+    "clair": "Light",
+    "sombre": "Dark"
+  },
+  "signets": {
+    "title": "Your Personal Library",
+    "masterclass_title": "My Favorite Masterclasses",
+    "masterclass_subtitle": "You don't have any favorite masterclasses yet",
+    "oeuvres_title": "My Favorite Works",
+    "oeuvres_subtitle": "You don't have any favorite works yet",
+    "composer_title": "My Favorite Composers",
+    "composer_subtitle": "You don't have any favorite composers yet"
+  }
+}

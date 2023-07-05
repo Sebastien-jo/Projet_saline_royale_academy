@@ -12,7 +12,7 @@ const CardFullSmall = ({title, subtitle, background}) => {
                 <h1>{title}</h1>
                 {subtitle !== "" ? <p>{subtitle}</p> : null}
             </div>
-            <ButtonIcon icon={chevron} className={"blue"}/>
+            <ButtonIcon icon={chevron} className={"blue"} link={"/masterclass/1"}/>
         </div>
 
     )

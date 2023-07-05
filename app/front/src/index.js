@@ -9,6 +9,8 @@ import {store, persistor} from "./store/store";
 
 import "./styles/root.css";
 import Routing from "./Router/routing";
+// import i18n (needs to be bundled ;))
+import './i18n';
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(

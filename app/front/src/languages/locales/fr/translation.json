@@ -1,0 +1,51 @@
+{
+  "navbar": {
+    "links": [
+      { "text": "Accueil", "href": "/" },
+      { "text": "Masterclass", "href": "/masterclass" },
+      { "text": "MyStudy", "href": "/mystudy" },
+      { "text": "Favoris", "href": "/signets" },
+      { "text": "Bibliothèque", "href": "/library" },
+      { "text": "Paramètres", "href": "/parametre" },
+        { "text": "Mes cours", "href": "/" },
+      { "text": "Notations", "href": "/notations" },
+        { "text": "Gestion", "href": "/gestion" }
+    ],
+    "roles": [
+      "Étudiant",
+      "Enseignant"
+    ]
+  },
+  "home": {
+    "card_new_masterclass": "DÉCOUVREZ ET SUIVEZ NOTRE NOUVELLE MASTERCLASS",
+    "card_new_events": "ÉVÈNEMENTS À VENIR",
+    "section_masterclass": "Récemment ajoutés",
+    "section_selection": "Sélectionné pour vous"
+  },
+  "bouton": {
+    "découvrir": "Découvrir",
+    "participer": "Participer",
+    "voir_plus": "Voir plus",
+    "voir": "Voir",
+    "voir_tout": "Voir tout"
+  },
+  "parametre": {
+    "title": "Paramètres",
+    "subtitle": "Modifier les paramètres de l'application",
+    "langue": "Langue",
+    "français": "Français",
+    "anglais": "Anglais",
+    "theme": "Thème",
+    "clair": "Clair",
+    "sombre": "Sombre"
+  },
+  "signets": {
+    "title": "Votre bibliothèque rien que pour vous",
+    "masterclass_title": "Mes masterclass favoris",
+    "masterclass_subtitle": "Vous n'avez pas encore de masterclass favorites",
+    "oeuvres_title": "Mes oeuvres favorites",
+    "oeuvres_subtitle": "Vous n'avez pas encore d'oeuvres favorites",
+    "composer_title": "Mes compositeurs favoris",
+    "composer_subtitle": "Vous n'avez pas encore de compositeurs favoris"
+  }
+}
