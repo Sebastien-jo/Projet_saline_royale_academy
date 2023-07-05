@@ -4,8 +4,6 @@ import Navbar from "./components/navbar/Navbar";
 import TitleBar from "./components/titleBar/TitleBar";
 import {useLocation} from "react-router-dom";
 
-
-
 function GlobalLayout({children}) {
 
     //get route name
