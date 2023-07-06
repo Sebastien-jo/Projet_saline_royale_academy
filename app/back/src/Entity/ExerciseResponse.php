@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\QuizResponseRepository;
+use App\Repository\ExerciseResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: QuizResponseRepository::class)]
+#[ORM\Entity(repositoryClass: ExerciseResponseRepository::class)]
 #[ApiResource]
-class QuizResponse extends AbstractEntity
+class ExerciseResponse extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,9 +19,9 @@ class QuizResponse extends AbstractEntity
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quizResponses')]
+    #[ORM\ManyToOne(inversedBy: 'exerciseResponses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?QuizQuestion $question = null;
+    private ?LessonExercise $lessonExercise = null;
 
     public function getId(): ?int
     {
@@ -40,14 +40,14 @@ class QuizResponse extends AbstractEntity
         return $this;
     }
 
-    public function getQuestion(): ?QuizQuestion
+    public function getLesson(): ?LessonExercise
     {
-        return $this->question;
+        return $this->lessonExercise;
     }
 
-    public function setQuestion(?QuizQuestion $question): self
+    public function setLesson(?LessonExercise $lessonExercise): static
     {
-        $this->question = $question;
+        $this->lessonExercise = $lessonExercise;
 
         return $this;
     }

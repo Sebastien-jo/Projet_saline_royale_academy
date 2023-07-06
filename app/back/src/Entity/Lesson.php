@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING)]
 #[ORM\DiscriminatorMap([
     'lesson' => Lesson::class,
-    'lesson_quiz' => LessonQuiz::class,
+    'lesson_exercise' => LessonExercise::class,
     'lesson_video' => LessonVideo::class,
     'lesson_article' => LessonArticle::class,
 ])]
