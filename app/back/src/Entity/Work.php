@@ -9,21 +9,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: WorkRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['work:read']], denormalizationContext: ['groups' => ['work:create']])]
+#[Vich\Uploadable]
 class Work extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['work:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'works')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['work:read'])]
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['work:read'])]
     private ?DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -34,7 +41,42 @@ class Work extends AbstractEntity
 
     #[ORM\ManyToOne(inversedBy: 'works')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['work:read'])]
     private ?Composer $composer = null;
+
+    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
+    #[Groups(['user:create'])]
+    public ?File $partition = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $partitionPath = null;
+
+    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
+    #[Groups(['user:create'])]
+    public ?File $audio = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $audioPath = null;
+
+    public function getPartition(): ?File
+    {
+        return $this->partition;
+    }
+
+    public function setPartition(?File $partition): void
+    {
+        $this->partition = $partition;
+    }
+
+    public function getAudio(): ?File
+    {
+        return $this->audio;
+    }
+
+    public function setAudio(?File $audio): void
+    {
+        $this->audio = $audio;
+    }
 
     public function __construct($array = [])
     {
@@ -119,6 +161,30 @@ class Work extends AbstractEntity
     public function setComposer(?Composer $composer): static
     {
         $this->composer = $composer;
+
+        return $this;
+    }
+
+    public function getPartitionPath(): ?string
+    {
+        return $this->partitionPath;
+    }
+
+    public function setPartitionPath(?string $PartitionPath): static
+    {
+        $this->partitionPath = $PartitionPath;
+
+        return $this;
+    }
+
+    public function getAudioPath(): ?string
+    {
+        return $this->audioPath;
+    }
+
+    public function setAudioPath(string $audioPath): static
+    {
+        $this->audioPath = $audioPath;
 
         return $this;
     }

@@ -16,7 +16,6 @@ use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Stringable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,7 +45,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     normalizationContext: ['groups' => ['user:read']],
 )]
 #[Vich\Uploadable]
-class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
+class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
 
@@ -86,7 +85,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[Groups(['user:update'])]
     private Collection $badges;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: QuizResponse::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExerciseResponse::class, orphanRemoval: true)]
     private Collection $quizResponses;
 
     #[Groups(['user:read'])]
@@ -249,14 +248,14 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     }
 
     /**
-     * @return Collection<int, QuizResponse>
+     * @return Collection<int, ExerciseResponse>
      */
     public function getQuizResponses(): Collection
     {
         return $this->quizResponses;
     }
 
-    public function addQuizResponse(QuizResponse $quizResponse): self
+    public function addQuizResponse(ExerciseResponse $quizResponse): self
     {
         if (!$this->quizResponses->contains($quizResponse)) {
             $this->quizResponses->add($quizResponse);
@@ -266,7 +265,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this;
     }
 
-    public function removeQuizResponse(QuizResponse $quizResponse): self
+    public function removeQuizResponse(ExerciseResponse $quizResponse): self
     {
         // set the owning side to null (unless already changed)
         if ($this->quizResponses->removeElement($quizResponse) && $quizResponse->getUser() === $this) {
@@ -354,11 +353,6 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**
