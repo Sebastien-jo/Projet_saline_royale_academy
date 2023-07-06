@@ -53,12 +53,10 @@ when@prod:
         handlers:
             main:
                 type: fingers_crossed
-                action_level: critical
+                action_level: error
                 handler: nested
-                excluded_http_codes: [403, 404, 405]
+                excluded_http_codes: [404, 405]
                 buffer_size: 50 # How many messages should be saved? Prevent memory leaks
-                channels: [ 'exception' ]
-                environment: '%env(APP_ENV)%'
             nested:
                 type: stream
                 path: php://stderr
@@ -67,9 +65,14 @@ when@prod:
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: ["!event", "!doctrine"]
-                environment: '%env(APP_ENV)%'
+                channels: ["!app", "!doctrine"]
+            deprecation:
+                type: stream
+                channels: [deprecation]
+                path: php://stderr
             api:
                 type: rotating_file
                 path: "%kernel.logs_dir%/api/api.log"
+                channels: [ "app" ]
                 max_files: 30
+
