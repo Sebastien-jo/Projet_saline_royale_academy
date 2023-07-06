@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Section[]|Proxy[]                 findBy(array $attributes)
  * @method static Section[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Section[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Section> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Section> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Section> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Section> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Section> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Section> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Section> random(array $attributes = [])
- * @phpstan-method static Proxy<Section> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Section> repository()
- * @phpstan-method static list<Proxy<Section>> all()
- * @phpstan-method static list<Proxy<Section>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Section>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Section>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Section>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Section>> randomSet(int $number, array $attributes = [])
  */
 final class SectionFactory extends ModelFactory
 {

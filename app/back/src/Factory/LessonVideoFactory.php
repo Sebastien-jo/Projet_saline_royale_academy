@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static LessonVideo[]|Proxy[]            findBy(array $attributes)
  * @method static LessonVideo[]|Proxy[]            randomRange(int $min, int $max, array $attributes = [])
  * @method static LessonVideo[]|Proxy[]            randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<LessonVideo> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<LessonVideo> createOne(array $attributes = [])
- * @phpstan-method static Proxy<LessonVideo> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<LessonVideo> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<LessonVideo> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<LessonVideo> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<LessonVideo> random(array $attributes = [])
- * @phpstan-method static Proxy<LessonVideo> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<LessonVideo> repository()
- * @phpstan-method static list<Proxy<LessonVideo>> all()
- * @phpstan-method static list<Proxy<LessonVideo>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<LessonVideo>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<LessonVideo>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<LessonVideo>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<LessonVideo>> randomSet(int $number, array $attributes = [])
  */
 final class LessonVideoFactory extends ModelFactory
 {

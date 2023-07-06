@@ -21,8 +21,10 @@ final readonly class MultipartDecoder implements DecoderInterface
      * {@inheritdoc}
      *
      * @param array<mixed> $context
+     *
+     * @return array<mixed>|null
      */
-    public function decode(string $data, string $format, array $context = []): mixed
+    public function decode(string $data, string $format, array $context = []): ?array
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -32,7 +34,7 @@ final readonly class MultipartDecoder implements DecoderInterface
 
         return array_map(static function (string $element) {
             // Multipart form values will be encoded in JSON.
-            $decoded = json_decode($element, true, 512, 0);
+            $decoded = json_decode($element, true, 512, JSON_THROW_ON_ERROR);
 
             return is_array($decoded) ? $decoded : $element;
         }, $request->request->all()) + $request->files->all();

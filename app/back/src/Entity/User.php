@@ -17,38 +17,51 @@ use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', hardDelete: false)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
-        new GetCollection(
-            uriTemplate: '/users/stats',
+        new Get(
+            uriTemplate: '/api/users/{id}/stats',
             routeName: 'api:user:stat',
-            normalizationContext: ['groups' => ['user:read']],
+            normalizationContext: ['groups' => ['user:stats']],
+            security: 'is_granted("USER_PROFILE_VIEW_STATS", object)',
             name: 'api:user:stat'
         ),
-        new GetCollection(),
+        new GetCollection(
+            security: 'is_granted("USER_PROFILE_VIEW_LIST")'
+        ),
         new Post(
             denormalizationContext: ['groups' => ['user:create']],
+            validationContext: ['groups' => ['user:create']],
             processor: UserPasswordHasher::class
         ),
-        new Get(uriTemplate: '/users/{id}', requirements: ['id' => '\d+']),
-        new Patch(denormalizationContext: ['groups' => ['user:update']], processor: UserPasswordHasher::class),
-        new Delete(),
+        new Get(security: 'is_granted("USER_PROFILE_VIEW", object)'),
+        new Patch(
+            denormalizationContext: ['groups' => ['user:update']],
+            security: 'is_granted("USER_PROFILE_EDIT", object)',
+            name: 'update_user',
+            processor: UserPasswordHasher::class
+        ),
+        new Delete(
+            security: 'is_granted("USER_PROFILE_DELETE", object)'
+        ),
     ],
-    inputFormats: ['multipart' => ['multipart/form-data']],
-    normalizationContext: ['groups' => ['user:read']],
+    normalizationContext: ['groups' => ['user:read', 'timestamp']],
+    denormalizationContext: ['groups' => ['user:create']],
 )]
-#[Vich\Uploadable]
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
+    use SoftDeleteableEntity;
 
     #[Groups(['user:read'])]
     #[ORM\Id]
@@ -58,53 +71,50 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:read'])]
+    #[Assert\NotBlank(allowNull: false, groups: ['user:create'])]
+    #[Assert\Email(groups: ['user:create'])]
     private ?string $email = null;
 
     /**
      * @var array<string> $roles
      */
     #[ORM\Column(type: 'json')]
+    #[Groups(['user:read', 'admin:write'])]
     private array $roles = [];
 
     #[ORM\Column]
     private string $password;
 
-    //    #[Assert\NotBlank(groups: ['user:create'])]
-    #[Groups(['user:create'])]
+    #[Assert\NotBlank(allowNull: false, groups: ['user:create'])]
+    #[Groups(['user:create', 'user:update'])]
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
+    #[Assert\NotBlank(allowNull: false, groups: ['user:create'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
+    #[Assert\NotBlank(allowNull: false, groups: ['user:create'])]
     private ?string $firstName = null;
 
     #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
-    #[Groups(['user:update'])]
     private Collection $badges;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExerciseResponse::class, orphanRemoval: true)]
     private Collection $quizResponses;
-
-    #[Groups(['user:read'])]
-    public ?string $contentUrl = null;
-
-    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
-    #[Groups(['user:create'])]
-    public ?File $avatar = null;
-
-    #[ORM\Column(nullable: true)]
-    #[Groups(['user:read'])]
-    public ?string $avatarPath = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassUser::class, orphanRemoval: true)]
     private Collection $masterclassUsers;
 
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Masterclass::class, orphanRemoval: true)]
     private Collection $masterclass;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist'])]
+    #[Groups(['user:read'])]
+    private ?UserAvatar $userAvatar = null;
 
     #[ORM\ManyToOne]
     private ?Category $instrument = null;
@@ -287,30 +297,6 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this;
     }
 
-    public function getAvatarPath(): ?string
-    {
-        return $this->avatarPath;
-    }
-
-    public function setAvatarPath(?string $avatarPath): self
-    {
-        $this->avatarPath = $avatarPath;
-
-        return $this;
-    }
-
-    public function getAvatar(): ?File
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?File $avatar): self
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, MasterclassUser>
      */
@@ -419,6 +405,23 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         if ($this->favorites->removeElement($favorite) && $favorite->getUser() === $this) {
             $favorite->setUser(null);
         }
+
+        return $this;
+    }
+
+    public function getUserAvatar(): ?UserAvatar
+    {
+        return $this->userAvatar;
+    }
+
+    public function setUserAvatar(UserAvatar $userAvatar): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userAvatar->getUser() !== $this) {
+            $userAvatar->setUser($this);
+        }
+
+        $this->userAvatar = $userAvatar;
 
         return $this;
     }

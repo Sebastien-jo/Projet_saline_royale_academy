@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Badge[]|Proxy[]                 findBy(array $attributes)
  * @method static Badge[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Badge[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Badge> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Badge> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Badge> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Badge> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Badge> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Badge> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Badge> random(array $attributes = [])
- * @phpstan-method static Proxy<Badge> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Badge> repository()
- * @phpstan-method static list<Proxy<Badge>> all()
- * @phpstan-method static list<Proxy<Badge>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Badge>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Badge>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Badge>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Badge>> randomSet(int $number, array $attributes = [])
  */
 final class BadgeFactory extends ModelFactory
 {
