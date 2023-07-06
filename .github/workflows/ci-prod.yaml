@@ -13,7 +13,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Pull newest images
+      - name: Pull latest images
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SERV }}
@@ -25,7 +25,6 @@ jobs:
             docker rm docker_symfony_1
             docker stop docker_nginx_1
             docker rm docker_nginx_1
-            docker volume ls
             docker volume rm docker_symfony-sra
             docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-symfony:latest
             docker pull ghcr.io/sebastien-jo/projet_saline_royale_academy-nginx:latest
@@ -42,9 +41,8 @@ jobs:
             docker cp docker_symfony_1:/var/www/react/public/build /tmp
             docker cp /tmp/build/ docker_symfony_1:/var/www/symfony/public/build
             rm -rf /tmp/build
-      - name: Launch migrations
+      - name: Run DB migrations
         id: migration
-        if: steps.migration.outputs.migrations == 'true'
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SERV }}
@@ -54,3 +52,22 @@ jobs:
           script: |
             docker exec -ti docker-symfony-1 bash
             bin/console doctrine:migration:migrate
+      - name: Dump env
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker exec -ti docker-symfony-1 bash
+            composer dump-env prod
+      - name: Install packages for prod
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            composer install
