@@ -54,6 +54,10 @@
     border-radius: 20px;
 }
 
+.filters-card.active{
+    display: flex;
+}
+
 .filters-card__header{
     display: flex;
     flex-direction: row;

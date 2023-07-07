@@ -4,10 +4,10 @@ import {getRequests} from "../helpers/request";
 
 
 export const getCompositors = () => {
-    return getRequests("/compositors");
+    return getRequests("/composers");
 }
 
 export const getCompositor = (id) => {
-    return getRequests(`/compositors/${id}`);
+    return getRequests(`/composers/${id}`);
 }
 

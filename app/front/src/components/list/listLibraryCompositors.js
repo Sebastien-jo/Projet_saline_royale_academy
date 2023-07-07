@@ -2,9 +2,7 @@ import React from 'react';
 import CardColumn from "../card/cardColumn";
 import FiltersCard from "../filters/filtersCard";
 
-const ListLibrary = () => {
-
-    const tableTest = [0,1,2,3,4,5,6,7,8,9,10];
+const ListLibraryCompositors = ({list}) => {
 
     return (
         <div className="container-library">
@@ -17,9 +15,9 @@ const ListLibrary = () => {
                 <div className="container-library__content">
 
                     {
-                        tableTest.map((item, index) => {
+                        list.map((item, index) => {
                             return(
-                                <CardColumn key={index}/>
+                                <CardColumn key={index} image={item.portrait} title={item.name} subtitle={item.birth} description={""} link={`/compositeur/${item.id}`}/>
                             )
                         })
                     }
@@ -29,4 +27,4 @@ const ListLibrary = () => {
     );
 }
 
-export default ListLibrary;
+export default ListLibraryCompositors;

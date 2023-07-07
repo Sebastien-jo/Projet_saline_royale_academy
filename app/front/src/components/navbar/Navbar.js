@@ -60,7 +60,7 @@ const Navbar = () => {
                 <Link to="/account" className="navbar__user__avatar">
                     <div className="navbar__user__avatar__img"></div>
                     <div className="navbar__user__infos">
-                        <div className="navbar__user__name">{ user.username }</div>
+                        <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
                         {
                             user.roles[0] !== "TEACHER" ?
                                 <div className="navbar__user__status">{t('navbar.roles.0')}</div>

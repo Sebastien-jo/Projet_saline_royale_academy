@@ -71,7 +71,7 @@ const Routing = () => {
                                         </Route>
                                         <Route path="masterclass/:id" element={<SingleMasterclass/>}/>
                                         <Route path="oeuvre/:id" element={<SingleOeuvre />}/>
-                                        <Route path={"compositeur/:id"} element={<SingleCompositeur />}/>
+                                        <Route path="compositeur/:id" element={<SingleCompositeur />}/>
                                         <Route path="/account/*">
                                             <Route index element={<Informations />} title="Informations" />
                                             <Route path={"progression"} element={<Progress />} title="Progression" />

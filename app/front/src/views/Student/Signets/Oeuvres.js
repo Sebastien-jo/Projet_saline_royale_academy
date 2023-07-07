@@ -1,9 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibrary from "../../../components/list/listLibrary";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import ListLibraryOeuvres from "../../../components/list/listLibraryOeuvres";
+import {getOeuvres} from "../../../api/endpoints/oeuvres";
 
 const Oeuvres = () => {
+
+    const [oeuvres, setOeuvres] = React.useState([]);
+
+    useEffect(() => {
+        getOeuvres().then((response) => {
+            setOeuvres(response['hydra:member']);
+            console.log(response['hydra:member']);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
 
     return (
         <div className="main-container">
@@ -11,20 +23,21 @@ const Oeuvres = () => {
                 <MenuBar items={[
                     {
                         name: "Masterclass",
-                        link: "/signets/masterclass",
+                        link: "/#/signets/masterclass",
                         isLinkActive: false,
                     },
                     {
                         name: "Oeuvres",
-                        link: "/signets/oeuvres",
+                        link: "/#/signets/oeuvres",
                         isLinkActive: true,
                     },
                     {
                         name: "Compositeur",
-                        link: "/signets/compositeur",
+                        link: "/#/signets/compositeur",
                         isLinkActive: false,
                     }]}/>
-                <ListLibrary/>
+
+                <ListLibraryOeuvres list={oeuvres}/>
             </div>
             <SidebarLibrary/>
         </div>

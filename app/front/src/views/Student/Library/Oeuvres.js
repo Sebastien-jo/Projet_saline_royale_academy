@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibrary from "../../../components/list/listLibrary";
+import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 
@@ -24,7 +24,6 @@ const OeuvresLibrary = () => {
                         link: "/library/compositeur",
                         isLinkActive: false,
                     }]}/>
-                <ListLibrary/>
             </div>
             <SidebarLibrary/>
         </div>

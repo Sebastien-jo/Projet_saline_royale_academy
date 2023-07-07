@@ -1,22 +1,22 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibrary from "../../../components/list/listLibrary";
+import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 import {getCompositors} from "../../../api/endpoints/compositor";
 
 const Compositeurs = () => {
 
+    const [compositors, setCompositors] = useState([]); // [state, function to update state
+
     //call api to get list of composers
     useEffect(() => {
-        console.log("useEffect");
-        //call api
         getCompositors().then((response) => {
-            console.log(response);
-        }
-        ).catch((error) => {
+            setCompositors(response['hydra:member']);
+        }).catch((error) => {
             console.log(error);
         });
     }, []);
+
 
     return (
         <div className="main-container">
@@ -38,7 +38,7 @@ const Compositeurs = () => {
                         isLinkActive: true,
 
                     }]}/>
-                <ListLibrary/>
+                <ListLibraryCompositors list={compositors}/>
             </div>
             <SidebarLibrary/>
         </div>
