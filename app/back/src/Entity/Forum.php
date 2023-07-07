@@ -3,6 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ForumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +16,11 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 #[ORM\Entity(repositoryClass: ForumRepository::class)]
 #[hasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(operations: [])]
+#[Get(security: 'is_granted("ROLE_USER") and object.user == user')]
+#[GetCollection()]
+#[Post()]
+#[Put(securityPostDenormalize: "is_granted('ROLE_ADMIN') or (object.owner == user and previous_object.owner == user)")]
 class Forum
 {
     use TimestampableTrait;
