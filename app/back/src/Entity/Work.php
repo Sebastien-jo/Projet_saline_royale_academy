@@ -51,12 +51,15 @@ class Work extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $partitionPath = null;
 
-    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
+    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath', size: 'audioSize', mimeType: 'audio/mpeg, audio/x-wav, audio/ogg, audio/mp3, audio/wav, audio/mpeg3, audio/x-mpeg-3, audio/x-mpeg, audio/x-mpegaudio')]
     #[Groups(['user:create'])]
     public ?File $audio = null;
 
     #[ORM\Column(length: 255)]
     private ?string $audioPath = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
     public function getPartition(): ?File
     {
@@ -185,6 +188,18 @@ class Work extends AbstractEntity
     public function setAudioPath(string $audioPath): static
     {
         $this->audioPath = $audioPath;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

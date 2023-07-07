@@ -2,7 +2,7 @@
 
 namespace App\Factory;
 
-use App\Entity\Lesson;
+use App\Entity\Lesson\Lesson;
 use App\Repository\LessonRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;

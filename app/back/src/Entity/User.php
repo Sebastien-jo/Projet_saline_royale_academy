@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Entity\Favorites\Favorites;
 use App\Entity\Traits\TimestampableTrait;
 use App\Enum\BadgeCategory;
 use App\Repository\UserRepository;
@@ -105,6 +106,12 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Masterclass::class, orphanRemoval: true)]
     private Collection $masterclass;
 
+    #[ORM\ManyToOne]
+    private ?Category $instrument = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favorites::class, orphanRemoval: true)]
+    private Collection $favorites;
+
     public function __construct()
     {
         parent::__construct();
@@ -112,6 +119,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->quizResponses = new ArrayCollection();
         $this->masterclass = new ArrayCollection();
         $this->masterclassUsers = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -369,5 +377,45 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
                 Badge $badge
             ) => $badge->getCategory() === BadgeCategory::Instrument)->count(),
         ];
+    }
+
+    public function getInstrument(): ?Category
+    {
+        return $this->instrument;
+    }
+
+    public function setInstrument(?Category $instrument): static
+    {
+        $this->instrument = $instrument;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorites>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorites $favorite): static
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
+            $favorite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorites $favorite): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->favorites->removeElement($favorite) && $favorite->getUser() === $this) {
+            $favorite->setUser(null);
+        }
+
+        return $this;
     }
 }

@@ -23,10 +23,14 @@ class Category extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Work::class)]
     private Collection $works;
 
+    #[ORM\ManyToMany(targetEntity: Composer::class, mappedBy: 'categories')]
+    private Collection $composers;
+
     public function __construct(array $array = [])
     {
         parent::__construct($array);
         $this->works = new ArrayCollection();
+        $this->composers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +73,33 @@ class Category extends AbstractEntity
         // set the owning side to null (unless already changed)
         if ($this->works->removeElement($work) && $work->getCategory() === $this) {
             $work->setCategory(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Composer>
+     */
+    public function getComposers(): Collection
+    {
+        return $this->composers;
+    }
+
+    public function addComposer(Composer $composer): static
+    {
+        if (!$this->composers->contains($composer)) {
+            $this->composers->add($composer);
+            $composer->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComposer(Composer $composer): static
+    {
+        if ($this->composers->removeElement($composer)) {
+            $composer->removeCategory($this);
         }
 
         return $this;
