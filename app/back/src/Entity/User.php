@@ -105,6 +105,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Masterclass::class, orphanRemoval: true)]
     private Collection $masterclass;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Like::class)]
+    private Collection $likes;
+
     public function __construct()
     {
         parent::__construct();
@@ -112,6 +115,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->quizResponses = new ArrayCollection();
         $this->masterclass = new ArrayCollection();
         $this->masterclassUsers = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -369,5 +373,33 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
                 Badge $badge
             ) => $badge->getCategory() === BadgeCategory::Instrument)->count(),
         ];
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->likes->removeElement($like) && $like->getUser() === $this) {
+            $like->setUser(null);
+        }
+
+        return $this;
     }
 }
