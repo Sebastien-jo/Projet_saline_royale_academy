@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getRequest, postRequest, putRequest, deleteRequest} from "../helpers/request";
+import {getRequest, postRequest, putRequest, deleteRequest, postRequestFormData} from "../helpers/request";
 
 
 export const getBadges = () => {
@@ -12,7 +12,7 @@ export const getBadge = (id) => {
 }
 
 export const addBadge = (data) => {
-    return postRequest("/badges", data);
+    return postRequestFormData("/badges", data);
 }
 
 export const updateBadge = (id, data) => {

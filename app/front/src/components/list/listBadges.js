@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import FiltersCard from "../filters/filtersCard";
 import Button from "../button/button";
-import edit from "../../assets/icones/icon-edit-blue-stroke.svg";
+import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import '../../styles/components/badge.css';
