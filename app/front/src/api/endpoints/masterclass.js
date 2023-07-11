@@ -1,19 +1,19 @@
 import React from "react";
 
-import {getRequests, postRequestFormData, putRequest, deleteRequest} from "../helpers/request";
+import {getRequest, postRequestFormData, putRequest, deleteRequest} from "../helpers/request";
 
 
 
 export const getMasterclasses = () => {
-    return getRequests("/masterclasses");
+    return getRequest("/masterclasses");
 }
 
 export const getMasterclass = (id) => {
-    return getRequests(`/masterclasses/${id}`);
+    return getRequest(`/masterclasses/${id}`);
 }
 
 export const getMasterclassByCompositor = (id) => {
-    return getRequests(`/masterclasses/compositor/${id}`);
+    return getRequest(`/masterclasses/compositor/${id}`);
 }
 
 export const postMasterclass = (masterclassData) => {

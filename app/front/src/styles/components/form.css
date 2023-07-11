@@ -103,6 +103,20 @@ textarea{
     cursor: text;
 }
 
+select{
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-blue-dark-100);
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+    color: #626262;
+    cursor: pointer;
+}
+
 
 /* INSTRUMENTS FORM */
 .form-first{

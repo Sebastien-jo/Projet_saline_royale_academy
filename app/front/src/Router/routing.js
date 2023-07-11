@@ -16,7 +16,6 @@ import Progress from "../views/Student/Account/Progress";
 import MentionsLegales from "../views/Student/Account/MentionsLegales";
 
 import Home from "../views/Student/Home";
-import Masterclass from "../views/Student/Masterclass";
 import MyStudy from "../views/Student/MyStudy";
 
 import Library from "../views/Student/Library/Library";
@@ -40,67 +39,87 @@ import Notations from "../views/Teacher/Notations";
 import Gestion from "../views/Teacher/Gestion";
 import AddCourses from "../views/Teacher/AddCourses";
 
+import MasterclassAdmin from "../views/Admin/Masterclass";
+import OeuvresAdmin from "../views/Admin/Oeuvres";
+import UserAdmin from "../views/Admin/users/Users";
+import CompositorAdmin from "../views/Admin/Compositors";
+import BadgesAdmin from "../views/Admin/badges/Badges";
+import AddUser from "../views/Admin/users/AddUser";
+import AddBadge from "../views/Admin/badges/AddBadge";
+
 
 const Routing = () => {
     const { isAuthenticated, user } = useAuth();
-
 
     return (
         <HashRouter>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/signin" element={<SignIn />}/>
-                {
-                    isAuthenticated ? (
-                        <>
-                            {
-                                user.roles[0] !== "TEACHER" ?
-                                    <Route path="/" element={<GlobalLayout />}>
-                                        <Route path="/" exact element={<Home />} title="Home" />
-                                        <Route path="/mystudy" element={<MyStudy />} title="MyStudy"  />
-                                        <Route path="/forum" element={<Forum />} title={"Forum"}/>
-                                        <Route path="/signets/*">
-                                            <Route index element={<Signets />} title="Signets" />
-                                            <Route path="masterclass" element={<MasterclassSignets/>}/>
-                                            <Route path="oeuvres" element={<OeuvresSignets/>}/>
-                                            <Route path="compositeur" element={<CompositeurSignets/>}/>
-                                        </Route>
-                                        <Route path="/library/*">
-                                            <Route index element={<Library />} title="Library" />
-                                            <Route path="masterclass" element={<MasterclassLibrary/>} />
-                                            <Route path="oeuvres" element={<OeuvresLibrary />}/>
-                                            <Route path="compositeur" element={<CompositeurLibrary />}/>
-                                        </Route>
-                                        <Route path="masterclass/:id" element={<SingleMasterclass/>}/>
-                                        <Route path="oeuvre/:id" element={<SingleOeuvre />}/>
-                                        <Route path="compositeur/:id" element={<SingleCompositeur />}/>
-                                        <Route path="/account/*">
-                                            <Route index element={<Informations />} title="Informations" />
-                                            <Route path={"progression"} element={<Progress />} title="Progression" />
-                                            <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
-                                        </Route>
-                                    </Route>
-                                    :
-                                    <Route path="/" element={<GlobalLayout />}>
-                                        <Route path="/" exact element={<Courses />} title="MyCourses" />
-                                        <Route path="/notations" element={<Notations />} title="Notations" />
-                                        <Route path={"/gestion"} element={<Gestion />} title="Gestion" />
-                                        <Route path={"/gestion/ajout"} element={<AddCourses />} title="Gestion" />
-                                        <Route path="/account">
-                                            <Route index element={<Informations />} title="Informations" />
-                                            <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
-                                        </Route>
-                                    </Route>
-
-                            }
-                        </>
-                    ) : (
-                        <Route path="*" element={<Login />} />
-                    )
-                }
+                <Route path="/signin" element={<SignIn />} />
+                {isAuthenticated ? (
+                    <>
+                        {user.roles[0] == "USER" ? (
+                            <Route path="/" element={<GlobalLayout />}>
+                                <Route path="/" exact element={<Home />} title="Home" />
+                                <Route path="/mystudy" element={<MyStudy />} title="MyStudy" />
+                                <Route path="/forum" element={<Forum />} title={"Forum"} />
+                                <Route path="/signets/*">
+                                    <Route index element={<Signets />} title="Signets" />
+                                    <Route path="masterclass" element={<MasterclassSignets />} />
+                                    <Route path="oeuvres" element={<OeuvresSignets />} />
+                                    <Route path="compositeur" element={<CompositeurSignets />} />
+                                </Route>
+                                <Route path="/library/*">
+                                    <Route index element={<Library />} title="Library" />
+                                    <Route path="masterclass" element={<MasterclassLibrary />} />
+                                    <Route path="oeuvres" element={<OeuvresLibrary />} />
+                                    <Route path="compositeur" element={<CompositeurLibrary />} />
+                                </Route>
+                                <Route path="masterclass/:id" element={<SingleMasterclass />} />
+                                <Route path="oeuvre/:id" element={<SingleOeuvre />} />
+                                <Route path="compositeur/:id" element={<SingleCompositeur />} />
+                                <Route path="/account/*">
+                                    <Route index element={<Informations />} title="Informations" />
+                                    <Route path={"progression"} element={<Progress />} title="Progression" />
+                                    <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
+                                </Route>
+                            </Route>
+                        ) : user.roles[0] === "TEACHER" ? (
+                            <Route path="/" element={<GlobalLayout />}>
+                                <Route path="/" exact element={<Courses />} title="MyCourses" />
+                                <Route path="/notations" element={<Notations />} title="Notations" />
+                                <Route path={"/gestion"} element={<Gestion />} title="Gestion" />
+                                <Route path={"/gestion/ajout"} element={<AddCourses />} title="Gestion" />
+                                <Route path="/account">
+                                    <Route index element={<Informations />} title="Informations" />
+                                    <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
+                                </Route>
+                            </Route>
+                        ) : user.roles[0] === "ADMIN" ? (
+                            <Route path="/" element={<GlobalLayout />}>
+                                <Route path="/masterclass" element={<MasterclassAdmin />} title="Masterclass" />
+                                <Route path="/oeuvres" element={<OeuvresAdmin />} title="Oeuvres" />
+                                <Route path="/compositeurs" element={<CompositorAdmin />} title="Compositors" />
+                                <Route path="/badges/*">
+                                    <Route index element={<BadgesAdmin />} title="Badges" />
+                                    <Route path="add" element={<AddBadge />} />
+                                </Route>
+                                <Route path="/users/*">
+                                    <Route index element={<UserAdmin />} title="User" />
+                                    <Route path="add" element={<AddUser />} />
+                                </Route>
+                            </Route>
+                        ) : (
+                            <Route path="*" element={<Login />} />
+                        )}
+                    </>
+                ) : (
+                    <Route path="*" element={<Login />} />
+                )}
             </Routes>
         </HashRouter>
     );
+
 }
 
 export default Routing;
