@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import FiltersCard from "../filters/filtersCard";
 import Button from "../button/button";
-import edit from "../../assets/icones/icon-edit-blue-stroke.svg";
+import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 
@@ -35,7 +35,7 @@ const ListUsers= ({text, users}) => {
                                       <p className={"card-column__text"}>email</p>
                                     <p className={"card-column__text"}>Rôle</p>
                                     <div className={"card-column__buttons"}>
-                                        <Button text="Modifier" link={"/gestion/modifier"} className={"blue-stroke"} isIcon={true} icon={edit} />
+                                        <Button text="Modifier" link={`#/users/edit/${user.id}`} className={"blue-stroke"} isIcon={true} icon={edit} />
                                         <Button text="Supprimer" click={() => setOpen(true)} className={"red-full"} isIcon={true} icon={trash} />
                                     </div>
                                 </div>

@@ -10,7 +10,7 @@ const ListBadges= ({text, badges}) => {
 
     const [openPopup, setOpen] = useState(false);
 
-
+    console.log(badges.id);
 
     return (
         <div className="container-list">
@@ -35,7 +35,7 @@ const ListBadges= ({text, badges}) => {
                                     <p className={"card-column__text"}>{badge.description}</p>
                                     <p className={"card-column__text"}>{badge.category}</p>
                                     <div className={"card-column__buttons"}>
-                                        <Button text="Modifier" link={"/badge/update"} className={"blue-stroke"} isIcon={true} icon={edit} />
+                                        <Button text="Modifier" link={`#/badges/edit/${index}`} className={"blue-stroke"} isIcon={true} icon={edit} />
                                         <Button text="Supprimer" click={() => setOpen(true)} className={"red-full"} isIcon={true} icon={trash} />
                                     </div>
                                 </div>

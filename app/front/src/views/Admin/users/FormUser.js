@@ -1,11 +1,15 @@
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "../../../components/button/button";
 import Input from "../../../components/form/input";
 import Select from "../../../components/form/select";
+import {useParams} from "react-router-dom";
+import {getUser} from "../../../api/endpoints/user";
 
 
-const AddUser = () => {
+const FormUser = () => {
 
+    const id = parseInt(useParams().id);
+    const [user, setUser] = useState([]);
 
     const [open, setOpen] = useState(false);
     const [lastName, setLastName] = useState("");
@@ -20,6 +24,20 @@ const AddUser = () => {
 
     const listRole = ["User", "Teacher", "Admin"];
     const listInstrument = ["Violon", "Violoncelle", "Alto", "Flute", "Clarinette", "Trombone", "Haut-bois", "Piano", "Chant", "Chef d'orchestre"]
+
+
+    useEffect(() => {
+        if(id !== undefined) {
+            getUser(id).then((response) => {
+                setUser(response);
+                setLastName(response.lastName);
+                setFirstName(response.firstName);
+                setEmail(response.email);
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,6 +57,7 @@ const AddUser = () => {
         }
     }
 
+
     return (
         <div className="main-container">
             <div className="main-content">
@@ -46,10 +65,10 @@ const AddUser = () => {
                 <form onSubmit={handleSubmit} method="POST">
                     <div className={`form-first`}>
                         <div className={"form-row"}>
-                            <Input name="lastname" label="Nom" type="text" onChange={e => setLastName(e.target.value)} />
-                            <Input name="firstname" label="Prénom" type="text" onChange={e => setFirstName(e.target.value)} />
+                            <Input name="lastname" label="Nom" type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
+                            <Input name="firstname" label="Prénom" type="text" value={firstName}  onChange={e => setFirstName(e.target.value)} />
                         </div>
-                        <Input name="email" label="Email" type="email" onChange={e => setEmail(e.target.value)} />
+                        <Input name="email" label="Email" type="email" value={email}  onChange={e => setEmail(e.target.value)} />
                         <Input name="plainPassword" label="Password" type="password" onChange={e => setPlainPassword(e.target.value)} />
                         <Input name="password2" label="Confimation de password" type="password" onChange={e => setPassword2(e.target.value)} />
                         <Select name="role" label="Rôle" onChange={e => setRole(e.target.value)} list={listRole} />
@@ -83,4 +102,4 @@ const AddUser = () => {
     );
 }
 
-export default AddUser;
+export default FormUser;

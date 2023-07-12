@@ -44,8 +44,6 @@ import OeuvresAdmin from "../views/Admin/Oeuvres";
 import UserAdmin from "../views/Admin/users/Users";
 import CompositorAdmin from "../views/Admin/Compositor/Compositors";
 import BadgesAdmin from "../views/Admin/badges/Badges";
-import AddUser from "../views/Admin/users/AddUser";
-import AddBadge from "../views/Admin/badges/AddBadge";
 import FormCompositor from "../views/Admin/Compositor/FormCompositor";
 import FormBadges from "../views/Admin/badges/FormBadges";
 import FormUser from "../views/Admin/users/FormUser";
