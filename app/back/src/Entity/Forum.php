@@ -55,7 +55,7 @@ class Forum
 
     #[ORM\ManyToOne]
     #[Groups(['admin:write', 'forum:read'])]
-    #[Assert\NotNull(message: 'Champ obligatoire', groups: ['admin:write'])]
+    #[Assert\NotBlank(message: 'Champ obligatoire', allowNull: false, groups: ['admin:write'])]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'forum', targetEntity: ForumMessage::class, orphanRemoval: true)]

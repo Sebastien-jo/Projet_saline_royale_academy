@@ -75,11 +75,11 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:update', 'user:read'])]
+    #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:update', 'user:read'])]
+    #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
     private ?string $firstName = null;
 
     #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
