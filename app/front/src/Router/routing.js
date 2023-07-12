@@ -39,14 +39,16 @@ import Notations from "../views/Teacher/Notations";
 import Gestion from "../views/Teacher/Gestion";
 import AddCourses from "../views/Teacher/AddCourses";
 
-import MasterclassAdmin from "../views/Admin/Masterclass";
-import OeuvresAdmin from "../views/Admin/Oeuvres";
-import UserAdmin from "../views/Admin/users/Users";
+import MasterclassAdmin from "../views/Admin/Masterclass/Masterclass";
+import OeuvresAdmin from "../views/Admin/Oeuvres/Oeuvres";
+import UserAdmin from "../views/Admin/Users/Users";
 import CompositorAdmin from "../views/Admin/Compositor/Compositors";
-import BadgesAdmin from "../views/Admin/badges/Badges";
+import BadgesAdmin from "../views/Admin/Badges/Badges";
 import FormCompositor from "../views/Admin/Compositor/FormCompositor";
-import FormBadges from "../views/Admin/badges/FormBadges";
-import FormUser from "../views/Admin/users/FormUser";
+import FormBadge from "../views/Admin/Badges/FormBadge";
+import FormUser from "../views/Admin/Users/FormUser";
+import FormMasterclass from "../views/Admin/Masterclass/FormMasterclass";
+import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
 
 
 const Routing = () => {
@@ -98,8 +100,17 @@ const Routing = () => {
                             </Route>
                         ) : user.roles[0] === "ADMIN" ? (
                             <Route path="/" element={<GlobalLayout />}>
-                                <Route path="/masterclass" element={<MasterclassAdmin />} title="Masterclass" />
-                                <Route path="/oeuvres" element={<OeuvresAdmin />} title="Oeuvres" />
+                                <Route path="/masterclass/*">
+                                    <Route index element={<MasterclassAdmin />} title="Masterclass" />
+                                    <Route path="add" element={<FormMasterclass text={"Ajouter une masterclass"}/>} />
+                                    <Route path="edit/:id" element={<FormMasterclass text={"Mettre à jour cette masterclass"}/>} />
+                                </Route>
+                                <Route path="/oeuvres/*">
+                                    <Route index element={<OeuvresAdmin />} title="Oeuvres" />
+                                    <Route path="add" element={<FormOeuvre title={"Ajouter une oeuvre"}/>} />
+                                    <Route path="edit/:id" element={<FormOeuvre title={"Mettre à jour cette oeuvre"}/>} />
+
+                                </Route>
                                 <Route path="/compositeurs">
                                     <Route index element={<CompositorAdmin />} title="Compositeurs" />
                                     <Route path="add" element={<FormCompositor title={"Ajouter un compositeur"}/>} />
@@ -107,8 +118,8 @@ const Routing = () => {
                                 </Route>
                                 <Route path="/badges/*">
                                     <Route index element={<BadgesAdmin />} title="Badges" />
-                                    <Route path="add" element={<FormBadges title={"Ajouter un badge"}/>} />
-                                    <Route path="edit/:id" element={<FormBadges title={"Mettre à jour ce badge"}/>} />
+                                    <Route path="add" element={<FormBadge title={"Ajouter un badge"}/>} />
+                                    <Route path="edit/:id" element={<FormBadge title={"Mettre à jour ce badge"}/>} />
                                 </Route>
                                 <Route path="/users/*">
                                     <Route index element={<UserAdmin />} title="User" />

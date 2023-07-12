@@ -5,7 +5,7 @@ import Textarea from "../../../components/form/textarea";
 import {getBadge} from "../../../api/endpoints/badge";
 import {useParams} from "react-router-dom";
 
-const FormBadges = ({title}) => {
+const FormBadge = ({title}) => {
 
     const id = parseInt(useParams().id);
     const [badge, setBadge] = useState([]);
@@ -55,4 +55,4 @@ const FormBadges = ({title}) => {
     );
 }
 
-export default FormBadges;
+export default FormBadge;
