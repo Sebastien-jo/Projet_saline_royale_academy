@@ -26,6 +26,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
         if (isset($context['groups']) && $this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $context['groups'][] = $normalization ? 'admin:read' : 'admin:write';
+        } elseif (isset($context['groups']) && $this->authorizationChecker->isGranted('ROLE_TEACHER')) {
+            $context['groups'][] = $normalization ? 'teacher:read' : 'teacher:write';
+        } else {
+            $context['groups'][] = $normalization ? 'user:read' : 'user:write';
         }
 
         return $context;
