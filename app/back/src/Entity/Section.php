@@ -32,10 +32,14 @@ class Section extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, orphanRemoval: true)]
     private Collection $lessons;
 
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: SectionUser::class, orphanRemoval: true)]
+    private Collection $sectionUsers;
+
     public function __construct()
     {
         parent::__construct();
         $this->lessons = new ArrayCollection();
+        $this->sectionUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +106,34 @@ class Section extends AbstractEntity
         // set the owning side to null (unless already changed)
         if ($this->lessons->removeElement($lesson) && $lesson->getSection() === $this) {
             $lesson->setSection(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SectionUser>
+     */
+    public function getSectionUsers(): Collection
+    {
+        return $this->sectionUsers;
+    }
+
+    public function addSectionUser(SectionUser $sectionUser): static
+    {
+        if (!$this->sectionUsers->contains($sectionUser)) {
+            $this->sectionUsers->add($sectionUser);
+            $sectionUser->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSectionUser(SectionUser $sectionUser): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->sectionUsers->removeElement($sectionUser) && $sectionUser->getSection() === $this) {
+            $sectionUser->setSection(null);
         }
 
         return $this;
