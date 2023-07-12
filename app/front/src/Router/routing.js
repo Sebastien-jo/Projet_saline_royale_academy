@@ -42,10 +42,13 @@ import AddCourses from "../views/Teacher/AddCourses";
 import MasterclassAdmin from "../views/Admin/Masterclass";
 import OeuvresAdmin from "../views/Admin/Oeuvres";
 import UserAdmin from "../views/Admin/users/Users";
-import CompositorAdmin from "../views/Admin/Compositors";
+import CompositorAdmin from "../views/Admin/Compositor/Compositors";
 import BadgesAdmin from "../views/Admin/badges/Badges";
 import AddUser from "../views/Admin/users/AddUser";
 import AddBadge from "../views/Admin/badges/AddBadge";
+import FormCompositor from "../views/Admin/Compositor/FormCompositor";
+import FormBadges from "../views/Admin/badges/FormBadges";
+import FormUser from "../views/Admin/users/FormUser";
 
 
 const Routing = () => {
@@ -99,14 +102,20 @@ const Routing = () => {
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/masterclass" element={<MasterclassAdmin />} title="Masterclass" />
                                 <Route path="/oeuvres" element={<OeuvresAdmin />} title="Oeuvres" />
-                                <Route path="/compositeurs" element={<CompositorAdmin />} title="Compositors" />
+                                <Route path="/compositeurs">
+                                    <Route index element={<CompositorAdmin />} title="Compositeurs" />
+                                    <Route path="add" element={<FormCompositor title={"Ajouter un compositeur"}/>} />
+                                    <Route path="edit/:id" element={<FormCompositor title={"Mettre à jour ce compositeur"}/>} />
+                                </Route>
                                 <Route path="/badges/*">
                                     <Route index element={<BadgesAdmin />} title="Badges" />
-                                    <Route path="add" element={<AddBadge />} />
+                                    <Route path="add" element={<FormBadges title={"Ajouter un badge"}/>} />
+                                    <Route path="edit/:id" element={<FormBadges title={"Mettre à jour ce badge"}/>} />
                                 </Route>
                                 <Route path="/users/*">
                                     <Route index element={<UserAdmin />} title="User" />
-                                    <Route path="add" element={<AddUser />} />
+                                    <Route path="add" element={<FormUser title={"Ajouter un utilisateur"}/>} />
+                                    <Route path="edit/:id" element={<FormUser title={"Mettre à jour cet utilisateur"}/>} />
                                 </Route>
                             </Route>
                         ) : (
