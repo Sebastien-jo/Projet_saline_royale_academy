@@ -3,15 +3,37 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Enum\Nationality;
 use App\Repository\ComposerRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ComposerRepository::class)]
-#[ApiResource]
+#[Get]
+#[GetCollection]
+#[ApiResource(
+    operations: [
+        new Post(
+            security: "is_granted('COMPOSER_CREATE')",
+            securityMessage: 'Only admin can create a composer'
+        ),
+        new Put(securityPostDenormalize: "is_granted('COMPOSER_EDIT')"),
+        new Get(security: "is_granted('COMPOSER_VIEW')"),
+        new GetCollection(security: "is_granted('COMPOSER_VIEW_LIST')"),
+    ],
+    normalizationContext: ['groups' => ['composer:read']],
+    denormalizationContext: ['groups' => ['composer:create']]
+)]
 #[uniqueEntity(
     fields: ['name', 'completeName'],
     message: 'Name already use',
@@ -25,28 +47,47 @@ class Composer extends AbstractEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(groups: ['import', 'Default'])]
+    #[Groups(['composer:read', 'composer:create'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
+    #[Groups(['composer:read', 'composer:create'])]
     private ?string $completeName = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $portrait = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['composer:read', 'composer:create'])]
+    #[Assert\Url(groups: ['import', 'Default'])]
+    private ?string $picture = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['composer:read', 'composer:create'])]
+    #[Assert\Url(groups: ['import', 'Default'])]
+    private ?string $description = null;
 
     #[ORM\Column(type: 'date')]
+    #[Groups(['composer:read', 'composer:create'])]
+    #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d'])]
     private DateTimeInterface $birth;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
+    #[Groups(['composer:read', 'composer:create'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d'])]
     private DateTimeInterface $death;
+
+    #[ORM\Column(length: 255, enumType: Nationality::class)]
+    #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
+    #[Groups(['composer:read', 'composer:create'])]
+    private Nationality $nationality;
 
     #[ORM\OneToMany(mappedBy: 'composer', targetEntity: Work::class)]
     private Collection $works;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'composers')]
     private Collection $categories;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
 
     public function __construct()
     {
@@ -84,14 +125,14 @@ class Composer extends AbstractEntity
         return $this;
     }
 
-    public function getPortrait(): ?string
+    public function getPicture(): ?string
     {
-        return $this->portrait;
+        return $this->picture;
     }
 
-    public function setPortrait(?string $portrait): void
+    public function setPicture(?string $picture): void
     {
-        $this->portrait = $portrait;
+        $this->picture = $picture;
     }
 
     public function getBirth(): DateTimeInterface
@@ -176,5 +217,15 @@ class Composer extends AbstractEntity
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getNationality(): Nationality
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(Nationality $nationality): void
+    {
+        $this->nationality = $nationality;
     }
 }
