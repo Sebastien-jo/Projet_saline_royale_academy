@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.HOST }}
           script: |
-            docker exec -ti docker-symfony-1 bash
+            docker exec -ti docker_symfony_1 bash
             bin/console doctrine:migration:migrate
       - name: Dump env
         uses: appleboy/ssh-action@v0.1.10
