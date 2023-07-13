@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Forum[]|Proxy[]                 findBy(array $attributes)
  * @method static Forum[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Forum[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Forum> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Forum> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Forum> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Forum> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Forum> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Forum> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Forum> random(array $attributes = [])
- * @phpstan-method static Proxy<Forum> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Forum> repository()
- * @phpstan-method static list<Proxy<Forum>> all()
- * @phpstan-method static list<Proxy<Forum>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Forum>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Forum>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Forum>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Forum>> randomSet(int $number, array $attributes = [])
  */
 final class ForumFactory extends ModelFactory
 {
@@ -54,7 +38,8 @@ final class ForumFactory extends ModelFactory
     {
         return [
             'createdAt' => self::faker()->dateTime(),
-            'name' => self::faker()->text(255),
+            'title' => self::faker()->text(255),
+            'description' => self::faker()->text(255),
             'updatedAt' => self::faker()->dateTime(),
         ];
     }
@@ -65,7 +50,7 @@ final class ForumFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this;
-            // ->afterInstantiate(function(Forum $forum): void {})
+        // ->afterInstantiate(function(Forum $forum): void {})
     }
 
     protected static function getClass(): string

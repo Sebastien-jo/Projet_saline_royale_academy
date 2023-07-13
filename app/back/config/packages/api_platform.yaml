@@ -4,3 +4,11 @@ api_platform:
              JWT:
                 name: Authorization
                 type: header
+    patch_formats:
+      json: [ 'application/json' ]
+    formats:
+      json: [ 'application/json' ]
+      jsonld: [ 'application/ld+json' ]
+      html: [ 'text/html' ]
+      form:
+        mime_types: [ 'multipart/form-data' ]

@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Work[]|Proxy[]                 findBy(array $attributes)
  * @method static Work[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Work[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Work> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Work> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Work> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Work> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Work> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Work> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Work> random(array $attributes = [])
- * @phpstan-method static Proxy<Work> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Work> repository()
- * @phpstan-method static list<Proxy<Work>> all()
- * @phpstan-method static list<Proxy<Work>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Work>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Work>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Work>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Work>> randomSet(int $number, array $attributes = [])
  */
 final class WorkFactory extends ModelFactory
 {

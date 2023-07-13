@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static ExerciseResponse[]|Proxy[]                 findBy(array $attributes)
  * @method static ExerciseResponse[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static ExerciseResponse[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<ExerciseResponse> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<ExerciseResponse> createOne(array $attributes = [])
- * @phpstan-method static Proxy<ExerciseResponse> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<ExerciseResponse> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<ExerciseResponse> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<ExerciseResponse> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<ExerciseResponse> random(array $attributes = [])
- * @phpstan-method static Proxy<ExerciseResponse> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<ExerciseResponse> repository()
- * @phpstan-method static list<Proxy<ExerciseResponse>> all()
- * @phpstan-method static list<Proxy<ExerciseResponse>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<ExerciseResponse>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<ExerciseResponse>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<ExerciseResponse>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<ExerciseResponse>> randomSet(int $number, array $attributes = [])
  */
 final class ExerciseResponseFactory extends ModelFactory
 {

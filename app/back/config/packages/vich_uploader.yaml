@@ -1,5 +1,7 @@
 vich_uploader:
     db_driver: orm
+    metadata:
+        type: attribute
 
     mappings:
         media_object:
@@ -7,7 +9,7 @@ vich_uploader:
             upload_destination: '%kernel.project_dir%/public/files/medias'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
-        avatar_object:
+        avatarFile:
             uri_prefix: files/avatars
             upload_destination: '%kernel.project_dir%/public/files/avatars'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

@@ -22,7 +22,7 @@ class StatUserController extends AbstractController
      * @throws ExceptionInterface
      */
     #[Route(
-        '/api/users/stats',
+        '/api/users/{id}/stats',
         name: 'api:user:stat',
         defaults: [
             '_api_resource_class' => User::class,

@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Masterclass[]|Proxy[]                 findBy(array $attributes)
  * @method static Masterclass[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Masterclass[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Masterclass> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Masterclass> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Masterclass> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Masterclass> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Masterclass> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Masterclass> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Masterclass> random(array $attributes = [])
- * @phpstan-method static Proxy<Masterclass> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Masterclass> repository()
- * @phpstan-method static list<Proxy<Masterclass>> all()
- * @phpstan-method static list<Proxy<Masterclass>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Masterclass>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Masterclass>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Masterclass>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Masterclass>> randomSet(int $number, array $attributes = [])
  */
 final class MasterclassFactory extends ModelFactory
 {

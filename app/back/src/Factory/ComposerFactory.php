@@ -26,22 +26,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Composer[]|Proxy[]                 findBy(array $attributes)
  * @method static Composer[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
  * @method static Composer[]|Proxy[]                 randomSet(int $number, array $attributes = [])
- *
- * @phpstan-method        Proxy<Composer> create(array|callable $attributes = [])
- * @phpstan-method static Proxy<Composer> createOne(array $attributes = [])
- * @phpstan-method static Proxy<Composer> find(object|array|mixed $criteria)
- * @phpstan-method static Proxy<Composer> findOrCreate(array $attributes)
- * @phpstan-method static Proxy<Composer> first(string $sortedField = 'id')
- * @phpstan-method static Proxy<Composer> last(string $sortedField = 'id')
- * @phpstan-method static Proxy<Composer> random(array $attributes = [])
- * @phpstan-method static Proxy<Composer> randomOrCreate(array $attributes = [])
- * @phpstan-method static RepositoryProxy<Composer> repository()
- * @phpstan-method static list<Proxy<Composer>> all()
- * @phpstan-method static list<Proxy<Composer>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Composer>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Composer>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Composer>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Composer>> randomSet(int $number, array $attributes = [])
  */
 final class ComposerFactory extends ModelFactory
 {

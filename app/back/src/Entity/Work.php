@@ -55,7 +55,7 @@ class Work extends AbstractEntity
     #[Groups(['user:create'])]
     public ?File $audio = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $audioPath = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -185,7 +185,7 @@ class Work extends AbstractEntity
         return $this->audioPath;
     }
 
-    public function setAudioPath(string $audioPath): static
+    public function setAudioPath(?string $audioPath): static
     {
         $this->audioPath = $audioPath;
 
