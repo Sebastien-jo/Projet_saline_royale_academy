@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className="navbar__line"></div>
 
             {
-                user.roles[0] == "USER" ?
+                user.roles[0] == "ROLE_USER" ?
                 <div className="navbar__links">
                     <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span><p>{t('navbar.links.0.text')}</p></Link>
                     <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>{t('navbar.links.2.text')}</p></Link>
@@ -45,7 +45,7 @@ const Navbar = () => {
                     <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span><p>{t('navbar.links.4.text')}</p></Link>
                     <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span><p>{t('navbar.links.5.text')}</p></Link>
                 </div>
-                : user.roles[0] == "USER" ?
+                : user.roles[0] == "ROLE_TEACHER" ?
                 <div className="navbar__links">
                     <Link to="/" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>{t('navbar.links.6.text')}</p></Link>
                     <Link to="/notations" className={activeLink === "notation" ? "active" : ""} onClick={() => handleLinkClick("notation")}><span className="navbar__icon notation"></span><p>{t('navbar.links.7.text')}</p></Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
                     <div className="navbar__user__infos">
                         <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
                         {
-                            user.roles[0] !== "TEACHER" ?
+                            user.roles[0] !== "ROLE_TEACHER" ?
                                 <div className="navbar__user__status">{t('navbar.roles.0')}</div>
                                 :
                                 <div className="navbar__user__status">{t('navbar.roles.1')}</div>

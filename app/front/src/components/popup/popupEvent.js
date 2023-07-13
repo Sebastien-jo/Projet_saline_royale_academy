@@ -32,7 +32,7 @@ const PopupEvent = ({openPopup = false, setOpen}) => {
                         {
                             test.map((item, index) => {
                                 return (
-                                    <CardFullSmall title={"Masterclass de test"} subtitle={"Sous-titre de test"} link={"/signets/masterclass"} key={index}/>
+                                    <CardFullSmall title={"Masterclass de test"} subtitle={"Sous-titre de test"} link={"#/signets/masterclass"} key={index}/>
                                 )
                             })
                         }

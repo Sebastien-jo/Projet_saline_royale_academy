@@ -1,6 +1,6 @@
 
 const apiConfig={
-    baseUrl: 'http://back.groupe7.hetic-projects.arcplex.tech:1234/api',
+    baseUrl: 'http://back.groupe7.hetic-projects.arcplex.tech/api',
     timeout: 50000000,
     headers: {
         'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ const useRegister = () => {
         const handleRegister = async (userData) => {
             try {
                 const response = await Register(userData);
-                naviguate("/login");
+                naviguate("#/login");
 
             } catch (e) {
                 setError(e);

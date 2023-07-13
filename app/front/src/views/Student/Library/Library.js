@@ -11,15 +11,15 @@ const Library = () => {
                 <MenuBar items={[
                     {
                         name: "Masterclass",
-                        link: "masterclass"
+                        link: "/library/masterclass",
                     },
                     {
                         name: "Oeuvres",
-                        link: "oeuvres"
+                        link: "/library/oeuvres",
                     },
                     {
                         name: "Compositeur",
-                        link: "compositeur"
+                        link: "/library/compositeur",
                     }]}/>
 
             </div>

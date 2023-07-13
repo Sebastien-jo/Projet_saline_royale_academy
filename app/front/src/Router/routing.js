@@ -57,11 +57,9 @@ const Routing = () => {
     return (
         <HashRouter>
             <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signin" element={<SignIn />} />
                 {isAuthenticated ? (
                     <>
-                        {user.roles[0] == "USER" ? (
+                        {user.roles[0] === "ROLE_USER" ? (
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/" exact element={<Home />} title="Home" />
                                 <Route path="/mystudy" element={<MyStudy />} title="MyStudy" />
@@ -78,16 +76,16 @@ const Routing = () => {
                                     <Route path="oeuvres" element={<OeuvresLibrary />} />
                                     <Route path="compositeur" element={<CompositeurLibrary />} />
                                 </Route>
-                                <Route path="masterclass/:id" element={<SingleMasterclass />} />
-                                <Route path="oeuvre/:id" element={<SingleOeuvre />} />
-                                <Route path="compositeur/:id" element={<SingleCompositeur />} />
+                                <Route path="/masterclass/:id" element={<SingleMasterclass />} />
+                                <Route path="/oeuvre/:id" element={<SingleOeuvre />} />
+                                <Route path="/compositeur/:id" element={<SingleCompositeur />} />
                                 <Route path="/account/*">
                                     <Route index element={<Informations />} title="Informations" />
                                     <Route path={"progression"} element={<Progress />} title="Progression" />
                                     <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
                                 </Route>
                             </Route>
-                        ) : user.roles[0] === "TEACHER" ? (
+                        ) : user.roles[0] === "ROLE_TEACHER" ? (
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/" exact element={<Courses />} title="MyCourses" />
                                 <Route path="/notations" element={<Notations />} title="Notations" />
@@ -98,7 +96,7 @@ const Routing = () => {
                                     <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
                                 </Route>
                             </Route>
-                        ) : user.roles[0] === "ADMIN" ? (
+                        ) : user.roles[0] === "ROLE_ADMIN" ? (
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/masterclass/*">
                                     <Route index element={<MasterclassAdmin />} title="Masterclass" />
@@ -126,13 +124,19 @@ const Routing = () => {
                                     <Route path="add" element={<FormUser title={"Ajouter un utilisateur"}/>} />
                                     <Route path="edit/:id" element={<FormUser title={"Mettre à jour cet utilisateur"}/>} />
                                 </Route>
+                                <Route path="/account/*">
+                                    <Route index element={<CompositorAdmin />} title="Account" />
+                                </Route>
                             </Route>
                         ) : (
-                            <Route path="*" element={<Login />} />
+                            <Route path="/" element={<Login />} />
                         )}
                     </>
                 ) : (
-                    <Route path="*" element={<Login />} />
+                    <>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/register" element={<SignIn />} />
+                    </>
                 )}
             </Routes>
         </HashRouter>

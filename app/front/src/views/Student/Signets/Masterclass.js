@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 import {getMasterclasses} from "../../../api/endpoints/masterclass";
@@ -8,12 +8,12 @@ const Masterclass = () => {
     const [masterclass, setMasterclass] = useState([]);
 
     useEffect(() => {
-        getMasterclasses().then((response) => {
+        /*getMasterclasses().then((response) => {
             console.log(response);
             setMasterclass(response['hydra:member']);
         }).catch((error) => {
             console.log(error);
-        });
+        });*/
     }, []);
 
     return (
@@ -22,20 +22,19 @@ const Masterclass = () => {
                 <MenuBar items={[
                     {
                         name: "Masterclass",
-                        link: "/#/signets/masterclass",
+                        link: "/signets/masterclass",
                         isLinkActive: true,
                     },
                     {
                         name: "Oeuvres",
-                        link: "/#/signets/oeuvres",
+                        link: "/signets/oeuvres",
                         isLinkActive: false,
                     },
                     {
                         name: "Compositeur",
-                        link: "/#/signets/compositeur",
+                        link: "/signets/compositeur",
                         isLinkActive: false,
                     }]}/>
-                hello
             </div>
             <SidebarLibrary/>
         </div>

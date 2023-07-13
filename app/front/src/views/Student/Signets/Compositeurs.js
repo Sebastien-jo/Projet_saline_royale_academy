@@ -10,11 +10,12 @@ const Compositeurs = () => {
 
     //call api to get list of composers
     useEffect(() => {
-        getCompositors().then((response) => {
+        /*getCompositors().then((response) => {
             setCompositors(response['hydra:member']);
         }).catch((error) => {
             console.log(error);
-        });
+        });*/
+
     }, []);
 
 

@@ -17,7 +17,7 @@ const ListLibraryCompositors = ({list}) => {
                     {
                         list.map((item, index) => {
                             return(
-                                <CardColumn key={index} image={item.portrait} title={item.name} subtitle={item.birth} description={""} link={`/compositeur/${item.id}`}/>
+                                <CardColumn key={index} image={item.portrait} title={item.name} subtitle={item.birth} description={""} link={`#/library/compositeur/${item.id}`}/>
                             )
                         })
                     }

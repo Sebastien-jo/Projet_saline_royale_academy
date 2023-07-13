@@ -19,7 +19,7 @@ const Signets = () => {
                             <h1>{ t('signets.masterclass_title') }</h1>
                             <span className="subtitle">{ t('signets.masterclass_subtitle') }</span>
                         </div>
-                        <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"/signets/masterclass"}/>
+                        <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"#/signets/masterclass"}/>
                     </div>
 
                     <div className="signets-card">
@@ -27,7 +27,7 @@ const Signets = () => {
                             <h1>{ t('signets.oeuvres_title') }</h1>
                             <span className="subtitle">{ t('signets.oeuvres_subtitle') }</span>
                         </div>
-                        <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"/signets/oeuvres"}/>
+                        <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"#/signets/oeuvres"}/>
                     </div>
 
                     <div className="signets-card">
@@ -35,7 +35,7 @@ const Signets = () => {
                             <h1>{ t('signets.composer_title') }</h1>
                             <span className="subtitle">{ t('signets.composer_subtitle') }</span>
                         </div>
-                       <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"/signets/compositeur"}/>
+                       <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"#/signets/compositeur"}/>
                     </div>
                 </div>
             </div>
