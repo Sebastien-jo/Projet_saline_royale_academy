@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
         UserFactory::createOne([
             'firstName' => 'admin',
             'lastName' => 'admin',
-            'roles' => ['TEACHER'],
+            'roles' => ['ROLE_ADMIN'],
             'email' => 'admin@gmail.com',
             'password' => 'admin',
         ]);
