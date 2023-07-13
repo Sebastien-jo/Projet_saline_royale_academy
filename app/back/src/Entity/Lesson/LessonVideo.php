@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Lesson;
 
 use Doctrine\ORM\Mapping\Entity;
 

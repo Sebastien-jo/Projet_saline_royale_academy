@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\Favorites\FavoritesMasterclass;
 use App\Repository\MasterclassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,11 +35,15 @@ class Masterclass extends AbstractEntity
     #[ORM\JoinColumn(nullable: false)]
     private ?User $teacher = null;
 
+    #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: FavoritesMasterclass::class)]
+    private Collection $favoritesMasterclasses;
+
     public function __construct(array $array = [])
     {
         parent::__construct($array);
         $this->sections = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->favoritesMasterclasses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +139,34 @@ class Masterclass extends AbstractEntity
     public function setTeacher(?User $teacher): static
     {
         $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoritesMasterclass>
+     */
+    public function getFavoritesMasterclasses(): Collection
+    {
+        return $this->favoritesMasterclasses;
+    }
+
+    public function addFavoritesMasterclass(FavoritesMasterclass $favoritesMasterclass): static
+    {
+        if (!$this->favoritesMasterclasses->contains($favoritesMasterclass)) {
+            $this->favoritesMasterclasses->add($favoritesMasterclass);
+            $favoritesMasterclass->setMasterclass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritesMasterclass(FavoritesMasterclass $favoritesMasterclass): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->favoritesMasterclasses->removeElement($favoritesMasterclass) && $favoritesMasterclass->getMasterclass() === $this) {
+            $favoritesMasterclass->setMasterclass(null);
+        }
 
         return $this;
     }

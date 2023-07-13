@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Lesson;
 
 use AllowDynamicProperties;
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\AbstractEntity;
+use App\Entity\Section;
 use App\Repository\LessonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

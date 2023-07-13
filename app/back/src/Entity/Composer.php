@@ -42,10 +42,17 @@ class Composer extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'composer', targetEntity: Work::class)]
     private Collection $works;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'composers')]
+    private Collection $categories;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         parent::__construct();
         $this->works = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +138,42 @@ class Composer extends AbstractEntity
         if ($this->works->removeElement($work) && $work->getComposer() === $this) {
             $work->setComposer(null);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

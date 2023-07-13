@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\Lesson\LessonExercise;
 use App\Repository\ExerciseResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
 

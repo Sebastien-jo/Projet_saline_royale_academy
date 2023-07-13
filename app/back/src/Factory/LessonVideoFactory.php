@@ -2,7 +2,7 @@
 
 namespace App\Factory;
 
-use App\Entity\LessonVideo;
+use App\Entity\Lesson\LessonVideo;
 use Doctrine\ORM\EntityRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
