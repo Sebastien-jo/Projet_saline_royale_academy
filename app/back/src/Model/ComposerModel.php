@@ -98,7 +98,7 @@ class ComposerModel implements ComposerModelInterface
         return [
             'name' => $this->getName(),
             'completeName' => $this->getCompleteName(),
-            'portrait' => $this->getPortrait(),
+            'picture' => $this->getPortrait(),
             'birth' => $this->getBirth(),
             'death' => $this->getDeath(),
         ];
