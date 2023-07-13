@@ -19,8 +19,8 @@ const useLogin = () => {
         try {
             const response = await Login(email, password);
             dispatch(login({ user: response.data, token: response.token }));
+            console.log("hello");
             naviguate("/");
-
         } catch (e) {
             console.log(e);
             if(e.response === 401) {

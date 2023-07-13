@@ -1,4 +1,4 @@
-.container-library{
+.container-list{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -6,16 +6,15 @@
     width: 100%;
 }
 
-.library-row{
+.list-row{
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    padding: 30px;
 }
 
 
-.container-library__content{
+.container-list__content{
     display: flex;
     flex-direction: column;
     align-items: center;

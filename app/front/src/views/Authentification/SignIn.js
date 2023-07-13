@@ -84,7 +84,7 @@ const SignIn = () => {
                         <Input name="plainPassword" label="Password" type="password" onChange={e => setPlainPassword(e.target.value)} />
                         <Input name="password2" label="Confimation de password" type="password" onChange={e => setPassword2(e.target.value)} />
 
-                        <p>Vous avez déjà un compte ? <a href={"/login"}>Se connecter</a></p>
+                        <p>Vous avez déjà un compte ? <a href={"#/login"}>Se connecter</a></p>
                         <Button className={"btn red-full"} click={handleOpen} text={"Continuer"} isArrow={true} />
                         {valid && <p className="error">{valid}</p>}
                     </div>

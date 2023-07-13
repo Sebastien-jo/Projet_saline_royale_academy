@@ -255,6 +255,36 @@
     --icon-forum-blue-stroke: url('../assets/icones/icon-forum-Blue-full.svg');
     --icon-forum-grey: url('../assets/icones/icon-forum-Grey.svg');
 
+    --icon-user-black: url('../assets/icones/icon-user-Default.svg');
+    --icon-user-white: url('../assets/icones/icon-user-White.svg');
+    --icon-user-red: url('../assets/icones/icon-user-Red.svg');
+    --icon-user-blue-stroke: url('../assets/icones/icon-user-Blue-full.svg');
+    --icon-user-grey: url('../assets/icones/icon-user-Grey.svg');
+
+    --icon-add-black: url('../assets/icones/icon-add-Default.svg');
+    --icon-add-white: url('../assets/icones/icon-add-White.svg');
+    --icon-add-red: url('../assets/icones/icon-add-Red.svg');
+    --icon-add-blue-stroke: url('../assets/icones/icon-add-Blue-full.svg');
+    --icon-add-grey: url('../assets/icones/icon-add-Grey.svg');
+
+    --icon-compositor-black: url('../assets/icones/icon-compositor-Default.svg');
+    --icon-compositor-white: url('../assets/icones/icon-compositor-White.svg');
+    --icon-compositor-red: url('../assets/icones/icon-compositor-Red.svg');
+    --icon-compositor-blue-stroke: url('../assets/icones/icon-compositor-Blue-full.svg');
+    --icon-compositor-grey: url('../assets/icones/icon-compositor-Grey.svg');
+
+    --icon-oeuvres-black: url('../assets/icones/icon-oeuvres-Default.svg');
+    --icon-oeuvres-white: url('../assets/icones/icon-oeuvres-White.svg');
+    --icon-oeuvres-red: url('../assets/icones/icon-oeuvres-Red.svg');
+    --icon-oeuvres-blue-stroke: url('../assets/icones/icon-oeuvres-Blue-full.svg');
+    --icon-oeuvres-grey: url('../assets/icones/icon-oeuvres-Grey.svg');
+
+    --icon-badge-black: url('../assets/icones/icon-badge-Default.svg');
+    --icon-badge-white: url('../assets/icones/icon-badge-White.svg');
+    --icon-badge-red: url('../assets/icones/icon-badge-Red.svg');
+    --icon-badge-blue-stroke: url('../assets/icones/icon-badge-Blue-full.svg');
+    --icon-badge-grey: url('../assets/icones/icon-badge-Grey.svg');
+
 }
 
 .dark-mode{

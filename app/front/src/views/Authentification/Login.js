@@ -26,7 +26,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit} method="POST">
                     <Input name="email" label="Email" type="email" onChange={e => setEmail(e.target.value)} />
                     <Input name="password" label="Password" type="password" onChange={e => setPassword(e.target.value)} />
-                    <p>Vous n'avez pas encore de compte ? <a href={"/signin"}>S’enregistrer</a></p>
+                    <p>Vous n'avez pas encore de compte ? <a href={"#/signin"}>S’enregistrer</a></p>
                     <button type="submit" className="btn btn-primary" disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>

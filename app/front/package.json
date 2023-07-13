@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "sass-loader": "^12.6.0",
     "@symfony/webpack-encore": "^4.3.0",
     "@reach/router": "^1.3.4",
     "@reduxjs/toolkit": "^1.9.5",
@@ -54,4 +55,3 @@
     "webpack-notifier": "^1.15.0"
   }
 }
-

@@ -7,7 +7,7 @@ export const httpClient = axios.create({
     headers: apiConfig.headers
 });
 
-export const getRequests = async (url, params = {}) => {
+export const getRequest = async (url, params = {}) => {
     try{
         const response = await httpClient.get(url, { params});
         return response.data;
@@ -52,4 +52,4 @@ export const deleteRequest = async (url) => {
     }
 }
 
-export default { httpClient, getRequests, postRequestJson, postRequestFormData, putRequest, deleteRequest };
+export default { httpClient, getRequest, postRequestJson, postRequestFormData, putRequest, deleteRequest };

@@ -9,7 +9,7 @@ const CardMyStudy = () => {
     return(
         <div className="mystudy-container">
             <div className={"mystudy-card"}>
-                <CardFull title={"Découvrez et suivez notre nouvelle masterclass "} bouton={"Découvrir"} link={"/masterclass"} background={"https://picsum.photos/900/1000"}/>
+                <CardFull title={"Découvrez et suivez notre nouvelle masterclass "} bouton={"Découvrir"} link={"#/mystudy"} background={"https://picsum.photos/900/1000"}/>
             </div>
 
             <div className={"mystudy-content"}>

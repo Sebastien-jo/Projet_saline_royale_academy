@@ -175,6 +175,46 @@
     background: var(--icon-forum-white-stroke) no-repeat center/contain;
 }
 
+.oeuvres{
+    background: var(--icon-oeuvres-grey) no-repeat center/contain;
+}
+.navbar__links a:hover .oeuvres{
+    background: var(--icon-oeuvres-blue-stroke) no-repeat center/contain;
+}
+.navbar__links a.active .oeuvres{
+    background: var(--icon-oeuvres-white) no-repeat center/contain;
+}
+
+.compositeurs{
+    background: var(--icon-compositor-grey) no-repeat center/contain;
+}
+.navbar__links a:hover .compositeurs{
+    background: var(--icon-compositor-blue-stroke) no-repeat center/contain;
+}
+.navbar__links a.active .compositeurs{
+    background: var(--icon-compositor-white) no-repeat center/contain;
+}
+
+.badges{
+    background: var(--icon-badge-grey) no-repeat center/contain;
+}
+.navbar__links a:hover .badges{
+    background: var(--icon-badge-blue-stroke) no-repeat center/contain;
+}
+.navbar__links a.active .badges{
+    background: var(--icon-badge-white) no-repeat center/contain;
+}
+
+.users{
+    background: var(--icon-user-grey) no-repeat center/contain;
+}
+.navbar__links a:hover .users{
+    background: var(--icon-user-blue-stroke) no-repeat center/contain;
+}
+.navbar__links a.active .users{
+    background: var(--icon-user-white) no-repeat center/contain;
+}
+
 .parameters {
     background: var(--icon-params-grey) no-repeat center/contain;
 }

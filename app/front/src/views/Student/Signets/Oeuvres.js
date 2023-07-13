@@ -23,17 +23,17 @@ const Oeuvres = () => {
                 <MenuBar items={[
                     {
                         name: "Masterclass",
-                        link: "/#/signets/masterclass",
+                        link: "/signets/masterclass",
                         isLinkActive: false,
                     },
                     {
                         name: "Oeuvres",
-                        link: "/#/signets/oeuvres",
+                        link: "/signets/oeuvres",
                         isLinkActive: true,
                     },
                     {
                         name: "Compositeur",
-                        link: "/#/signets/compositeur",
+                        link: "/signets/compositeur",
                         isLinkActive: false,
                     }]}/>
 
