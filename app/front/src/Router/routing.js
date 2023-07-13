@@ -135,7 +135,7 @@ const Routing = () => {
                 ) : (
                     <>
                         <Route path="/" element={<Login />} />
-                        <Route path="/register" element={<SignIn />} />
+                        <Route path="/signin" element={<SignIn />} />
                     </>
                 )}
             </Routes>
