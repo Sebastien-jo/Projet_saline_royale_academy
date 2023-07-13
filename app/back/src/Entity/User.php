@@ -75,11 +75,11 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:update', 'user:read'])]
+    #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:update', 'user:read'])]
+    #[Groups(['user:create', 'user:update', 'user:read', 'forum:message:read'])]
     private ?string $firstName = null;
 
     #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
@@ -112,6 +112,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favorites::class, orphanRemoval: true)]
     private Collection $favorites;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Like::class)]
+    private Collection $likes;
+
     public function __construct()
     {
         parent::__construct();
@@ -120,6 +123,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->masterclass = new ArrayCollection();
         $this->masterclassUsers = new ArrayCollection();
         $this->favorites = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -414,6 +418,34 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         // set the owning side to null (unless already changed)
         if ($this->favorites->removeElement($favorite) && $favorite->getUser() === $this) {
             $favorite->setUser(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->likes->removeElement($like) && $like->getUser() === $this) {
+            $like->setUser(null);
         }
 
         return $this;

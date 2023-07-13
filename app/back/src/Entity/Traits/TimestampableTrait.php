@@ -5,14 +5,20 @@ namespace App\Entity\Traits;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 // class MUST implement @ORM\HasLifecycleCallbacks
 trait TimestampableTrait
 {
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['timestamp'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
     private DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['timestamp'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
     private DateTimeInterface $updatedAt;
 
     public function getCreatedAt(): ?DateTimeInterface
