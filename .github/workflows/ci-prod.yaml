@@ -60,7 +60,6 @@ jobs:
           port: ${{ secrets.HOST }}
           script: |
             docker exec docker_symfony_1 composer dump-env prod
-
       - name: Install packages for prod
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -69,4 +68,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.HOST }}
           script: |
-            composer install
+            docker exec docker_symfony_1 composer install
