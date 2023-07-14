@@ -88,4 +88,4 @@ jobs:
           script: |
             docker exec docker_symfony_1 sh -c 'php bin/console lexik:jwt:generate-keypair'
             docker exec docker_symfony_1 sh -c 'setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
-            docker exec docker_symfony_1 sh -c' setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
+            docker exec docker_symfony_1 sh -c 'setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
