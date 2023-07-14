@@ -69,3 +69,23 @@ jobs:
           port: ${{ secrets.HOST }}
           script: |
             docker exec docker_symfony_1 composer install
+      - name: Give right to right on /var
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker exec docker_symfony_1 sh -c 'chown -Rf www-data: var/'
+      - name: Generate JWT keypair
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERV }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.HOST }}
+          script: |
+            docker exec docker_symfony_1 sh -c 'php bin/console lexik:jwt:generate-keypair'
+            docker exec docker_symfony_1 sh -c 'setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
+            docker exec docker_symfony_1 sh -c' setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt'
