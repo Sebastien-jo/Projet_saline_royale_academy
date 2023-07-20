@@ -1,16 +1,24 @@
 import React from 'react';
+import notfound from "../assets/logo/notfound.svg";
+import '../styles/notFound.css'
+import ButtonIcon from "../components/button/buttonIcon";
 import Button from "../components/button/button";
-import icon_add from "../assets/icones/icon-add-White.svg";
-import ListUsers from "../components/list/listUsers";
+
 
 const NotFound= () => {
 
     return (
         <div className="main-container">
             <div className="main-content">
+                <div className={"container-row"}>
 
-                <h1>404 Not Found</h1>
-                <p>The page you are looking for does not exist.</p>
+                    <div className={"not-found"}>
+                        <img src={notfound} alt="not found" />
+                    </div>
+
+                    <h1>Cette page est introuvable</h1>
+                    <Button className={"btn red-full"}  text={"Retourner à l'accueil"} isArrow={true} link={"/#/"} />
+                </div>
             </div>
         </div>
     );
