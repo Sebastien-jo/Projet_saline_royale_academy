@@ -10,9 +10,6 @@ const MenuBar = ({items}) => {
         setIsLinkActive(name);
     }
 
-
-
-
     return (
         <div className="menu-bar">
             <div className="menu-bar__row">

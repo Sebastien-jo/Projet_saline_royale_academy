@@ -284,8 +284,33 @@
     color: var(--primary-blue-40);
 }
 
-@media screen and (max-width: 991px) {
+/* ------- MOBILE NAVBAR -------------- */
 
+.navbar-mobile{
+    background-color: var(--background-color-light);
+    height: 60px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+    z-index: 51;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #00000010;
+}
+
+.navbar-mobile .navbar__links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 20px;
+    width: 100%;
 }
 
 
