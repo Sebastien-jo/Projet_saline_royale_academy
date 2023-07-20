@@ -50,6 +50,8 @@ import FormUser from "../views/Admin/Users/FormUser";
 import FormMasterclass from "../views/Admin/Masterclass/FormMasterclass";
 import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
 
+import NotFound from "../views/NotFound";
+
 
 const Routing = () => {
     const { isAuthenticated, user } = useAuth();
@@ -138,6 +140,10 @@ const Routing = () => {
                         <Route path="/signin" element={<SignIn />} />
                     </>
                 )}
+
+                <Route path="/" element={<GlobalLayout />}>
+                    <Route path="*" element={<NotFound />} />
+                </Route>
             </Routes>
         </HashRouter>
     );
