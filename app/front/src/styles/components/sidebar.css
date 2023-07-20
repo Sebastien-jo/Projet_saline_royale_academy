@@ -265,3 +265,9 @@
 
 
 
+/* MOBILE */
+
+.mobile .sidebar{
+    display: none;
+}
+

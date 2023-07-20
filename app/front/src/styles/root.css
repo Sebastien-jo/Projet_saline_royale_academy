@@ -428,4 +428,9 @@ p{
     width: 100%;
 }
 
+/* MOBILE */
+.mobile .main{
+    margin-left: 0vw;
+}
+
 
