@@ -13,6 +13,7 @@ import clarinet from "../../assets/icones/icon-clarinet.svg";
 import trombone from "../../assets/icones/icon-trombone.svg";
 import oboe from "../../assets/icones/icon-oboe.svg";
 import Button from "../../components/button/button";
+import {useIsMobileScreen} from "../../utils/mobileScreenUtils";
 
 
 const SignIn = () => {
@@ -39,10 +40,10 @@ const SignIn = () => {
     ];
 
     const {loading, error, handleRegister} = useRegister();
+    const isMobile = useIsMobileScreen();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         handleRegister({ lastName, firstName, email, plainPassword });
     }
 
@@ -64,12 +65,10 @@ const SignIn = () => {
         }   else{
             setValid("Veuillez remplir tous les champs");
         }
-
-
     }, [ lastName, firstName, email, plainPassword, password2]);
 
     return (
-        <div className="second-container">
+        <div className={`second-container ${isMobile ? "mobile" : ""}`}>
             <div className="logo-container">
                 <img src={logo} alt="Logo" />
             </div>
