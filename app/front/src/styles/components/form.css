@@ -7,14 +7,6 @@
     max-width: 400px;
 }
 
-.form-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-}
-
 .form-row{
     display: flex;
     flex-direction: row;
@@ -208,5 +200,15 @@ select{
     letter-spacing: 0.7px;
 }
 
+
+
+
+/* MOBILE */
+.mobile .form-container form{
+    width: 70vw;
+}
+.mobile .logo-container img{
+    width: 150px;
+}
 
 
