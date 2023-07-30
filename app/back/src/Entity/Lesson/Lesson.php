@@ -6,9 +6,12 @@ use AllowDynamicProperties;
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\AbstractEntity;
 use App\Entity\Section;
+use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LessonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
@@ -21,14 +24,14 @@ use Doctrine\ORM\Mapping as ORM;
     'lesson_article' => LessonArticle::class,
 ])]
 #[ApiResource]
+#[ORM\HasLifecycleCallbacks]
 class Lesson extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdentifiableTrait;
+    use TimestampableTrait;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['masterclass_user:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -38,16 +41,12 @@ class Lesson extends AbstractEntity
     private ?string $description = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['masterclass_user:read'])]
     private ?int $position = null;
 
     #[ORM\ManyToOne(inversedBy: 'lessons')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Section $section = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getName(): ?string
     {

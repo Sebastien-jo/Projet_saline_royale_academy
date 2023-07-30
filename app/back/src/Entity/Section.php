@@ -4,28 +4,29 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Lesson\Lesson;
+use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
 #[ApiResource]
 class Section extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdentifiableTrait;
 
     #[ORM\ManyToOne(inversedBy: 'sections')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Masterclass $masterclass = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['masterclass_user:read'])]
     private ?string $name = null;
 
+    #[Groups(['masterclass_user:read'])]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
 
@@ -40,11 +41,6 @@ class Section extends AbstractEntity
         parent::__construct();
         $this->lessons = new ArrayCollection();
         $this->sectionUsers = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getMasterclass(): ?Masterclass
@@ -84,7 +80,7 @@ class Section extends AbstractEntity
     }
 
     /**
-     * @return Collection<int, Lesson>
+     * @return Collection<mixed>
      */
     public function getLessons(): Collection
     {

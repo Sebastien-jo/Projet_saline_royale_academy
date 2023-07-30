@@ -2,42 +2,45 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\SectionUserRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: SectionUserRepository::class)]
-class SectionUser
+class SectionUser extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdentifiableTrait;
+    use SoftDeleteableEntity;
+    use TimestampableTrait;
 
     #[ORM\ManyToOne(inversedBy: 'sectionUsers')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['masterclass_user:read'])]
     private ?Section $section = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['masterclass_user:read'])]
     private ?DateTimeImmutable $validatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'sectionUser', targetEntity: LessonUser::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'sectionUser', targetEntity: LessonUser::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['masterclass_user:read'])]
     private Collection $lessonUsers;
 
     #[ORM\ManyToOne(inversedBy: 'sectionUsers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?MasterclassUser $masterclassUser = null;
 
-    public function __construct()
+    public function __construct(array $array = [])
     {
+        parent::__construct($array);
         $this->lessonUsers = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getSection(): ?Section

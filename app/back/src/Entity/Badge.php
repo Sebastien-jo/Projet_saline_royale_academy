@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['badge:post:write']],
     filters: ['translation.groups'],
 )]
-class Badge extends AbstractEntity
+class Badge extends AbstractEntityTranslator
 {
     use IdentifiableTrait;
 

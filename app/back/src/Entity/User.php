@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -10,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Favorites\Favorites;
+use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Enum\BadgeCategory;
 use App\Repository\UserRepository;
@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
+        new Get(security: 'is_granted("USER_PROFILE_VIEW", object)'),
         new Get(
             uriTemplate: '/api/users/{id}/stats',
             routeName: 'api:user:stat',
@@ -44,7 +45,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             validationContext: ['groups' => ['user:create']],
             processor: UserPasswordHasher::class
         ),
-        new Get(security: 'is_granted("USER_PROFILE_VIEW", object)'),
         new Patch(
             denormalizationContext: ['groups' => ['user:update']],
             security: 'is_granted("USER_PROFILE_EDIT", object)',
@@ -55,20 +55,14 @@ use Symfony\Component\Validator\Constraints as Assert;
             security: 'is_granted("USER_PROFILE_DELETE", object)'
         ),
     ],
-    normalizationContext: ['groups' => ['user:read', 'timestamp']],
+    normalizationContext: ['groups' => ['user:read', 'timestamp', 'id']],
     denormalizationContext: ['groups' => ['user:create']],
 )]
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
     use SoftDeleteableEntity;
-
-    #[Groups(['user:read'])]
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[ApiProperty(identifier: true)]
-    private ?int $id = null;
+    use IdentifiableTrait;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['user:create', 'user:read'])]
