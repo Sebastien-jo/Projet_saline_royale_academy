@@ -242,7 +242,8 @@
     align-items: center;
 }
 
-.card_crow_col{
+
+.card_row_col{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -308,6 +309,30 @@
     justify-content: space-between;
     gap: 15px;
     width: 100%;
+}
+
+/* FORUM ANSWER */
+
+.card_sidebar_answer{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    border-radius: 20px;
+    padding: 10px;
+    background: var(--primary-blue-light-100);
+}
+
+.card-row_col{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    width: auto;
 }
 
 
