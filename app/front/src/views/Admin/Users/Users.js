@@ -1,25 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import Button from "../../../components/button/button";
 import ListUsers from "../../../components/list/listUsers";
-import {getUsers} from "../../../api/endpoints/user";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
 import '../../../styles/users.css'
+import useUsers from "../../../hooks/useUsers";
 
 const Users = () => {
 
     const [users, setUsers] = useState([]);
+    const {loading, error, handleGetAll} = useUsers();
 
     useEffect(() => {
-        try {
-            getUsers().then((response) => {
-                setUsers(response['hydra:member']);
-            }).catch((error) => {
-                console.log(error);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
+        handleGetAll().then((response) => {
+            console.log(response);
+            setUsers(response);
+        }).catch((err) => {
+                console.log(err);
+        });
     }, []);
 
     return (

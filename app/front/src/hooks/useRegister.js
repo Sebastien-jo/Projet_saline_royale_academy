@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {postRequest} from "../api/helpers/request";
 import { useNavigate } from "react-router-dom";
 import {Register} from "../api/endpoints/auth";
 
