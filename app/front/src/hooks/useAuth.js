@@ -10,6 +10,7 @@ const useAuth = () => {
 
     const handleLogin = (user, token) => {
         dispatch(login({ user, token }));
+
     }
 
     const handleLogout = () => {
