@@ -49,17 +49,20 @@ import FormBadge from "../views/Admin/Badges/FormBadge";
 import FormUser from "../views/Admin/Users/FormUser";
 import FormMasterclass from "../views/Admin/Masterclass/FormMasterclass";
 import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
+import SingleCompositor from "../views/Admin/Compositor/SingleCompositor";
 
 
 const Routing = () => {
     const { isAuthenticated, user } = useAuth();
+
+    console.log(isAuthenticated);
 
     return (
         <HashRouter>
             <Routes>
                 {isAuthenticated ? (
                     <>
-                        {user.roles[0] === "ROLE_USER" ? (
+                        {user.roles[0] === "ROLE_STUDENT" ? (
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/" exact element={<Home />} title="Home" />
                                 <Route path="/mystudy" element={<MyStudy />} title="MyStudy" />
@@ -113,6 +116,7 @@ const Routing = () => {
                                     <Route index element={<CompositorAdmin />} title="Compositeurs" />
                                     <Route path="add" element={<FormCompositor title={"Ajouter un compositeur"}/>} />
                                     <Route path="edit/:id" element={<FormCompositor title={"Mettre à jour ce compositeur"}/>} />
+                                    <Route path=":id" element={<SingleCompositor title={"Compositeur"}/>} />
                                 </Route>
                                 <Route path="/badges/*">
                                     <Route index element={<BadgesAdmin />} title="Badges" />
