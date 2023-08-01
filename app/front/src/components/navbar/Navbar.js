@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className="navbar__line"></div>
 
             {
-                user.roles[0] == "ROLE_USER" ?
+                user.roles[0] == "ROLE_STUDENT" ?
                 <div className="navbar__links">
                     <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span><p>{t('navbar.links.0.text')}</p></Link>
                     <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>{t('navbar.links.2.text')}</p></Link>
