@@ -1,6 +1,6 @@
 
 const apiConfig={
-    baseUrl: 'http://back.groupe7.hetic-projects.arcplex.tech/api',
+    baseUrl: 'http://localhost:1234/api',
     timeout: 50000000,
     headers: {
         'Content-Type': 'application/json',
@@ -9,7 +9,7 @@ const apiConfig={
 }
 
 const apiConfigNotToken={
-    baseUrl: 'http://back.groupe7.hetic-projects.arcplex.tech/api',
+    baseUrl: 'http://localhost:1234/api',
     timeout: 50000000,
     headers: {
         'Content-Type': 'application/json',

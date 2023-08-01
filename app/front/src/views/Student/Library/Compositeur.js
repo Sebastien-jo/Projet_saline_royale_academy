@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
 import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import useCompositors from "../../../hooks/useCompositors";
 
 const CompositeurLibrary = () => {
+
+    const [compositors, setCompositors] = useState([]); // [state, function to update state
+    const {loading, error, handleGetAll} = useCompositors();
+
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            console.log(response);
+            setCompositors(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
@@ -26,6 +40,7 @@ const CompositeurLibrary = () => {
 
                     }]}/>
 
+                <ListLibraryCompositors list={compositors}/>
             </div>
             <SidebarLibrary/>
         </div>

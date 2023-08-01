@@ -4,6 +4,7 @@ import Button from "../../../components/button/button";
 import Textarea from "../../../components/form/textarea";
 import {useParams} from "react-router-dom";
 import {getCompositor} from "../../../api/endpoints/compositor";
+import useCompositors from "../../../hooks/useCompositors";
 
 
 const FormCompositor = ({title}) => {
@@ -11,18 +12,24 @@ const FormCompositor = ({title}) => {
 
         const id = useParams().id;
         const [compositor, setCompositor] = useState([]);
+        const {loading, error, handlePost} = useCompositors();
+
+
         useEffect(() => {
             if(id !== undefined){
-                getCompositor(id).then((response) => {
-                    console.log("hello");
-                    setCompositor(response['hydra:member']);
+                const data = {
+                    name: name,
+                    dateOfBirth: dateOfBirth,
+                    dateOfDeath: dateOfDeath,
+                    instruments: instruments,
+                }
+                handlePost(id).then((response) => {
+                    setCompositor(response);
                 }).catch((error) => {
                     console.log(error);
                 });
+
             }
-
-
-
         }, [id]);
 
 
