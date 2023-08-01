@@ -1,30 +1,54 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CardForum from "../card/cardForum";
 import Pastille from "../pastille/pastille";
 import Button from "../button/button";
 import icon from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import Textarea from "../form/textarea";
+import CardForumAnswer from "../card/cardForumAnswer";
+import useForum from "../../hooks/useForum";
+import useForumMessage from "../../hooks/useForumMessage";
 
-const SidebarForum = () => {
+
+const SidebarForum = (forumId) => {
 
     const [isLike, setIsLike] = useState(false);
+    const {loading, error, handleGet} = useForum();
+    const {loadingMessage, errorMessage, handleGetMessage} = useForumMessage();
+    const [forum, setForum] = useState([]);
+    const [forumMessage, setForumMessage] = useState([]);
 
     const handleLike = () => {
         setIsLike(!isLike);
     }
 
+    useEffect(() => {
+        handleGet(80).then((response) => {
+            console.log(response);
+            setForum(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        handleGetMessage(80).then((response) => {
+            console.log(response);
+            setForumMessage(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+    },[forumId])
+
     return (
         <div className="sidebar isForum">
             <div className="sidebar__header">
-                <h2>La question du monsieur</h2>
+                <h2>{ forum.title }</h2>
                 <Pastille text={"Actif"} color={"green"} />
             </div>
             <div className="sidebar__content">
 
                 <div className={"card_sidebar"}>
                     <div className={"card-row_container infos"}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium adipisci alias asperiores atque autem blanditiis commodi consequatur cumque cupiditate delectus doloremque doloribus ducimus ea earum eligendi eos error est eum eveniet excepturi exercitationem facilis fugiat fugit hic id illum impedit in incidunt ipsa ipsum iure iusto labore laboriosam laborum libero magnam maiores maxime minima minus molestiae mollitia natus nemo neque nihil nisi nobis nostrum nulla numquam obcaecati officia officiis omnis optio pariatur perferendis perspiciatis placeat porro possimus praesentium provident quae quas quia quibusdam quisquam quod.</p>
-                        <p className={"subtitle"}>Publiée le 05/06/2023</p>
+                        <p>{ forum.description}</p>
+                         <p className={"subtitle"}>Publiée le 05/06/2023</p>
                     </div>
 
                     <div className={"line"}></div>
@@ -54,8 +78,12 @@ const SidebarForum = () => {
             </div>
 
             <div className="card-forum-answer">
-                <h2>Réponses <p>12 réponses</p></h2>
-
+                <h2>Réponses <p>{ forumMessage.length } réponses</p></h2>
+                {
+                    forumMessage.map((message) => {
+                        return <CardForumAnswer key={message.id} message={message} />
+                    })
+                }
 
             </div>
         </div>
