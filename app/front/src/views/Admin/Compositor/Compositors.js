@@ -2,19 +2,19 @@ import React, {useEffect, useState} from 'react';
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
 import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
-import {getCompositors} from "../../../api/endpoints/compositor";
+import useCompositors from "../../../hooks/useCompositors";
 
 const Compositors = () => {
 
     const [compositors, setCompositors] = useState([]); // [state, function to update state
+    const {loading, error, handleGetAll} = useCompositors();
 
-    //call api to get list of composers
     useEffect(() => {
-        getCompositors().then((response) => {
-            setCompositors(response['hydra:member']);
-            console.log(response['hydra:member']);
-        }).catch((error) => {
-            console.log(error);
+        handleGetAll().then((response) => {
+            console.log(response);
+            setCompositors(response);
+        }).catch((err) => {
+            console.log(err);
         });
     }, []);
 
