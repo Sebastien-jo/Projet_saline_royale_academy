@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Composer;
+use App\Enum\Nationality;
 use App\Repository\ComposerRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -39,6 +40,7 @@ final class ComposerFactory extends ModelFactory
             'completeName' => self::faker()->text(255),
             'death' => self::faker()->dateTime(),
             'name' => self::faker()->name(255),
+            'nationality' => Nationality::Az,
             'picture' => self::faker()->imageUrl(640, 480, ''),
         ];
     }
