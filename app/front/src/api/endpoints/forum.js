@@ -1,6 +1,6 @@
 import React from "react";
 
-import {deleteRequest, getRequest, putRequest, postRequestFormData} from "../helpers/request";
+import {deleteRequest, getRequest, putRequest, postRequestJson} from "../helpers/request";
 
 export const getForums = () => {
     return getRequest("/forums");
@@ -11,7 +11,7 @@ export const getForum = (id) => {
 }
 
 export const addForum = (data) => {
-    return postRequestFormData(`/admin/forums`, data);
+    return postRequestJson(`/forums`, data);
 }
 
 export const deleteForum= (id) => {
