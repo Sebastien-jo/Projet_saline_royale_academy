@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getRequest, postRequestFormData} from "../helpers/request";
+import {getRequest, postRequestJson} from "../helpers/request";
 
 
 export const getForumMessage = (id) => {
@@ -8,6 +8,6 @@ export const getForumMessage = (id) => {
 }
 
 export const addForumMessage = (data) => {
-    return postRequestFormData(`/forum_messages`, data);
+    return postRequestJson(`/forum_messages`, data);
 }
 

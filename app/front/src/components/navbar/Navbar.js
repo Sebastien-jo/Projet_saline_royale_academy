@@ -6,6 +6,7 @@ import "../../styles/components/navbar.css"
 import PopupParametre from "../popup/popupParametre";
 import {useSelector} from "react-redux";
 import { useTranslation } from 'react-i18next';
+import logo_user from "../../assets/logo/logo_user.png";
 
 const Navbar = () => {
 
@@ -67,7 +68,9 @@ const Navbar = () => {
             <div className="navbar__user">
                 <div className={`navbar__links_link ${activeLink === "params" ? "active" : ""}`} onClick={() => handleLinkClick("params")}><span className="navbar__icon parameters"></span><p>{t('navbar.links.9.text')}</p></div>
                 <Link to="/account" className="navbar__user__avatar">
-                    <div className="navbar__user__avatar__img"></div>
+                    <div className="navbar__user__avatar__img">
+                        <img src={logo_user} alt={"avatar"} />
+                    </div>
                     <div className="navbar__user__infos">
                         <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
                         {
