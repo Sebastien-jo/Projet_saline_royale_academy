@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Favorites\FavoritesMasterclass;
+use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\MasterclassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,10 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource]
 class Masterclass extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdentifiableTrait;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -44,11 +42,6 @@ class Masterclass extends AbstractEntity
         $this->sections = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->favoritesMasterclasses = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): ?string
