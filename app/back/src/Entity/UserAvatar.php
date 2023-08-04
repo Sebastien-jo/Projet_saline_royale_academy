@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
 use App\Controller\Api\UserAvatarController;
+use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserAvatarRepository;
 use DateTime;
@@ -37,13 +37,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class UserAvatar extends AbstractEntity
 {
     use TimestampableTrait;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[Groups(['avatar:read', 'user:read'])]
-    #[ApiProperty(identifier: true)]
-    private ?int $id = null;
+    use IdentifiableTrait;
 
     #[Vich\UploadableField(mapping: 'avatarFile', fileNameProperty: 'imagePath')]
     #[Assert\NotNull(groups: ['avatar:create'])]
