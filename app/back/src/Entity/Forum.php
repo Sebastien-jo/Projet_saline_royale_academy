@@ -184,7 +184,7 @@ class Forum
     public function removeLike(Like $like): static
     {
         // set the owning side to null (unless already changed)
-        if ($this->likes->removeElement($like) && $like->getForum()===$this) {
+        if ($this->likes->removeElement($like) && $like->getForum() === $this) {
             $like->setForum(null);
         }
 

@@ -23,10 +23,6 @@ readonly class SetUserProcessor implements ProcessorInterface
      * @param array<mixed> $uriVariables
      * @param array<mixed> $context
      */
-    /**
-     * @param array<mixed> $uriVariables
-     * @param array<mixed> $context
-     */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         /** @var Forum $object */

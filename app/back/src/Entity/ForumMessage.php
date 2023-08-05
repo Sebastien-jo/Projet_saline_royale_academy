@@ -57,7 +57,7 @@ class ForumMessage
 
     #[ORM\ManyToOne(targetEntity: self::class, cascade: ['persist', 'remove'])]
     #[Groups(['forum:message:write'])]
-    #[Assert\NotNull(message: 'Champ obligatoire', groups: ['user:write'])]
+    #[Assert\NotBlank(message: 'Champ obligatoire', allowNull: true, groups: ['user:write'])]
     private ?self $parent = null;
 
     #[ORM\ManyToOne(inversedBy: 'forumMessages')]
