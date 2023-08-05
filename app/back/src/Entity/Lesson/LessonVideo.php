@@ -3,10 +3,12 @@
 namespace App\Entity\Lesson;
 
 use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Entity]
 class LessonVideo extends Lesson
 {
+    #[Groups(['masterclass:write'])]
     private ?string $videoUrl = null;
 
     public function getVideoUrl(): ?string
@@ -23,6 +25,6 @@ class LessonVideo extends Lesson
 
     public function getType(): string
     {
-        return 'video';
+        return 'lesson_video';
     }
 }
