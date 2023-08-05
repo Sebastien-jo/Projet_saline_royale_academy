@@ -9,12 +9,12 @@ use App\Entity\Forum;
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class SetUserProcessor implements ProcessorInterface
+readonly class SetUserProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly ProcessorInterface $persistProcessor,
-        private readonly ProcessorInterface $removeProcessor,
-        private readonly Security $security
+        private ProcessorInterface $persistProcessor,
+        private ProcessorInterface $removeProcessor,
+        private Security $security
     ) {
     }
 
@@ -22,22 +22,24 @@ class SetUserProcessor implements ProcessorInterface
      * @param Forum        $data
      * @param array<mixed> $uriVariables
      * @param array<mixed> $context
-     *
-     * @return mixed
      */
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
+    /**
+     * @param array<mixed> $uriVariables
+     * @param array<mixed> $context
+     */
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        /** @var Forum $forum */
-        $forum = $data;
+        /** @var Forum $object */
+        $object = $data;
 
         /** @var User $user */
         $user = $this->security->getUser();
-        $forum->setUser($user);
+        $object->setUser($user);
 
         if ($operation instanceof DeleteOperationInterface) {
-            return $this->removeProcessor->process($forum, $operation, $uriVariables, $context);
+            return $this->removeProcessor->process($object, $operation, $uriVariables, $context);
         }
 
-        return $this->persistProcessor->process($forum, $operation, $uriVariables, $context);
+        return $this->persistProcessor->process($object, $operation, $uriVariables, $context);
     }
 }

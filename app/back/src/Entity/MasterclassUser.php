@@ -7,7 +7,6 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
@@ -19,12 +18,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MasterclassUserRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(security: "is_granted('MASTERCLASS_USER_VIEW', object)"),
+        new Get(security: "is_granted('MASTERCLASS_USER_VIEW', object)", name: 'get_masterclass_user'),
         new GetCollection(
             security: "is_granted('MASTERCLASS_USER_VIEW_LIST')",
             provider: MasterclassUserProvider::class
@@ -38,17 +38,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 ),
             ],
             requirements: ['masterclassId' => '\d+'],
-            security: "is_granted('MASTERCLASS_USER_CREATE', object)",
+            security: "is_granted('MASTERCLASS_USER_CREATE')",
             processor: MasterclassUserStateProcessor::class
         ),
-        //                processor: MasterclassUserStateProcessor::class),
-        //        new Delete(security: "is_granted('MASTERCLASS_USER_DELETE', object)"),
-        //        new Patch(securityPostDenormalize: "is_granted('MASTERCLASS_USER_DELETE', [object, previous_object])"),
+        new Delete(security: "is_granted('MASTERCLASS_USER_DELETE', object)", processor: MasterclassUserStateProcessor::class),
     ],
     normalizationContext: ['groups' => ['masterclass_user:read', 'id']],
     denormalizationContext: ['groups' => ['masterclass_user:write']]
 )]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: [
+    'user', 'masterclass',
+], message: 'masterclass_user.already_add', errorPath: MasterclassUser::class)]
 class MasterclassUser extends AbstractEntity
 {
     use TimestampableTrait;

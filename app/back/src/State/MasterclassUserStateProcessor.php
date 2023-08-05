@@ -1,7 +1,5 @@
 <?php
 
-// api/src/State/UserPasswordHasher.php
-
 namespace App\State;
 
 use ApiPlatform\Metadata\DeleteOperationInterface;
@@ -35,25 +33,34 @@ final readonly class MasterclassUserStateProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): object
     {
-        $e = null;
         try {
-            if (!($masterclass = $this->entityManager->getRepository(Masterclass::class)->find($uriVariables['masterclassId'])) instanceof \App\Entity\Masterclass) {
-                throw new Exception('Masterclass not found');
+            if (!($data instanceof MasterclassUser)) {
+                throw new Exception('MasterclassUser not found');
             }
-            /** @var MasterclassUser $masterclassUser */
+
+            if ($data->getId() === null) {
+                if (!($masterclass = $this->entityManager->getRepository(Masterclass::class)->find($uriVariables['masterclassId'])) instanceof Masterclass) {
+                    throw new Exception('Masterclass not found');
+                }
+            } else {
+                $masterclass = $data->getMasterclass();
+            }
+
             $masterclassUser = $data;
             /** @var User $user */
             $user = $this->security->getUser();
             $user = $masterclassUser->getUser() ?? $user;
 
-            $masterclassUser->setMasterclass($masterclass);
+            /**
+             * @var Masterclass $masterclass
+             */
             $event = new MasterclassUserEvent($masterclass, $user);
-
             if ($operation instanceof DeleteOperationInterface) {
-                return $this->dispatcher->dispatch($event, MasterclassUserEvent::DELETE);
+                $this->entityManager->remove($masterclassUser);
+                $this->entityManager->flush();
             }
 
-            return $this->dispatcher->dispatch($event, MasterclassUserEvent::CREATE);
+            return $this->dispatcher->dispatch($event, MasterclassUserEvent::CREATE)->getResponse();
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
             throw new Exception($e->getMessage(), $e->getCode(), $e);
