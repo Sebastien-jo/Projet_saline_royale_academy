@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
-use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MasterclassUserRepository;
 use App\State\MasterclassUserProvider;
@@ -24,8 +24,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: MasterclassUserRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(security: "is_granted('MASTERCLASS_USER_VIEW', object)", name: 'get_masterclass_user'),
+        new Get(
+            normalizationContext: ['groups' => ['masterclass_user:read:item', 'id']],
+            security: "is_granted('MASTERCLASS_USER_VIEW', object)",
+            name: 'get_masterclass_user'
+        ),
         new GetCollection(
+            normalizationContext: ['groups' => ['masterclass_user:read', 'id']],
             security: "is_granted('MASTERCLASS_USER_VIEW_LIST')",
             provider: MasterclassUserProvider::class
         ),
@@ -41,41 +46,58 @@ use Symfony\Component\Serializer\Annotation\Groups;
             security: "is_granted('MASTERCLASS_USER_CREATE')",
             processor: MasterclassUserStateProcessor::class
         ),
-        new Delete(security: "is_granted('MASTERCLASS_USER_DELETE', object)", processor: MasterclassUserStateProcessor::class),
+        new Delete(
+            security: "is_granted('MASTERCLASS_USER_DELETE', object)",
+            processor: MasterclassUserStateProcessor::class
+        ),
     ],
-    normalizationContext: ['groups' => ['masterclass_user:read', 'id']],
+    normalizationContext: ['groups' => ['masterclass_user:read']],
     denormalizationContext: ['groups' => ['masterclass_user:write']]
 )]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: [
     'user', 'masterclass',
 ], message: 'masterclass_user.already_add', errorPath: MasterclassUser::class)]
+#[ApiResource]
 class MasterclassUser extends AbstractEntity
 {
     use TimestampableTrait;
     use SoftDeleteableEntity;
-    use IdentifiableTrait;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[ApiProperty(readableLink: false)]
+    #[Groups(['masterclass_user:read', 'masterclass_user:read:item'])]
+    private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['masterclass_user:read', 'masterclass_user:read:item'])]
     private ?Masterclass $masterclass = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclassUsers')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read:item, admin:read'])]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'masterclassUser', targetEntity: SectionUser::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read:item'])]
     private Collection $sectionUsers;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['masterclass_user:read:item'])]
     private ?DateTimeImmutable $validatedAt = null;
 
     public function __construct(array $array = [])
     {
         parent::__construct($array);
         $this->sectionUsers = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getMasterclass(): ?Masterclass

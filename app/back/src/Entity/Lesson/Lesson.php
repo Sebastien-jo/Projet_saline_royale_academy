@@ -2,26 +2,19 @@
 
 namespace App\Entity\Lesson;
 
-use AllowDynamicProperties;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Entity\AbstractEntity;
 use App\Entity\Section;
-use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LessonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
 #[ORM\InheritanceType('JOINED')]
-#[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING, options: [
-    'groups' => [
-        'masterclass_user:read', 'masterclass:write',
-    ],
-])]
+#[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING)]
 #[ORM\DiscriminatorMap([
     'lesson' => Lesson::class,
     'lesson_exercise' => LessonExercise::class,
@@ -32,28 +25,38 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks]
 class Lesson extends AbstractEntity
 {
-    use IdentifiableTrait;
     use TimestampableTrait;
 
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass_user:read:item', 'masterclass:read:item'])]
+    private ?int $id = null;
+
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass_user:read', 'masterclass:write'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass:read:item'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass:write'])]
+    #[Groups(['masterclass:write', 'masterclass:read:item'])]
     private ?string $resume = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['masterclass:write'])]
+    #[Groups(['masterclass:write', 'masterclass:read:item'])]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['masterclass_user:read', 'masterclass:write'])]
+    #[ORM\Column(type: Types::SMALLINT, )]
+    #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass:read:item'])]
     private ?int $position = null;
 
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'lessons')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Section $section = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getName(): ?string
     {

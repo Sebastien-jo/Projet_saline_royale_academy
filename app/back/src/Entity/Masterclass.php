@@ -23,19 +23,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[
     ORM\Entity(repositoryClass: MasterclassRepository::class)]
 #[ApiResource(operations: [
-    new Get(),
+    new Get(normalizationContext: ['groups' => ['masterclass:read:item']]),
     new GetCollection(),
     new Delete(),
     new Put(),
     new Post(
-        normalizationContext: [
-            'groups' => ['masterclass:read'],
-        ],
-        denormalizationContext: ['groups' => ['masterclass:write']],
         security: "is_granted('ROLE_TEACHER') or is_granted('ROLE_ADMIN')",
         processor: MasterclassProcessor::class
     ),
-])]
+], normalizationContext: [
+    'groups' => ['masterclass:read'],
+], denormalizationContext: ['groups' => ['masterclass:write']])]
 #[ORM\HasLifecycleCallbacks()]
 class Masterclass extends AbstractEntity
 {
@@ -44,17 +42,17 @@ class Masterclass extends AbstractEntity
     use SoftDeleteableEntity;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass:read', 'masterclass:write'])]
+    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass:write', 'masterclass_user:read:item', 'masterclass_user:read'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['masterclass:read', 'masterclass:write'])]
+    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass:write', 'masterclass_user:read:item'])]
     private ?Work $work = null;
 
     #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: Section::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass:read', 'masterclass:write'])]
-    #[ApiProperty(readableLink: true, writableLink: false)]
+    #[Groups(['masterclass:read:item', 'masterclass:write'])]
+    #[ApiProperty(readableLink: true, writableLink: true)]
     private Collection $sections;
 
     #[Groups(['masterclass:write'])]
@@ -66,7 +64,7 @@ class Masterclass extends AbstractEntity
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['masterclass:read', 'admin:write'])]
+    #[Groups(['masterclass:read', 'admin:write', 'masterclass_user:read:item'])]
     private ?User $teacher = null;
 
     #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: FavoritesMasterclass::class)]
