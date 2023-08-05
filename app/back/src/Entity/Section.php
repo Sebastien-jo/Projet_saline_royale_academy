@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Entity\Lesson\Lesson;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\SectionRepository;
@@ -13,25 +14,30 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
-#[ApiResource]
+#[ApiResource(operations: [new Get(name: 'api_sections_get_item')])]
 class Section extends AbstractEntity
 {
     use IdentifiableTrait;
 
     #[ORM\ManyToOne(inversedBy: 'sections')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Masterclass $masterclass = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write'])]
     private ?string $name = null;
 
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write'])]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['masterclass:write'])]
     private Collection $lessons;
+
+    #[Groups(['masterclass:write'])]
+    /* @phpstan-ignore-next-line */
+    private Collection $lessonsContent;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: SectionUser::class, orphanRemoval: true)]
     private Collection $sectionUsers;

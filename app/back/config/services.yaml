@@ -25,6 +25,10 @@ services:
     App\State\UserPasswordHasher:
         bind:
             $processor: '@api_platform.doctrine.orm.state.persist_processor'
+    App\State\MasterclassProcessor:
+        bind:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+            $removeProcessor: '@api_platform.doctrine.orm.state.remove_processor'
     App\State\SetUserProcessor:
         bind:
             $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
