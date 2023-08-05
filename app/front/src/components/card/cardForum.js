@@ -14,6 +14,7 @@ const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSideba
     }
 
     const handleClick = () => {
+        console.log(forum.id);
         handleSelect();
         setSidebar(forum.id);
         setActiveSidebar("forum");

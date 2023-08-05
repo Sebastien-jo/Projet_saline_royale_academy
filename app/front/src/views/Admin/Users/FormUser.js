@@ -4,12 +4,17 @@ import Input from "../../../components/form/input";
 import Select from "../../../components/form/select";
 import {useParams} from "react-router-dom";
 import {getUser} from "../../../api/endpoints/user";
+import useUsers from "../../../hooks/useUsers";
+import {useNavigate} from "react-router-dom";
+
 
 
 const FormUser = () => {
 
     const id = parseInt(useParams().id);
     const [user, setUser] = useState([]);
+    const {loading, error, handlePost} = useUsers();
+
 
     const [open, setOpen] = useState(false);
     const [lastName, setLastName] = useState("");
@@ -25,6 +30,7 @@ const FormUser = () => {
     const listRole = ["User", "Teacher", "Admin"];
     const listInstrument = ["Violon", "Violoncelle", "Alto", "Flute", "Clarinette", "Trombone", "Haut-bois", "Piano", "Chant", "Chef d'orchestre"]
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(id !== undefined) {
@@ -42,7 +48,12 @@ const FormUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        /*handleRegister({ lastName, firstName, email, plainPassword, role, instrument });*/
+        handlePost({ lastName, firstName, email, plainPassword})
+        .then((response) => {
+            navigate("/#/users");
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     const handleFileSelect = (files) => {
@@ -94,7 +105,7 @@ const FormUser = () => {
                     </div>
 
                     <Button className={"btn red-full"}  text={"Continuer"} isArrow={true} />
-
+                    <input type={"submit"} value={"Envoyer"} className={"btn red-full"} />
 
                 </form>
             </div>

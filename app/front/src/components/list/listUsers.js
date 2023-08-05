@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FiltersCard from "../filters/filtersCard";
 import Button from "../button/button";
 import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
@@ -6,20 +6,25 @@ import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import useUsers from "../../hooks/useUsers";
 
-const ListUsers= ({text, users}) => {
+const ListUsers= ({text}) => {
 
     const [openPopup, setOpen] = useState(false);
     const [id, setId] = useState(null);
-    const {loading, error, handleDelete} = useUsers();
+    const [users, setUsers] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const {loading, error, handleDelete, handleGetAll} = useUsers();
 
     const handleRemove = () => {
-        console.log("User "+ id);
-        handleDelete(id).then((response) => {
-            console.log("User deleted");
+        handleDelete(id).then((response) => {setRefresh(!refresh)}).catch((err) => {console.log(err);});
+    }
+
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            setUsers(response);
         }).catch((err) => {
             console.log(err);
         });
-    }
+    }, [refresh]);
 
     return (
         <div className="container-list">

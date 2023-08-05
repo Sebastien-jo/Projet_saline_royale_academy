@@ -2,6 +2,7 @@ import React from 'react';
 import logo_user from "../../assets/logo/logo_user.png";
 
 const CardForumAnswer = ({message}) => {
+
     return (
         <div className={"card_sidebar_answer"}>
             <div className={"card-row_col"}>
