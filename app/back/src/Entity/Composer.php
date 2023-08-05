@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ComposerRepository::class)]
@@ -73,13 +74,13 @@ class Composer extends AbstractEntity
     #[ORM\Column(type: 'date')]
     #[Groups(['composer:read', 'composer:create'])]
     #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
-    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d'])]
+    #[Context(normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
     private DateTimeInterface $birth;
 
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
     #[Groups(['composer:read', 'composer:create'])]
-    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d'])]
+    #[Context(normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
     private DateTimeInterface $death;
 
     #[ORM\Column(length: 255, nullable: true, enumType: Nationality::class)]

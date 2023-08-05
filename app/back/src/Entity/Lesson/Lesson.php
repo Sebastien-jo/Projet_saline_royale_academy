@@ -4,6 +4,7 @@ namespace App\Entity\Lesson;
 
 use AllowDynamicProperties;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Entity\AbstractEntity;
 use App\Entity\Section;
 use App\Entity\Traits\IdentifiableTrait;
@@ -16,14 +17,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
 #[ORM\InheritanceType('JOINED')]
-#[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING)]
+#[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING, options: [
+    'groups' => [
+        'masterclass_user:read', 'masterclass:write',
+    ],
+])]
 #[ORM\DiscriminatorMap([
     'lesson' => Lesson::class,
     'lesson_exercise' => LessonExercise::class,
     'lesson_video' => LessonVideo::class,
     'lesson_article' => LessonArticle::class,
 ])]
-#[ApiResource]
+#[ApiResource(operations: [new Get(name: 'api_lessons_get_item')])]
 #[ORM\HasLifecycleCallbacks]
 class Lesson extends AbstractEntity
 {
@@ -31,21 +36,23 @@ class Lesson extends AbstractEntity
     use TimestampableTrait;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['masterclass:write'])]
     private ?string $resume = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['masterclass:write'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write'])]
     private ?int $position = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lessons')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'lessons')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Section $section = null;
 
     public function getName(): ?string
