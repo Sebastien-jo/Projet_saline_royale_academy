@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Operation;
 #[ApiResource]
 enum Nationality: string
 {
+    case Null = '';
     case Fr = 'Française';
     case En = 'English';
     case Es = 'Español';

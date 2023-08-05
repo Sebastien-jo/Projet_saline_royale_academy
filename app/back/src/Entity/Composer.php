@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
@@ -19,13 +20,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ComposerRepository::class)]
-#[Get]
-#[GetCollection]
 #[ApiResource(
     operations: [
         new Post(
             security: "is_granted('COMPOSER_CREATE')",
             securityMessage: 'Only admin can create a composer'
+        ),
+        new Delete(
+            security: "is_granted('COMPOSER_DELETE', object)",
+            securityMessage: 'Only admin can delete a composer',
         ),
         new Put(securityPostDenormalize: "is_granted('COMPOSER_EDIT')"),
         new Get(security: "is_granted('COMPOSER_VIEW')"),
@@ -44,6 +47,7 @@ class Composer extends AbstractEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['composer:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -78,8 +82,8 @@ class Composer extends AbstractEntity
     #[Context(normalizationContext: ['datetime_format' => 'Y-m-d'])]
     private DateTimeInterface $death;
 
-    #[ORM\Column(length: 255, enumType: Nationality::class)]
-    #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
+    #[ORM\Column(length: 255, nullable: true, enumType: Nationality::class)]
+    #[Assert\NotBlank(allowNull: true, groups: ['import', 'Default'])]
     #[Groups(['composer:read', 'composer:create'])]
     private Nationality $nationality;
 
