@@ -1,5 +1,5 @@
 import React from "react";
-import {getRequest, deleteRequest, putRequest} from "../helpers/request";
+import {getRequest, deleteRequest, putRequest, postRequestJsonNotToken} from "../helpers/request";
 
 
 export const getUsers = () => {
@@ -12,6 +12,10 @@ export const getUser = (id) => {
 
 export const deleteUser = (id) => {
     return deleteRequest(`/users/${id}`);
+}
+
+export const addUser = (data) => {
+    return postRequestJsonNotToken("/users", data);
 }
 
 export const updateUser = (id, data) => {
