@@ -21,12 +21,12 @@ class Work extends AbstractEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['work:read'])]
+    #[Groups(['work:read', 'masterclass_user:read:item'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'works')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['work:read'])]
+    #[Groups(['work:read', 'masterclass_user:read:item'])]
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -41,7 +41,7 @@ class Work extends AbstractEntity
 
     #[ORM\ManyToOne(inversedBy: 'works')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['work:read'])]
+    #[Groups(['work:read', 'masterclass_user:read:item'])]
     private ?Composer $composer = null;
 
     #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]

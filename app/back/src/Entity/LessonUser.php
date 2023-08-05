@@ -18,11 +18,10 @@ class LessonUser extends AbstractEntity
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['masterclass_user:read'])]
     private ?Lesson $lesson = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read:item'])]
     private ?DateTimeImmutable $validatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'lessonUsers')]
@@ -63,5 +62,15 @@ class LessonUser extends AbstractEntity
         $this->sectionUser = $sectionUser;
 
         return $this;
+    }
+
+    #[Groups(['masterclass_user:read:item'])]
+    public function getLessonInfo(): mixed
+    {
+        return [
+            'id' => $this->lesson?->getId(),
+            'name' => $this->lesson?->getName(),
+            'position' => $this->lesson?->getPosition(),
+        ];
     }
 }

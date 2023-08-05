@@ -5,7 +5,6 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Entity\Lesson\Lesson;
-use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,22 +16,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(operations: [new Get(name: 'api_sections_get_item')])]
 class Section extends AbstractEntity
 {
-    use IdentifiableTrait;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[Groups(['masterclass_user:read', 'masterclass_user:read:item', 'masterclass:read', 'masterclass:read:item'])]
+    private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'sections')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Masterclass $masterclass = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass_user:read', 'masterclass:write'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass_user:read:item', 'masterclass:read', 'masterclass:read:item'])]
     private ?string $name = null;
 
-    #[Groups(['masterclass_user:read', 'masterclass:write'])]
+    #[Groups(['masterclass:write', 'masterclass_user:read:item', 'masterclass:read:item'])]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass:write'])]
+    #[Groups(['masterclass:write', 'masterclass:read:item'])]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $lessons;
 
     #[Groups(['masterclass:write'])]
@@ -47,6 +51,11 @@ class Section extends AbstractEntity
         parent::__construct();
         $this->lessons = new ArrayCollection();
         $this->sectionUsers = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getMasterclass(): ?Masterclass
