@@ -104,7 +104,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private Collection $masterclassUsers;
 
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Masterclass::class, orphanRemoval: true)]
-    private Collection $masterclass;
+    private Collection $masterclasses;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist'])]
     #[Groups(['user:read'])]
@@ -124,7 +124,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         parent::__construct();
         $this->badges = new ArrayCollection();
         $this->quizResponses = new ArrayCollection();
-        $this->masterclass = new ArrayCollection();
+        $this->masterclasses = new ArrayCollection();
         $this->masterclassUsers = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->likes = new ArrayCollection();
@@ -322,15 +322,15 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @return Collection<int, Masterclass>
      */
-    public function getMasterclass(): Collection
+    public function getMasterclasses(): Collection
     {
-        return $this->masterclass;
+        return $this->masterclasses;
     }
 
     public function addMasterclass(Masterclass $masterclass): static
     {
-        if (!$this->masterclass->contains($masterclass)) {
-            $this->masterclass->add($masterclass);
+        if (!$this->masterclasses->contains($masterclass)) {
+            $this->masterclasses->add($masterclass);
             $masterclass->setTeacher($this);
         }
 
@@ -340,7 +340,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     public function removeMasterclass(Masterclass $masterclass): static
     {
         // set the owning side to null (unless already changed)
-        if ($this->masterclass->removeElement($masterclass) && $masterclass->getTeacher() === $this) {
+        if ($this->masterclasses->removeElement($masterclass) && $masterclass->getTeacher() === $this) {
             $masterclass->setTeacher(null);
         }
 

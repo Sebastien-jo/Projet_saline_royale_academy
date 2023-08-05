@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\SectionUserRepository;
@@ -23,14 +24,15 @@ class SectionUser extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'sectionUsers')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['masterclass_user:read'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Section $section = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read', 'masterclass_user:read:item'])]
     private ?DateTimeImmutable $validatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'sectionUser', targetEntity: LessonUser::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass_user:read'])]
+    #[Groups(['masterclass_user:read:item'])]
     private Collection $lessonUsers;
 
     #[ORM\ManyToOne(inversedBy: 'sectionUsers')]
@@ -105,5 +107,14 @@ class SectionUser extends AbstractEntity
         $this->masterclassUser = $masterclassUser;
 
         return $this;
+    }
+
+    #[Groups(['masterclass_user:read:item'])]
+    public function getInfoSection(): mixed
+    {
+        return [
+            'name' => $this->section?->getName(),
+            'position' => $this->section?->getPosition(),
+        ];
     }
 }
