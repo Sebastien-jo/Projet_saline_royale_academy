@@ -23,3 +23,13 @@ vich_uploader:
             uri_prefix: /files/exercises
             upload_destination: '%kernel.project_dir%/public/files/exercises'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        workAudioFile:
+            uri_prefix: /files/work_audio
+            upload_destination: '%kernel.project_dir%/public/files/work_audio'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        workScoreFile:
+            uri_prefix: /files/work_scores
+            upload_destination: '%kernel.project_dir%/public/files/work_scores'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

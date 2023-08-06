@@ -3,88 +3,90 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Controller\Api\WorkController;
+use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\WorkRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: WorkRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['work:read']], denormalizationContext: ['groups' => ['work:create']])]
+#[ApiResource(
+    operations: [
+        new Post(
+            inputFormats: ['multipart' => ['multipart/form-data']],
+            controller: WorkController::class,
+            denormalizationContext: ['groups' => ['work:create']],
+            security: 'is_granted("WORK_CREATE")',
+        ),
+        new Get(
+            security: 'is_granted("WORK_VIEW")',
+        ),
+        new GetCollection(
+            security: 'is_granted("WORK_VIEW_LIST")',
+        ),
+        new Delete(
+            security: 'is_granted("WORK_DELETE")',
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['work:update']],
+            security: 'is_granted("WORK_EDIT")',
+        ),
+    ],
+    normalizationContext: ['groups' => ['work:read', 'id']],
+)]
 #[Vich\Uploadable]
 class Work extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[Groups(['work:read', 'masterclass_user:read:item'])]
-    private ?int $id = null;
+    use IdentifiableTrait;
+
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Groups(['work:read', 'work:create', 'work:update'])]
+    private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'works')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['work:read', 'masterclass_user:read:item'])]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['work:read', 'masterclass_user:read:item', 'work:create', 'work:update'])]
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['work:read'])]
+    #[Groups(['work:read', 'work:create', 'work:update'])]
     private ?DateTimeInterface $date = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imagePath = null;
 
     #[ORM\OneToMany(mappedBy: 'work', targetEntity: Masterclass::class)]
     private Collection $masterclasses;
 
     #[ORM\ManyToOne(inversedBy: 'works')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['work:read', 'masterclass_user:read:item'])]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['work:read', 'masterclass_user:read:item', 'work:create', 'work:update'])]
     private ?Composer $composer = null;
 
-    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath')]
-    #[Groups(['user:create'])]
-    public ?File $partition = null;
-
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $partitionPath = null;
-
-    #[Vich\UploadableField(mapping: 'avatar_object', fileNameProperty: 'avatarPath', size: 'audioSize', mimeType: 'audio/mpeg, audio/x-wav, audio/ogg, audio/mp3, audio/wav, audio/mpeg3, audio/x-mpeg-3, audio/x-mpeg, audio/x-mpegaudio')]
-    #[Groups(['user:create'])]
-    public ?File $audio = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $audioPath = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['work:read', 'work:create', 'work:update'])]
     private ?string $description = null;
 
-    public function getPartition(): ?File
-    {
-        return $this->partition;
-    }
+    #[ORM\OneToOne(mappedBy: 'work', targetEntity: WorkAudio::class, cascade: ['persist', 'remove'])]
+    #[Groups(['work:read'])]
+    private ?WorkAudio $workAudio = null;
 
-    public function setPartition(?File $partition): void
-    {
-        $this->partition = $partition;
-    }
-
-    public function getAudio(): ?File
-    {
-        return $this->audio;
-    }
-
-    public function setAudio(?File $audio): void
-    {
-        $this->audio = $audio;
-    }
+    #[ORM\OneToMany(mappedBy: 'work', targetEntity: WorkScore::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['work:read'])]
+    private Collection $workScores;
 
     public function __construct($array = [])
     {
         parent::__construct($array);
         $this->masterclasses = new ArrayCollection();
+        $this->workScores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,12 +94,22 @@ class Work extends AbstractEntity
         return $this->id;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCategory(?Category $category): static
     {
         $this->category = $category;
 
@@ -112,18 +124,6 @@ class Work extends AbstractEntity
     public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getImagePath(): ?string
-    {
-        return $this->imagePath;
-    }
-
-    public function setImagePath(?string $imagePath): self
-    {
-        $this->imagePath = $imagePath;
 
         return $this;
     }
@@ -168,30 +168,6 @@ class Work extends AbstractEntity
         return $this;
     }
 
-    public function getPartitionPath(): ?string
-    {
-        return $this->partitionPath;
-    }
-
-    public function setPartitionPath(?string $PartitionPath): static
-    {
-        $this->partitionPath = $PartitionPath;
-
-        return $this;
-    }
-
-    public function getAudioPath(): ?string
-    {
-        return $this->audioPath;
-    }
-
-    public function setAudioPath(?string $audioPath): static
-    {
-        $this->audioPath = $audioPath;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -200,6 +176,51 @@ class Work extends AbstractEntity
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getWorkAudio(): ?WorkAudio
+    {
+        return $this->workAudio;
+    }
+
+    public function setWorkAudio(WorkAudio $workAudio): static
+    {
+        // set the owning side of the relation if necessary
+        if ($workAudio->getWork() !== $this) {
+            $workAudio->setWork($this);
+        }
+
+        $this->workAudio = $workAudio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WorkScore>
+     */
+    public function getWorkScores(): Collection
+    {
+        return $this->workScores;
+    }
+
+    public function addWorkScore(WorkScore $workScore): static
+    {
+        if (!$this->workScores->contains($workScore)) {
+            $this->workScores->add($workScore);
+            $workScore->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkScore(WorkScore $workScore): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->workScores->removeElement($workScore) && $workScore->getWork() === $this) {
+            $workScore->setWork(null);
+        }
 
         return $this;
     }
