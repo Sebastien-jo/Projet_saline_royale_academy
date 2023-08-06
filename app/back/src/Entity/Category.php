@@ -17,7 +17,7 @@ class Category extends AbstractEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['work:read', 'masterclass_user:read:item'])]
+    #[Groups(['work:read', 'masterclass_user:read:item', 'composer:read', 'masterclass:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Work::class)]
@@ -26,11 +26,15 @@ class Category extends AbstractEntity
     #[ORM\ManyToMany(targetEntity: Composer::class, mappedBy: 'categories')]
     private Collection $composers;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Masterclass::class)]
+    private Collection $masterclasses;
+
     public function __construct(array $array = [])
     {
         parent::__construct($array);
         $this->works = new ArrayCollection();
         $this->composers = new ArrayCollection();
+        $this->masterclasses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,6 +104,34 @@ class Category extends AbstractEntity
     {
         if ($this->composers->removeElement($composer)) {
             $composer->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Masterclass>
+     */
+    public function getMasterclasses(): Collection
+    {
+        return $this->masterclasses;
+    }
+
+    public function addMasterclass(Masterclass $masterclass): static
+    {
+        if (!$this->masterclasses->contains($masterclass)) {
+            $this->masterclasses->add($masterclass);
+            $masterclass->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMasterclass(Masterclass $masterclass): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->masterclasses->removeElement($masterclass) && $masterclass->getCategory() === $this) {
+            $masterclass->setCategory(null);
         }
 
         return $this;

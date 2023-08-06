@@ -70,6 +70,11 @@ class Masterclass extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: FavoritesMasterclass::class)]
     private Collection $favoritesMasterclasses;
 
+    #[ORM\ManyToOne(inversedBy: 'masterclasses')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['masterclass:read', 'masterclass:write'])]
+    private ?Category $category = null;
+
     public function __construct(array $array = [])
     {
         parent::__construct($array);
@@ -194,6 +199,18 @@ class Masterclass extends AbstractEntity
         if ($this->favoritesMasterclasses->removeElement($favoritesMasterclass) && $favoritesMasterclass->getMasterclass() === $this) {
             $favoritesMasterclass->setMasterclass(null);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
