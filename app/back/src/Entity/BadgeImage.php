@@ -44,7 +44,7 @@ class BadgeImage extends AbstractEntity
     #[Assert\NotNull(groups: ['badge:image:create'])]
     public ?File $imageFile = null;
 
-    #[Groups(['badge:image:read', 'badge:image:read'])]
+    #[Groups(['badge:image:read', 'badge:read'])]
     public ?string $contentUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]

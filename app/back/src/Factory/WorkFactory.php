@@ -35,6 +35,7 @@ final class WorkFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
+            'name' => self::faker()->name(),
             'category' => CategoryFactory::random(),
             'date' => self::faker()->dateTime(),
             'composer'=> ComposerFactory::random(),
