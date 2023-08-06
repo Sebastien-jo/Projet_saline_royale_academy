@@ -10,7 +10,7 @@ class FileUploader
 {
     public function uploadFile(Request $request): ?File
     {
-        $uploadedFile = $request->files->get('imageFile');
+        $uploadedFile = $request->files->get('file');
 
         if (!$uploadedFile instanceof File) {
             throw new BadRequestHttpException('"file" is required');

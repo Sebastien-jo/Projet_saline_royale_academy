@@ -63,7 +63,7 @@ class UserAvatar extends AbstractEntity
     {
         $this->imageFile = $imageFile;
 
-        if ($imageFile instanceof \Symfony\Component\HttpFoundation\File\File) {
+        if ($imageFile instanceof File) {
             $this->setUpdatedAt(new DateTime('now'));
         }
 
