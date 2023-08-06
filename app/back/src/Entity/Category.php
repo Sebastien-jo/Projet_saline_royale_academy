@@ -17,7 +17,7 @@ class Category extends AbstractEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['work:read'])]
+    #[Groups(['work:read', 'masterclass_user:read:item'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Work::class)]
