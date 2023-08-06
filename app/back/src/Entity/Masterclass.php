@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Entity\Favorites\FavoritesMasterclass;
-use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MasterclassRepository;
 use App\State\MasterclassProcessor;
@@ -37,9 +36,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks()]
 class Masterclass extends AbstractEntity
 {
-    use IdentifiableTrait;
     use TimestampableTrait;
     use SoftDeleteableEntity;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass_user:read:item'])]
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass:write', 'masterclass_user:read:item', 'masterclass_user:read'])]
@@ -76,6 +80,11 @@ class Masterclass extends AbstractEntity
         $this->sections = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->favoritesMasterclasses = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getName(): ?string
