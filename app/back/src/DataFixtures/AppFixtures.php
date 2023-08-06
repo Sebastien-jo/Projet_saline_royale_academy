@@ -37,7 +37,9 @@ class AppFixtures extends Fixture
         ForumFactory::createMany(10);
         ForumMessageFactory::createMany(10);
 
-        ComposerFactory::createMany(10);
+        ComposerFactory::createMany(50, [
+            'categories' => CategoryFactory::randomRange(1, 5),
+        ]);
         WorkFactory::createMany(30);
 
         MasterClassStory::load();

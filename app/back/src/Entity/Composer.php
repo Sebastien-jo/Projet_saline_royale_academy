@@ -92,6 +92,7 @@ class Composer extends AbstractEntity
     private Collection $works;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'composers')]
+    #[Groups(['composer:read'])]
     private Collection $categories;
 
     public function __construct()
