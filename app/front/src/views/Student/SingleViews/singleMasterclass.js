@@ -1,45 +1,50 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "../../../components/button/button";
 import VideoPlayer from "../../../components/video/videoPlayer";
 import "../../../styles/singleMasterclass.css";
+import {useParams} from "react-router-dom";
+import useMasterclass from "../../../hooks/api/useMasterclass";
+import CardSection from "../../../components/card/masterclass/cardSection";
+import SidebarChapter from "../../../components/sidebar/Masterclass/sidebarChapter";
 
 const SingleMasterclass = () => {
+
+    const {id} = useParams();
+    const [masterclass, setMasterclass] = useState(false);
+    const [chapter, setChapter] = useState([]); // [state, function to update state
+    const [isOpen, setIsOpen] = useState(false);
+    const {loading, error, handleGet } = useMasterclass();
+
+    useEffect(() => {
+        handleGet(id).then((response) => {
+            setMasterclass(response);
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
+
     return (
         <div className="main-container">
-            <div className="main-content">
+            <div className="main-content isSidebar">
+
                 <div className="masterclass-container">
-                    <div className="masterclass-video">
-                        <VideoPlayer/>
-                    </div>
+                    <h2 className="masterclass-title">Masterclass: {masterclass.name}</h2>
+                    <div className="masterclass-chapter-list">
 
-                    <div className="masterclass-content">
-                        <div className="masterclass-infos">
-                            <div className="masterclass-infos-row">
-                                <h2 className="masterclass-title">Masterclass de piano</h2>
-                                <p className="masterclass-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec</p>
-                            </div>
-
-                            <div className="masterclass-infos-row">
-                                <h2 className="masterclass-subtitle">Partitions</h2>
-                                <Button text={"Télécharger la partition"} link={"#"} className={"red-full"} isIcon={true}/>
-                            </div>
-                        </div>
-
-                        <div className="masterclass-compositeur">
-                            <div className={"masterclass-compositeur-image"}>
-                                <img src="https://picsum.photos/200/300" alt="compositeur"/>
-                            </div>
-
-                            <div className={"masterclass-compositeur-infos"}>
-                                <h2 className="masterclass-compositeur-name">Compositrice : Ludwig van Beethoven</h2>
-                                <p className="masterclass-compositeur-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec</p>
-                                <Button text={"En savoir plus"} link={"#"} className={"red-stroke"} isArrow={true}/>
-                            </div>
-                        </div>
+                        {
+                            masterclass ?
+                                masterclass.sections.map((item, index) => {
+                                    return <CardSection chapter={item} key={index} setChapter={setChapter} setIsOpen={setIsOpen}/>
+                                })
+                            : null
+                        }
                     </div>
                 </div>
-
             </div>
+            {
+                isOpen ? <SidebarChapter key={masterclass.id} chapter={chapter} setChapter={setChapter}/> : null
+            }
         </div>
     );
 }

@@ -60,6 +60,15 @@ export const putRequest = async (url, body) => {
     }
 }
 
+export const patchRequest = async (url, body) => {
+    try{
+        const response = await httpClient.patch(url, body);
+        return response.data;
+    }catch (error){
+        throw new Error(error);
+    }
+}
+
 export const deleteRequest = async (url) => {
     try{
         const response = await httpClient.delete(url);
@@ -69,4 +78,13 @@ export const deleteRequest = async (url) => {
     }
 }
 
-export default { httpClient, getRequest, postRequestJson, postRequestFormData, postRequestJsonNotToken, putRequest, deleteRequest };
+export default {
+    httpClient,
+    getRequest,
+    postRequestJson,
+    postRequestFormData,
+    postRequestJsonNotToken,
+    putRequest,
+    patchRequest,
+    deleteRequest
+};

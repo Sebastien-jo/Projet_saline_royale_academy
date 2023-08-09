@@ -67,10 +67,13 @@
     --primary-red-hover-100: #FF816C;
     --secondary-red-100: #FF8E7C;
 
+    --primary-green-100: #aee698;
+
     --primary-white-100: #FFFFFF;
     --secondary-white-100: #F5F5F5;
 
     --primary-black-100: #000000;
+    --secondary-black-20: #00000020;
 
 
     /* FLEX */
@@ -124,6 +127,7 @@
     --icon-cross-blue-full: url('../assets/icones/icon-cross-Blue-full.svg');
     --icon-cross-black: url('../assets/icones/icon-cross-Default.svg');
     --icon-cross-grey: url('../assets/icones/icon-cross-Grey.svg');
+    --icon-cross-white-stroke: url('../assets/icones/icon-cross-White-stroke.svg');
 
     --icon-crown-blue-full: url('../assets/icones/icon-crown-Blue-full.svg');
     --icon-crown-black: url('../assets/icones/icon-crown-Default.svg');
@@ -227,6 +231,7 @@
     --icon-time-blue-full: url('../assets/icones/icon-time-Blue-full.svg');
     --icon-time-black: url('../assets/icones/icon-time-Default.svg');
     --icon-time-grey: url('../assets/icones/icon-time-grey.svg');
+    --icon-time-white-stroke: url('../assets/icones/icon-time-White-stroke.svg');
 
     --icon-trash-blue-full: url('../assets/icones/icon-trash-Blue-full.svg');
     --icon-trash-black: url('../assets/icones/icon-trash-Default.svg');

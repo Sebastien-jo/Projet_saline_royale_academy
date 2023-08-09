@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {BrowserRouter, Routes, Route, Router, useNavigate, HashRouter} from "react-router-dom";
 import "../index.css";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/api/useAuth";
 
 import "../styles/root.css";
 import GlobalLayout from "../GlobalLayout";
@@ -50,6 +50,7 @@ import FormUser from "../views/Admin/Users/FormUser";
 import FormMasterclass from "../views/Admin/Masterclass/FormMasterclass";
 import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
 import SingleCompositor from "../views/Admin/Compositor/SingleCompositor";
+import MasterclassChapter from "../views/Student/SingleViews/Lessons/MasterclassChapter";
 
 
 const Routing = () => {
@@ -79,7 +80,10 @@ const Routing = () => {
                                     <Route path="oeuvres" element={<OeuvresLibrary />} />
                                     <Route path="compositeur" element={<CompositeurLibrary />} />
                                 </Route>
-                                <Route path="/masterclass/:id" element={<SingleMasterclass />} />
+                                <Route path="/masterclass/:id/*">
+                                    <Route index element={<SingleMasterclass />} />
+                                    <Route path="chapter" element={<MasterclassChapter />} />
+                                </Route>
                                 <Route path="/oeuvre/:id" element={<SingleOeuvre />} />
                                 <Route path="/compositeur/:id" element={<SingleCompositeur />} />
                                 <Route path="/account/*">
