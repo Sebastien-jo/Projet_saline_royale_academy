@@ -53,12 +53,12 @@ class Composer extends AbstractEntity
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups: ['import', 'Default'])]
-    #[Groups(['composer:read', 'composer:create'])]
+    #[Groups(['composer:read', 'composer:create', 'work:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
-    #[Groups(['composer:read', 'composer:create'])]
+    #[Groups(['composer:read', 'composer:create', 'work:read'])]
     private ?string $completeName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -72,14 +72,14 @@ class Composer extends AbstractEntity
     private ?string $description = null;
 
     #[ORM\Column(type: 'date')]
-    #[Groups(['composer:read', 'composer:create'])]
+    #[Groups(['composer:read', 'composer:create', 'work:read'])]
     #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
     #[Context(normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
     private DateTimeInterface $birth;
 
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank(allowNull: false, groups: ['import', 'Default'])]
-    #[Groups(['composer:read', 'composer:create'])]
+    #[Groups(['composer:read', 'composer:create', 'work:read'])]
     #[Context(normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
     private DateTimeInterface $death;
 
