@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import { getOeuvres, getOeuvre, deleteOeuvre, addOeuvre} from "../api/endpoints/oeuvres";
+import {getForums, getForum, addForum, deleteForum, updateForum} from "../../api/endpoints/forum";
 
-const useOeuvres = () => {
+const useForum = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleGetAll = async () => {
         try{
-            const response = await getOeuvres();
+            const response = await getForums();
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -17,9 +17,10 @@ const useOeuvres = () => {
         }
     }
 
+
     const handleGet = async(id) => {
         try{
-            const response = await getOeuvre(id);
+            const response = await getForum(id);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -30,7 +31,7 @@ const useOeuvres = () => {
 
     const handlePost = async (data) => {
         try{
-            const response = await addOeuvre(data);
+            const response = await addForum(data);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -41,7 +42,7 @@ const useOeuvres = () => {
 
     const handleDelete = async (id) => {
         try{
-            const response = await deleteOeuvre(id);
+            const response = await deleteForum(id);
             // Handle the response if needed
         } catch(e){
             setError(e);
@@ -50,6 +51,27 @@ const useOeuvres = () => {
         }
     }
 
+    const handleUpdate = async (id) => {
+        try{
+            const response = await updateForum(id);
+            // Handle the response if needed
+        } catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    return {
+        loading,
+        error,
+        handleGetAll,
+        handleGet,
+        handlePost,
+        handleDelete,
+        handleUpdate
+    }
+
 }
 
-export default useOeuvres;
+export default useForum;

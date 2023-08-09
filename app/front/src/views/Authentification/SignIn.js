@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Input from "../../components/form/input";
 import logo from "../../assets/logo/logo-login.svg";
 import "../../styles/components/form.css";
-import useRegister from "../../hooks/useRegister";
+import useRegister from "../../hooks/api/useRegister";
 import cello from "../../assets/icones/icon-cello.svg";
 import violin from "../../assets/icones/icon-violin.svg";
 import piano from "../../assets/icones/icon-piano.svg";

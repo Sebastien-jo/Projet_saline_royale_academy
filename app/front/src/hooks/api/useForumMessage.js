@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {getForumMessage, addForumMessage} from "../api/endpoints/forumMessage";
+import {getForumMessage, addForumMessage} from "../../api/endpoints/forumMessage";
 
 const useForumMessage = () => {
 

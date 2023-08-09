@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
+import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
-import useCompositors from "../../../hooks/useCompositors";
+import useCompositors from "../../../hooks/api/useCompositors";
 
 const CompositeurLibrary = () => {
 
@@ -40,7 +40,7 @@ const CompositeurLibrary = () => {
 
                     }]}/>
 
-                <ListLibraryCompositors list={compositors}/>
+                <ListCompositors list={compositors}/>
             </div>
             <SidebarLibrary/>
         </div>

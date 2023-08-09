@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getCompositors} from "../../../api/endpoints/compositor";
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
-import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
+import ListCompositors from "../../../components/list/listCompositors";
 import ListLibraryOeuvres from "../../../components/list/listLibraryOeuvres";
 import {getOeuvres} from "../../../api/endpoints/oeuvres";
 

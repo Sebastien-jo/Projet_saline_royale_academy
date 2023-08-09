@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import {Register} from "../api/endpoints/auth";
+import {Register} from "../../api/endpoints/auth";
 
 const useRegister = () => {
 

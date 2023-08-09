@@ -1,15 +1,14 @@
-import React, {useState} from "react";
-import {getBadges, getBadge, addBadge, updateBadge, deleteBadge} from "../api/endpoints/badge";
+import React, {useState} from 'react';
+import { getOeuvres, getOeuvre, deleteOeuvre, addOeuvre} from "../../api/endpoints/oeuvres";
 
-const useBagdes = () => {
+const useOeuvres = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-
     const handleGetAll = async () => {
         try{
-            const response = await getBadges();
+            const response = await getOeuvres();
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -20,7 +19,7 @@ const useBagdes = () => {
 
     const handleGet = async(id) => {
         try{
-            const response = await getBadge(id);
+            const response = await getOeuvre(id);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -31,7 +30,7 @@ const useBagdes = () => {
 
     const handlePost = async (data) => {
         try{
-            const response = await addBadge(data);
+            const response = await addOeuvre(data);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -42,7 +41,7 @@ const useBagdes = () => {
 
     const handleDelete = async (id) => {
         try{
-            const response = await deleteBadge(id);
+            const response = await deleteOeuvre(id);
             // Handle the response if needed
         } catch(e){
             setError(e);
@@ -51,27 +50,6 @@ const useBagdes = () => {
         }
     }
 
-    const handleUpdate = async (id) => {
-        try{
-            const response = await updateBadge(id);
-            // Handle the response if needed
-        } catch(e){
-            setError(e);
-        }finally{
-            setLoading(false);
-        }
-    }
-
-
-    return {
-        loading,
-        error,
-        handleGetAll,
-        handleGet,
-        handlePost,
-        handleDelete,
-        handleUpdate
-    }
 }
 
-export default useBagdes;
+export default useOeuvres;

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import DarkLightSwitch from "./DarkLightSwitch";
 import "../../styles/components/titlebar.css";
-import {useAuth} from "../../hooks/useAuth";
+import {useAuth} from "../../hooks/api/useAuth";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 

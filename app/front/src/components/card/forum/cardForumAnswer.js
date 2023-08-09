@@ -1,5 +1,5 @@
 import React from 'react';
-import logo_user from "../../assets/logo/logo_user.png";
+import logo_user from "../../../assets/logo/logo_user.png";
 
 const CardForumAnswer = ({message}) => {
 

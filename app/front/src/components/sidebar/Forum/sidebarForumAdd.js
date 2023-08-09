@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Button from "../../button/button";
 import Textarea from "../../form/textarea";
-import useForum from "../../../hooks/useForum";
+import useForum from "../../../hooks/api/useForum";
 import Input from "../../form/input";
 import {useSelector} from "react-redux";
 
