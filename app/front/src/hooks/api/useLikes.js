@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {getLikes, getLike, addLike, deleteLike, updateLike} from "../api/endpoints/likes";
+import {getLikes, getLike, addLike, deleteLike, updateLike} from "../../api/endpoints/likes";
 
 const useLikes = () => {
 
@@ -29,9 +29,9 @@ const useLikes = () => {
         }
     }
 
-    const handlePost = async (data) => {
+    const handlePost = async (id, data) => {
         try{
-            const response = await addLike(data);
+            const response = await addLike(id, data);
             return response; // Return the response from the function
         } catch(e){
             setError(e);

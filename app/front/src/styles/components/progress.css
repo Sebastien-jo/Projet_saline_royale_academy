@@ -1,0 +1,28 @@
+.round-progress {
+    display: block;
+}
+
+.round-progress-background {
+    fill: none;
+    stroke: #e5e5e5;
+    stroke-width: 10;
+}
+
+.round-progress-circle {
+    fill: none;
+    stroke: var(--secondary-red-100); /* Change the color to customize the progress bar */
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+.progress-text {
+    font-size: var(--text-corps-size);
+    font-weight: 400;
+    color: var(--primary-blue-dark-100);
+    font-family: var(--text-font-family-regular);
+    text-anchor: middle;
+    dominant-baseline: middle;
+}

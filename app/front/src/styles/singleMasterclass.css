@@ -59,4 +59,62 @@
     align-items: flex-start;
     gap: 20px;
 }
+/*RESUME */
+
+.masterclass-chapter-list{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.chapter-item{
+    background: var(--background-color-light);
+    padding: 20px;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.lesson_accordion_header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.lesson_grid{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: 20px
+}
+
+.lesson-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1.5px solid #e5e5e5;
+    cursor: pointer;
+}
+
+.lesson-list__lesson__progress__round{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+
 

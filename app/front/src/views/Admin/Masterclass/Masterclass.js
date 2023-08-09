@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
-import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
-import ListLibraryMasterclass from "../../../components/list/listLibraryMasterclass";
+import ListCompositors from "../../../components/list/listCompositors";
+import ListLibraryMasterclass from "../../../components/list/listMasterclass";
 import {getMasterclasses} from "../../../api/endpoints/masterclass";
 
 const Masterclass = () => {
