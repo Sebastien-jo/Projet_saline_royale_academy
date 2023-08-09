@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
+import ListCompositors from "../../../components/list/listCompositors";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 import {getCompositors} from "../../../api/endpoints/compositor";
 
@@ -39,7 +39,7 @@ const Compositeurs = () => {
                         isLinkActive: true,
 
                     }]}/>
-                <ListLibraryCompositors list={compositors}/>
+                <ListCompositors list={compositors}/>
             </div>
             <SidebarLibrary/>
         </div>

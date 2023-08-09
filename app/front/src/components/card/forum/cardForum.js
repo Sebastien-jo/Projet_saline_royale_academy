@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Button from "../button/button";
-import useLikes from "../../hooks/useLikes";
-import Pastille from "../pastille/pastille";
-import logo_user from "../../assets/logo/logo_user.png";
+import Button from "../../button/button";
+import useLikes from "../../../hooks/api/useLikes";
+import Pastille from "../../pastille/pastille";
+import logo_user from "../../../assets/logo/logo_user.png";
 
-const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSidebar}) => {
+const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSidebar, refresh, setRefresh }) => {
 
     const [isLike, setIsLike] = useState(false);
     const {loading, error, handlePost} = useLikes();
@@ -14,14 +14,17 @@ const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSideba
     }
 
     const handleClick = () => {
-        console.log(forum.id);
         handleSelect();
         setSidebar(forum.id);
         setActiveSidebar("forum");
     }
 
     useEffect(() => {
-        isLike ? handlePost({forum: `api/forums/${forum.id}`, user: `api/users/${forum.user.id}`}) : null
+        isLike ? handlePost(forum.id, {}).then((response) => {
+            setRefresh(!refresh);
+        }).catch((err) => {
+            console.log(err);
+        }) : null;
     },[isLike])
 
 

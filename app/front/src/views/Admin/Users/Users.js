@@ -3,7 +3,7 @@ import Button from "../../../components/button/button";
 import ListUsers from "../../../components/list/listUsers";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
 import '../../../styles/users.css'
-import useUsers from "../../../hooks/useUsers";
+import useUsers from "../../../hooks/api/useUsers";
 
 const Users = () => {
 

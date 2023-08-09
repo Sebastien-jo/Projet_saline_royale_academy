@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
 import ListBadges from "../../../components/list/listBadges";
-import useBagdes from "../../../hooks/useBadges";
+import useBagdes from "../../../hooks/api/useBadges";
 
 const Badges = () => {
 

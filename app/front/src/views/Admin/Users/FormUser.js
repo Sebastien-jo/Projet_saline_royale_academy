@@ -4,7 +4,7 @@ import Input from "../../../components/form/input";
 import Select from "../../../components/form/select";
 import {useParams} from "react-router-dom";
 import {getUser} from "../../../api/endpoints/user";
-import useUsers from "../../../hooks/useUsers";
+import useUsers from "../../../hooks/api/useUsers";
 import {useNavigate} from "react-router-dom";
 
 

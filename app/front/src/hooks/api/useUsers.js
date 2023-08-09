@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {getUsers, getUser, deleteUser, updateUser, addUser} from '../api/endpoints/user';
+import {getUsers, getUser, deleteUser, updateUser, addUser} from '../../api/endpoints/user';
 
 const useUsers = () => {
     const [loading, setLoading] = useState(false);

@@ -1,37 +1,37 @@
 import React, {useState} from 'react';
-import {getForums, getForum, addForum, deleteForum, updateForum} from "../api/endpoints/forum";
+import { getCompositors,  getCompositor, deleteCompositor, updateCompositor, addCompositor} from "../../api/endpoints/compositor";
 
-const useForum = () => {
+
+const useCompositors = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleGetAll = async () => {
-        try{
-            const response = await getForums();
+        try {
+            const response = await getCompositors();
             return response; // Return the response from the function
-        } catch(e){
+        } catch (e) {
             setError(e);
-        } finally{
+        } finally {
             setLoading(false);
         }
     }
 
-
     const handleGet = async(id) => {
-        try{
-            const response = await getForum(id);
+        try {
+            const response = await getCompositor(id);
             return response; // Return the response from the function
-        } catch(e){
+        } catch (e) {
             setError(e);
-        } finally{
+        } finally {
             setLoading(false);
         }
     }
 
     const handlePost = async (data) => {
         try{
-            const response = await addForum(data);
+            const response = await addCompositor(data);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -41,37 +41,37 @@ const useForum = () => {
     }
 
     const handleDelete = async (id) => {
-        try{
-            const response = await deleteForum(id);
+        try {
+            const response = await deleteCompositor(id);
             // Handle the response if needed
-        } catch(e){
+        } catch (e) {
             setError(e);
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
 
     const handleUpdate = async (id) => {
-        try{
-            const response = await updateForum(id);
+        try {
+            const response = await updateCompositor(id);
             // Handle the response if needed
-        } catch(e){
+        } catch (e) {
             setError(e);
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
 
-    return {
+    return{
+        handleDelete,
+        handleUpdate,
+        handleGet,
+        handleGetAll,
+        handlePost,
         loading,
         error,
-        handleGetAll,
-        handleGet,
-        handlePost,
-        handleDelete,
-        handleUpdate
     }
 
 }
 
-export default useForum;
+export default useCompositors;

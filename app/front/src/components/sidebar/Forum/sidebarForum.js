@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import CardForum from "../../card/cardForum";
+import CardForum from "../../card/forum/cardForum";
 import Pastille from "../../pastille/pastille";
 import Button from "../../button/button";
 import icon from "../../../assets/icones/icon-edit-Blue-stroke.svg";
 import Textarea from "../../form/textarea";
-import CardForumAnswer from "../../card/cardForumAnswer";
-import useForum from "../../../hooks/useForum";
-import useForumMessage from "../../../hooks/useForumMessage";
-import CardForumForm from "../../card/cardForumForm";
+import CardForumAnswer from "../../card/forum/cardForumAnswer";
+import useForum from "../../../hooks/api/useForum";
+import useForumMessage from "../../../hooks/api/useForumMessage";
+import CardForumForm from "../../card/forum/cardForumForm";
 import logo_user from "../../../assets/logo/logo_user.png";
 
 

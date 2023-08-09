@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import { Login } from "../api/endpoints/auth";
+import { Login } from "../../api/endpoints/auth";
 import { useDispatch } from "react-redux";
-import { login } from "../store/Slice/authSlice";
+import { login } from "../../store/Slice/authSlice";
 
 import { useNavigate } from "react-router-dom";
 

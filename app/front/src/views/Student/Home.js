@@ -2,7 +2,7 @@ import React from "react";
 import CardFull from "../../components/card/cardFull";
 import ListHome from "../../components/list/listHome";
 import "../../styles/home.css";
-import ListLibraryCompositors from "../../components/list/listLibraryCompositors";
+import ListCompositors from "../../components/list/listCompositors";
 import SidebarLibrary from "../../components/sidebar/sidebarLibrary";
 import {useTranslation} from "react-i18next";
 

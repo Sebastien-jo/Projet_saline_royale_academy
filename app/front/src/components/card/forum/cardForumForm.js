@@ -1,7 +1,7 @@
 import React,{ useState} from 'react';
-import Textarea from "../form/textarea";
-import Button from "../button/button";
-import useForumMessage from "../../hooks/useForumMessage";
+import Textarea from "../../form/textarea";
+import Button from "../../button/button";
+import useForumMessage from "../../../hooks/api/useForumMessage";
 
 const CardForumForm = ({forumId,  setNewMessage}) => {
 

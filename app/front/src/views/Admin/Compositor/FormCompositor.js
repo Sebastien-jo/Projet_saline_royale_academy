@@ -4,7 +4,7 @@ import Button from "../../../components/button/button";
 import Textarea from "../../../components/form/textarea";
 import {useParams} from "react-router-dom";
 import {getCompositor} from "../../../api/endpoints/compositor";
-import useCompositors from "../../../hooks/useCompositors";
+import useCompositors from "../../../hooks/api/useCompositors";
 
 
 const FormCompositor = ({title}) => {

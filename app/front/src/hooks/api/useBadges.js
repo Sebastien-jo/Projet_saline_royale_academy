@@ -1,37 +1,37 @@
-import React, {useState} from 'react';
-import { getCompositors,  getCompositor, deleteCompositor, updateCompositor, addCompositor} from "../api/endpoints/compositor";
+import React, {useState} from "react";
+import {getBadges, getBadge, addBadge, updateBadge, deleteBadge} from "../../api/endpoints/badge";
 
-
-const useCompositors = () => {
+const useBagdes = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+
     const handleGetAll = async () => {
-        try {
-            const response = await getCompositors();
+        try{
+            const response = await getBadges();
             return response; // Return the response from the function
-        } catch (e) {
+        } catch(e){
             setError(e);
-        } finally {
+        } finally{
             setLoading(false);
         }
     }
 
     const handleGet = async(id) => {
-        try {
-            const response = await getCompositor(id);
+        try{
+            const response = await getBadge(id);
             return response; // Return the response from the function
-        } catch (e) {
+        } catch(e){
             setError(e);
-        } finally {
+        } finally{
             setLoading(false);
         }
     }
 
     const handlePost = async (data) => {
         try{
-            const response = await addCompositor(data);
+            const response = await addBadge(data);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -41,37 +41,37 @@ const useCompositors = () => {
     }
 
     const handleDelete = async (id) => {
-        try {
-            const response = await deleteCompositor(id);
+        try{
+            const response = await deleteBadge(id);
             // Handle the response if needed
-        } catch (e) {
+        } catch(e){
             setError(e);
-        } finally {
+        }finally{
             setLoading(false);
         }
     }
 
     const handleUpdate = async (id) => {
-        try {
-            const response = await updateCompositor(id);
+        try{
+            const response = await updateBadge(id);
             // Handle the response if needed
-        } catch (e) {
+        } catch(e){
             setError(e);
-        } finally {
+        }finally{
             setLoading(false);
         }
     }
 
-    return{
-        handleDelete,
-        handleUpdate,
-        handleGet,
-        handleGetAll,
-        handlePost,
+
+    return {
         loading,
         error,
+        handleGetAll,
+        handleGet,
+        handlePost,
+        handleDelete,
+        handleUpdate
     }
-
 }
 
-export default useCompositors;
+export default useBagdes;
