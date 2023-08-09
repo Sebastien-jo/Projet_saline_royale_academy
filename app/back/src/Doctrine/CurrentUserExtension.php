@@ -7,7 +7,9 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
-use App\Entity\MasterclassUser;
+use App\Entity\Favorites\FavoritesComposer;
+use App\Entity\Favorites\FavoritesMasterclass;
+use App\Entity\Favorites\FavoritesWork;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -31,21 +33,29 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
     ): void {
         $operationName = $operation?->getName();
         if ($operationName === 'SELF') {
-            if ($resourceClass === MasterclassUser::class) {
-                $this->addWhereCurrentUser($queryBuilder, 'user_id');
+            switch ($resourceClass) {
+                case FavoritesComposer::class:
+                case FavoritesMasterclass::class:
+                case FavoritesWork::class:
+                    $this->addWhereCurrentUser($queryBuilder, 'user');
+                    break;
+                default:
+                    $this->addWhereCurrentUser($queryBuilder);
+
+                    break;
             }
         } elseif ($operationName === 'MANAGE') {
             $this->addWhereCurrentTeacherFromMasterclass($queryBuilder);
         }
     }
 
-    private function addWhereCurrentUser(QueryBuilder $queryBuilder, string $columName = 'customer'): void
+    private function addWhereCurrentUser(QueryBuilder $queryBuilder, string $columName = 'user_id'): void
     {
         /** @var User|null $user */
         $user = $this->security->getUser();
         if (
             $this->security->isGranted('ROLE_ADMIN')
-            || !$user instanceof \App\Entity\User) {
+            || !$user instanceof User) {
             return;
         }
         $rootAlias = $queryBuilder->getRootAliases()[0];
@@ -59,7 +69,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         $user = $this->security->getUser();
         if (
             $this->security->isGranted('ROLE_ADMIN')
-            || !$user instanceof \App\Entity\User
+            || !$user instanceof User
         ) {
             return;
         }
