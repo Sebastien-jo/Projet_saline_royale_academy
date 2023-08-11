@@ -350,12 +350,24 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @return array<string, int>
      */
-    #[Groups(['user:stats'])]
+    #[Groups(['user:stats', 'user:read'])]
     public function getStats(): array
     {
+        $lessonFinished = [];
+        foreach ($this->masterclassUsers as $masterclassUser) {
+            /** @var SectionUser $sectionUser */
+            foreach ($masterclassUser->getSectionUsers() as $sectionUser) {
+                /* @var LessonUser $lessonUser */
+                foreach ($sectionUser->getLessonUsers() as $lessonUser) {
+                    $lessonFinished[] = $lessonUser->getValidatedAt() ?? null;
+                }
+            }
+        }
+
         return [
             'nbQuiz' => $this->quizResponses->count(),
             'nbMasterclass' => $this->masterclassUsers->count(),
+            'nbLessonFinished' => count(array_filter($lessonFinished)),
             'nbBadge' => $this->badges->count(),
             'nbInstrument' => $this->badges->filter(fn (
                 Badge $badge
