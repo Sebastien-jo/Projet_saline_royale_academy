@@ -3,11 +3,12 @@ import FiltersCard from "../filters/filtersCard";
 import CardForum from "../card/forum/cardForum";
 import Button from "../button/button";
 import useForum from "../../hooks/api/useForum";
+import Loader from "../loader/loader";
 
 
 const ListForum = ({text, setSidebar, setActiveSidebar}) => {
 
-    const [forums, setForums] = useState([]); // [state, function to update state
+    const [forums, setForums] = useState(false); // [state, function to update state
     const {loading, error, handleGetAll} = useForum()
     const [refresh, setRefresh] = useState(false); // [state, function to update state
     const [selectedForumId, setSelectedForumId] = useState(null);
@@ -35,11 +36,13 @@ const ListForum = ({text, setSidebar, setActiveSidebar}) => {
                 <div className="container-forum__content">
 
                     {
-                        forums.map((item, index) => {
-                            return(
-                                <CardForum key={index} forum={item} setSidebar={setSidebar} handleSelect={() => handleForumSelect(item.id)} isSelected={selectedForumId === item.id} setActiveSidebar={setActiveSidebar} setRefresh={setRefresh} refresh={refresh}/>
-                            )
-                        }).reverse()
+                        forums ?
+                            forums.map((item, index) => {
+                                return(
+                                    <CardForum key={index} forum={item} setSidebar={setSidebar} handleSelect={() => handleForumSelect(item.id)} isSelected={selectedForumId === item.id} setActiveSidebar={setActiveSidebar} setRefresh={setRefresh} refresh={refresh}/>
+                                )
+                            }).reverse()
+                            : <Loader />
                     }
                 </div>
             </div>

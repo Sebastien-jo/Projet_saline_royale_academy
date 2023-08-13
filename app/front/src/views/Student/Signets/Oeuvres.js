@@ -1,22 +1,22 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
-import ListLibraryOeuvres from "../../../components/list/listLibraryOeuvres";
-import {getOeuvres} from "../../../api/endpoints/oeuvres";
+import ListOeuvres from "../../../components/list/listOeuvres";
+import useFavoris from "../../../hooks/api/useFavoris";
 
 const Oeuvres = () => {
 
-    const [oeuvres, setOeuvres] = React.useState([]);
+    const [oeuvres, setOeuvres] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAllFavorisOeuvre} = useFavoris();
 
     useEffect(() => {
-        getOeuvres().then((response) => {
-            setOeuvres(response['hydra:member']);
-            console.log(response['hydra:member']);
-        }).catch((error) => {
-            console.log(error);
+        handleGetAllFavorisOeuvre().then((response) => {
+            console.log(response)
+            setOeuvres(response);
+        }).catch((err) => {
+            console.log(err);
         });
     }, []);
-
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
@@ -37,7 +37,7 @@ const Oeuvres = () => {
                         isLinkActive: false,
                     }]}/>
 
-                <ListLibraryOeuvres list={oeuvres}/>
+                <ListOeuvres oeuvres={oeuvres ? oeuvres : false} error={error}/>
             </div>
             <SidebarLibrary/>
         </div>

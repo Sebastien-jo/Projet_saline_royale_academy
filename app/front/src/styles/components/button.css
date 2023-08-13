@@ -110,3 +110,24 @@
     padding: 5px;
 }
 
+/* FAVORITE BUTTON */
+.favorite{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background-color: var(--primary-white-100);
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.favorite img{
+    width: 20px!important;
+    height: 20px!important;
+    min-height: 20px!important;
+    min-width: 20px!important;
+    object-fit: contain;
+}
+

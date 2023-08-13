@@ -2,22 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {getCompositors} from "../../../api/endpoints/compositor";
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
-import ListCompositors from "../../../components/list/listCompositors";
-import ListLibraryOeuvres from "../../../components/list/listLibraryOeuvres";
-import {getOeuvres} from "../../../api/endpoints/oeuvres";
+import ListOeuvres from "../../../components/list/listOeuvres";
+import useOeuvres from "../../../hooks/api/useOeuvres";
 
 const Oeuvres = () => {
 
-   const [oeuvres, setOeuvres] = useState([]); // [state, function to update state
+    const [oeuvres, setOeuvres] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAll} = useOeuvres();
 
-
-    //call api to get list of composers
     useEffect(() => {
-       getOeuvres().then((response) => {
-            setOeuvres(response['hydra:member']);
-            console.log(response['hydra:member']);
-        }).catch((error) => {
-            console.log(error);
+        handleGetAll().then((response) => {
+            setOeuvres(response);
+            console.log(response);
+        }).catch((err) => {
+            console.log(err);
         });
     }, []);
 
@@ -26,7 +24,7 @@ const Oeuvres = () => {
             <div className="main-content">
                 <Button text="Ajouter une oeuvre" link={"#/oeuvres/add"} className={"red-full"} isIcon={true} icon={icon_add} />
 
-                <ListLibraryOeuvres list={oeuvres}/>
+                <ListOeuvres oeuvres={oeuvres ? oeuvres : false} error={error}/>
             </div>
         </div>
     );

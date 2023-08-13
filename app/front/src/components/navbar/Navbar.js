@@ -50,7 +50,6 @@ const Navbar = () => {
                 <div className="navbar__links">
                     <Link to="/" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span><p>{t('navbar.links.6.text')}</p></Link>
                     <Link to="/notations" className={activeLink === "notation" ? "active" : ""} onClick={() => handleLinkClick("notation")}><span className="navbar__icon notation"></span><p>{t('navbar.links.7.text')}</p></Link>
-                    <Link to="/gestion" className={activeLink === "gestion" ? "active" : ""} onClick={() => handleLinkClick("gestion")}><span className="navbar__icon gestion"></span><p>{t('navbar.links.8.text')}</p></Link>
                 </div>
                 :
                 <div className="navbar__links">

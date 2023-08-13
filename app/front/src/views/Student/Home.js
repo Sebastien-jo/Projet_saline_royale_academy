@@ -23,7 +23,6 @@ const Home = () => {
 
                     <ListHome title={ t('home.section_masterclass') } isFilter={true}/>
 
-                    <ListHome title={ t('home.section_selection') }/>
                 </div>
 
                 <div className={"column-container"}>

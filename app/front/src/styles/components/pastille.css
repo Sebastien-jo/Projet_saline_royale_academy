@@ -12,13 +12,49 @@
     font-weight: 600;
 }
 
-.green{
+.violon{
     background-color: #e6f5f3;
     color: #00bfa5;
 }
 
-.red{
+.violoncelle{
     background-color: #ffebee;
     color: #f44336;
 }
+
+.alto{
+    background-color: #e8eaf6;
+    color: #3f51b5;
+}
+
+.flute{
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+.clarinette{
+    background-color: #fff3e0;
+    color: #ff9800;
+}
+
+.trombone{
+    background-color: #e3f2fd;
+    color: #2196f3;
+}
+
+.haut-bois{
+    background-color: #fce4ec;
+    color: #e91e63;
+}
+
+.piano{
+    background-color: #e0f7fa;
+    color: #00bcd4;
+}
+
+.chant{
+    background-color: #fffde7;
+    color: #ffc107;
+}
+
 

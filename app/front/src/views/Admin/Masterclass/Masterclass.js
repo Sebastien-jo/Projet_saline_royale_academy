@@ -1,29 +1,30 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
-import ListCompositors from "../../../components/list/listCompositors";
-import ListLibraryMasterclass from "../../../components/list/listMasterclass";
-import {getMasterclasses} from "../../../api/endpoints/masterclass";
+import ListMasterclass from "../../../components/list/listMasterclass";
+import useMasterclass from "../../../hooks/api/useMasterclass";
 
 const Masterclass = () => {
 
-        const [masterclass, setMasterclass] = React.useState([]);
+    const [masterclass, setMasterclass] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAll } = useMasterclass();
 
-        useEffect(() => {
-            getMasterclasses().then((response) => {
-                setMasterclass(response['hydra:member']);
-                console.log(response['hydra:member']);
-            }).catch((error) => {
-                console.log(error);
-            });
-        }, []);
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            setMasterclass(response);
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
 
-        return (
+
+    return (
             <div className="main-container">
                 <div className="main-content">
                     <Button text="Ajouter une masterclass" link={"#/masterclass/add"} className={"red-full"} isIcon={true} icon={icon_add} />
 
-                    <ListLibraryMasterclass list={masterclass}/>
+                    <ListMasterclass masterclass={masterclass ? masterclass : false} error={error}/>
                 </div>
             </div>
         );

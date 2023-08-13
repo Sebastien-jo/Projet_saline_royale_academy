@@ -7,12 +7,11 @@ import useCompositors from "../../../hooks/api/useCompositors";
 
 const CompositeurLibrary = () => {
 
-    const [compositors, setCompositors] = useState([]); // [state, function to update state
+    const [compositors, setCompositors] = useState(false); // [state, function to update state
     const {loading, error, handleGetAll} = useCompositors();
 
     useEffect(() => {
         handleGetAll().then((response) => {
-            console.log(response);
             setCompositors(response);
         }).catch((err) => {
             console.log(err);
@@ -40,7 +39,7 @@ const CompositeurLibrary = () => {
 
                     }]}/>
 
-                <ListCompositors list={compositors}/>
+                <ListCompositors compositors={compositors ? compositors : false} error={error} favoris={"composer"}/>
             </div>
             <SidebarLibrary/>
         </div>

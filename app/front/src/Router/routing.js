@@ -75,8 +75,8 @@ const Routing = () => {
                                     <Route path="compositeur" element={<CompositeurSignets />} />
                                 </Route>
                                 <Route path="/library/*">
-                                    <Route index element={<Library />} title="Library" />
-                                    <Route path="masterclass" element={<MasterclassLibrary />} />
+                                    <Route index element={<MasterclassLibrary />} title="Library" />
+                                    <Route index path="masterclass" element={<MasterclassLibrary />} />
                                     <Route path="oeuvres" element={<OeuvresLibrary />} />
                                     <Route path="compositeur" element={<CompositeurLibrary />} />
                                 </Route>
@@ -94,10 +94,11 @@ const Routing = () => {
                             </Route>
                         ) : user.roles[0] === "ROLE_TEACHER" ? (
                             <Route path="/" element={<GlobalLayout />}>
-                                <Route path="/" exact element={<Courses />} title="MyCourses" />
+                                <Route path="/" title="MyCourses">
+                                    <Route index element={<Courses />} title="MyCourses" />
+                                    <Route path={"/masterclass/add"} element={<FormMasterclass />} />
+                                </Route>
                                 <Route path="/notations" element={<Notations />} title="Notations" />
-                                <Route path={"/gestion"} element={<Gestion />} title="Gestion" />
-                                <Route path={"/gestion/ajout"} element={<AddCourses />} title="Gestion" />
                                 <Route path="/account">
                                     <Route index element={<Informations />} title="Informations" />
                                     <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
@@ -107,6 +108,7 @@ const Routing = () => {
                             <Route path="/" element={<GlobalLayout />}>
                                 <Route path="/masterclass/*">
                                     <Route index element={<MasterclassAdmin />} title="Masterclass" />
+                                    <Route path=":id" element={<SingleMasterclass />} />
                                     <Route path="add" element={<FormMasterclass text={"Ajouter une masterclass"}/>} />
                                     <Route path="edit/:id" element={<FormMasterclass text={"Mettre à jour cette masterclass"}/>} />
                                 </Route>
@@ -131,9 +133,6 @@ const Routing = () => {
                                     <Route index element={<UserAdmin />} title="User" />
                                     <Route path="add" element={<FormUser title={"Ajouter un utilisateur"}/>} />
                                     <Route path="edit/:id" element={<FormUser title={"Mettre à jour cet utilisateur"}/>} />
-                                </Route>
-                                <Route path="/account/*">
-                                    <Route index element={<CompositorAdmin />} title="Account" />
                                 </Route>
                             </Route>
                         ) : (

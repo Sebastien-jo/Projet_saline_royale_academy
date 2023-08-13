@@ -3,8 +3,17 @@ form{
     width: 100%;
 }
 
-.form-section {
-    width: 100%;
+.form-row{
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.form-first.masterclassForm{
+    width: 30%;
+}
+
+.form-second.masterclassForm{
+    width: 60%;
 }
 
 .section-container {
@@ -12,21 +21,51 @@ form{
     border-radius: 10px;
     padding: 20px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 20px;
+    transition: height 0.3s ease-in-out;
+}
+
+.form-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.section-lesson-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .section-lesson {
     cursor: pointer;
     background: var(--background-color-light);
+    padding: 20px;
     transition: height 0.3s ease-in-out;
-    height: 30px; /* Initial height, adjust as needed */
+    height: 20px; /* Initial height, adjust as needed */
     border-radius: 10px;
+    border: 1.5px solid var(--primary-blue-40);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.section-lesson:last-child {
-    border-bottom: none;
+
+.section-lesson:last-child,
+.section-lesson,
+.section-container{
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.section-lesson.active {
+
+.section-lesson.active,
+.section-container.active{
     height: auto; /* Expanded height, it will grow to fit content */
 }
 
@@ -35,17 +74,14 @@ form{
     padding: 0;
 }
 
+.lesson-card{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 /* CSS for the "Ajouter une leçon" button */
 .section-lesson-add {
-    cursor: pointer;
-    text-align: center;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
     margin-top: 10px;
 }
 
-.section-lesson-add:hover {
-    background-color: #0056b3;
-}

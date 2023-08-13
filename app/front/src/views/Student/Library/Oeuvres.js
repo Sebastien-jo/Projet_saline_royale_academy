@@ -1,10 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import ListOeuvres from "../../../components/list/listOeuvres";
+import useOeuvres from "../../../hooks/api/useOeuvres";
+
 
 const OeuvresLibrary = () => {
+
+    const [oeuvres, setOeuvres] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAll} = useOeuvres();
+
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            setOeuvres(response);
+            console.log(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
@@ -24,6 +40,9 @@ const OeuvresLibrary = () => {
                         link: "/library/compositeur",
                         isLinkActive: false,
                     }]}/>
+
+                    <ListOeuvres oeuvres={oeuvres ? oeuvres : false} error={error} favoris={"oeuvre"}/>
+
             </div>
             <SidebarLibrary/>
         </div>
