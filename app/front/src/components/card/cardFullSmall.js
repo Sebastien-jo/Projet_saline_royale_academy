@@ -1,13 +1,13 @@
 import React from 'react';
 import Button from "../button/button";
 import chevron from "../../assets/icones/icon-chevron-White-stroke.svg";
-import favoris from "../../assets/icones/icon-signet-Blue-stroke.svg";
+import ButtonFavoris from "../button/ButtonFavoris";
 import ButtonIcon from "../button/buttonIcon";
 
-const CardFullSmall = ({title, subtitle, background, link}) => {
+const CardFullSmall = ({id, title, subtitle, background, link, favoris}) => {
     return(
         <div className="card-full-small" style={{background: `linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${background}) no-repeat center/cover`}}>
-            <ButtonIcon icon={favoris} className={"white signet-button"}/>
+            <ButtonFavoris favoris={favoris} id={id}/>
             <div>
                 <h1>{title}</h1>
                 {subtitle !== "" ? <p>{subtitle}</p> : null}

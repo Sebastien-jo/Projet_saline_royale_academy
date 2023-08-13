@@ -50,6 +50,15 @@ const useOeuvres = () => {
         }
     }
 
+    return {
+        handleGetAll,
+        handleGet,
+        handlePost,
+        handleDelete,
+        loading,
+        error
+    }
+
 }
 
 export default useOeuvres;

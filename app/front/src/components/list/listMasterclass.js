@@ -2,20 +2,9 @@ import React, {useState, useEffect} from 'react';
 import CardColumn from "../card/cardColumn";
 import FiltersCard from "../filters/filtersCard";
 import useMasterclassUser from "../../hooks/api/useMasterclassUser";
+import Loader from "../loader/loader";
 
-const ListMasterclass = ({list}) => {
-
-    const [masterclass, setMasterclass] = useState(false); // [state, function to update state
-    const {loading, error, handleGetAll } = useMasterclassUser();
-
-    useEffect(() => {
-        handleGetAll().then((response) => {
-            setMasterclass(response);
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, []);
+const ListMasterclass = ({masterclass, error, favoris}) => {
 
 
     return (
@@ -32,10 +21,13 @@ const ListMasterclass = ({list}) => {
                         masterclass ?
                             masterclass.map((item, index) => {
                                 return(
-                                    <CardColumn key={index} image={"https://picsum.photos/200/300"} title={item.masterclass.name} description={""} link={"#/masterclass/" + item.id} />
+                                    <CardColumn key={index} image={"https://picsum.photos/200/300"} title={item.name} description={""} link={"#/masterclass/" + item.id} favoris={favoris} id={item.id}/>
                                 )
                         })
-                        : null
+                         : error ?
+                            <p>Une erreur est survenue</p>
+                        :
+                        <Loader/>
                     }
                 </div>
             </div>

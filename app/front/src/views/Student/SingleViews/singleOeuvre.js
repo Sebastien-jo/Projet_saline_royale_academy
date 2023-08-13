@@ -1,14 +1,28 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "../../../components/button/button";
 import CardFull from "../../../components/card/cardFull";
-
 import "../../../styles/singleOeuvre.css";
+import useOeuvres from "../../../hooks/api/useOeuvres";
+import {useParams} from "react-router-dom";
 
 const SingleOeuvre = () => {
 
-    const test = [1,2,3,4,5];
+    const [oeuvre, setOeuvre] = useState(false); // [state, function to update state
+    const {loading, error, handleGet} = useOeuvres();
 
-    return (
+    const id = useParams().id;
+
+    useEffect(() => {
+        handleGet(id).then((response) => {
+            setOeuvre(response);
+            console.log(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+
+    return oeuvre ? (
         <div className="main-container">
             <div className="main-content">
                 <div className="oeuvre-container">
@@ -19,14 +33,10 @@ const SingleOeuvre = () => {
                         </div>
 
                         <div className="oeuvre-infos">
-                            <h2 className="oeuvre-title">Nom de L'oeuvre </h2>
-                            <span className={"subtitle"}>Compositeur : Nom du compositeur</span>
-                            <span className={"subtitle"}>Instrument : Piano, Violin, Cello, Viola, Flute</span>
-                           <p className={"oeuvre-description"}>Lorem ipsum dolor sit amet consectetur. Maecenas feugiat sed platea vulputate vulputate fringilla sit convallis in. Aliquet aliquam ullamcorper magna mauris hendrerit tellus dignissim cras eget. Tellus at cursus sagittis senectus ut mollis.
-                               Ac in augue nisl porta maecenas interdum consequat scelerisque sollicitudin. Tincidunt imperdiet vitae urna lectus id. Ornare nisl nunc rhoncus aliquet bibendum tempor ipsum. Viverra dignissim neque enim donec urna nam id fringilla dui. Molestie cras quisque neque justo.
-
-                               Lorem ipsum dolor sit amet consectetur. Maecenas feugiat sed platea vulputate vulputate fringilla sit convallis in. Aliquet aliquam ullamcorper magna mauris hendrerit tellus dignissim cras eget. Tellus at cursus sagittis senectus ut mollis.
-                               Ac in augue nisl porta maecenas interdum consequat scelerisque sollicitudin. Tincidunt imperdiet vitae urna lectus id. Ornare nisl nunc rhoncus aliquet bibendum tempor ipsum. Viverra dignissim neque enim donec urna nam id fringilla dui. Molestie cras quisque neque justo.</p>
+                            <h2 className="oeuvre-title">{oeuvre.name}</h2>
+                            <span className={"subtitle"}>Compositeur : { oeuvre.composer.name }</span>
+                            <span className={"subtitle"}>Instrument : {oeuvre.category.name}</span>
+                            <p className={"oeuvre-description"}>{ oeuvre.description}</p>
                             <div className="oeuvre-infos-row">
                                 <Button text={"Voir la partition"} link={"#"} className={"red-full"} isIcon={true}/>
                                 <Button text={"Télécharger l'audio"} link={"#"} className={"red-stroke"} isArrow={true}/>
@@ -38,17 +48,17 @@ const SingleOeuvre = () => {
                     <div className="oeuvre-other">
                         <h2 className="oeuvre-title">Vous voulez apprendre cette oeuvres ?</h2>
                         <div className="masterclass-infos-row">
-                            {
+                            {/*
                                 test.map((item, index) => {
                                     return <CardFull key={index} title={"Masterclass de piano"} subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec"} bouton={"Voir la masterclass"} link={"#"}/>
                                 })
-                            }
+                           */ }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    ) : "";
 }
 
 export default SingleOeuvre;

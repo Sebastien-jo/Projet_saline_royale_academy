@@ -1,9 +1,9 @@
 import React from 'react';
 import "../../styles/components/pastille.css";
 
-const Pastille = ({text, color}) => {
+const Pastille = ({text, className}) => {
     return(
-        <div className={`pastille ${color}`}>
+        <div className={`pastille ${className}`}>
             {text}
         </div>
     )

@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/components/form.css";
 
-const Select = ({name, label, value, onChange, error = "", list}) => {
+const Select = ({name, label, value, onChange, error = "", list, isId = false}) => {
 
     return(
         <div className="form-group">
@@ -9,7 +9,7 @@ const Select = ({name, label, value, onChange, error = "", list}) => {
             <select name={name} id={name} value={value} onChange={onChange} className="form-control">
                 {
                     list.map((item, index) => (
-                        <option key={index} value={item}>{item}</option>
+                        <option key={index} value={isId ? item.id : item}>{isId ? item.name : item}</option>
                     ))
                 }
             </select>

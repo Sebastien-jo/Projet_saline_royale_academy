@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import ListMasterclass from "../../../components/list/listMasterclass";
+import useMasterclass from "../../../hooks/api/useMasterclass";
 
 const MasterclassLibrary = () => {
+
+    const [masterclass, setMasterclass] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAll } = useMasterclass();
+
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            setMasterclass(response);
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
+
+
     return (
         <div className="main-container">
             <div className="main-content isSidebar">
@@ -24,6 +39,8 @@ const MasterclassLibrary = () => {
                         link: "/library/compositeur",
                         isLinkActive: false,
                     }]}/>
+
+                <ListMasterclass masterclass={masterclass ? masterclass : false} error={error} favoris={"masterclass"}/>
 
             </div>
             <SidebarLibrary/>

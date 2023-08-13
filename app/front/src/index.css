@@ -1,4 +1,5 @@
 html{
+  min-height: calc(100vh - 120px)!important;
   height: fit-content!important;
 }
 body, #root, .App{

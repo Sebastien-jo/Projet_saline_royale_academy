@@ -1,18 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Input from "../input";
 import ButtonIcon from "../../button/buttonIcon";
 import LessonMasterclass from "./lessonMasterclass";
-import plus from "../../../assets/icones/icon-add-White.svg";
+import plus from "../../../assets/icones/icon-add-Default.svg";
+import Button from "../../button/button";
 
 
-const SectionMasterclass = (index, sectionsContent, setSectionsContent) => {
+const SectionMasterclass = ({index, sectionsContent, setSectionsContent}) => {
 
     const [name, setName] = useState("");
     const [position, setPosition] = useState(index);
     const [lessonsContent, setLessonsContent] = useState({});
     const [lessons, setLessons] = useState([]);
-    const [nbLessons, setNbLessons] = useState(1);
+    const [nbLessons, setNbLessons] = useState(0);
     const [activeSection, setActiveSection] = useState(0);
+
+    useEffect(() => {
+        setSectionsContent((prevSectionsContent) => ({
+            ...prevSectionsContent,
+            [position]: {
+                name: name,
+                lessonsContent: lessonsContent,
+                position: nbLessons
+            }
+        }));
+    }, [name, lessonsContent, nbLessons]);
 
     return (
         <div className="form-section">
@@ -28,9 +40,12 @@ const SectionMasterclass = (index, sectionsContent, setSectionsContent) => {
                         </div>
                     ))}
                 </div>
-                <div className="section-lesson-add" onClick={() => setNbLessons((prevNbLessons) => prevNbLessons + 1)}>
-                    Ajouter une leçon
+
+                <div className="section-lesson-add">
+                    <Button text="Ajouter une leçon" className={"blue-stroke"} isIcon={true} icon={plus} click={() => setNbLessons(nbLessons + 1)} />
                 </div>
+
+
             </div>
         </div>
     );

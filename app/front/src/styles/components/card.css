@@ -21,6 +21,9 @@
     width: 100%;
     height: 100%;
 }
+.card-column .card-image{
+    position: relative;
+}
 
 .card-column .card-image img{
   width: 100%;
@@ -351,9 +354,3 @@
     background: var(--primary-white-100);
     width: auto;
 }*/
-
-
-
-
-
-

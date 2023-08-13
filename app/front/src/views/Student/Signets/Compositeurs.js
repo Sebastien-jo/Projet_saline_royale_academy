@@ -2,20 +2,21 @@ import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
 import ListCompositors from "../../../components/list/listCompositors";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
-import {getCompositors} from "../../../api/endpoints/compositor";
+
+import useFavoris from "../../../hooks/api/useFavoris";
+
 
 const Compositeurs = () => {
 
-    const [compositors, setCompositors] = useState([]); // [state, function to update state
+    const [compositors, setCompositors] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAllFavorisComposer} = useFavoris();
 
-    //call api to get list of composers
     useEffect(() => {
-        /*getCompositors().then((response) => {
-            setCompositors(response['hydra:member']);
-        }).catch((error) => {
-            console.log(error);
-        });*/
-
+        handleGetAllFavorisComposer().then((response) => {
+            setCompositors(response);
+        }).catch((err) => {
+            console.log(err);
+        });
     }, []);
 
 
@@ -39,7 +40,7 @@ const Compositeurs = () => {
                         isLinkActive: true,
 
                     }]}/>
-                <ListCompositors list={compositors}/>
+                <ListCompositors compositors={compositors ? compositors : false} error={error}/>
             </div>
             <SidebarLibrary/>
         </div>
