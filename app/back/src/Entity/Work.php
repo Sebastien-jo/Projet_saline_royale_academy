@@ -8,9 +8,11 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\WorkController;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\WorkRepository;
+use ArrayObject;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,6 +27,46 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(
             inputFormats: ['multipart' => ['multipart/form-data']],
             controller: WorkController::class,
+            openapi: new Model\Operation(
+                requestBody: new Model\RequestBody(
+                    content: new ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'name' => [
+                                        'type' => 'string',
+                                    ],
+                                    'category' => [
+                                        'type' => 'string',
+                                        'format' => 'iri',
+                                        'example' => 'api/categories/2',
+                                    ],
+                                    'date' => [
+                                        'type' => 'date',
+                                    ],
+                                    'composer' => [
+                                        'type' => 'string',
+                                        'format' => 'iri',
+                                        'example' => 'api/composers/2',
+                                    ],
+                                    'description' => [
+                                        'type' => 'string',
+                                    ],
+                                    'workAudio' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                    'workScores' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])
+                )
+            ),
             denormalizationContext: ['groups' => ['work:create']],
             security: 'is_granted("WORK_CREATE")',
         ),
