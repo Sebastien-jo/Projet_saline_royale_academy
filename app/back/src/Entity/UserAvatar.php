@@ -5,10 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\UserAvatarController;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserAvatarRepository;
+use ArrayObject;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,6 +25,23 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(
             inputFormats: ['multipart' => ['multipart/form-data']],
             controller: UserAvatarController::class,
+            openapi: new Model\Operation(
+                requestBody: new Model\RequestBody(
+                    content: new ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])
+                )
+            ),
             security: 'is_granted("USER_AVATAR_CREATE")',
             name: 'create_user_avatar'
         ),
@@ -31,7 +50,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         ),
     ],
     normalizationContext: ['groups' => ['avatar:read', 'timestamp']],
-    denormalizationContext: ['groups' => ['avatar:create']],
 )]
 #[Vich\Uploadable]
 class UserAvatar extends AbstractEntity

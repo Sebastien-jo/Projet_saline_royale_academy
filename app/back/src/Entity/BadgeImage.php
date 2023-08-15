@@ -5,10 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\BadgeImageController;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\BadgeImageRepository;
+use ArrayObject;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,6 +25,28 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(
             inputFormats: ['multipart' => ['multipart/form-data']],
             controller: BadgeImageController::class,
+            openapi: new Model\Operation(
+                requestBody: new Model\RequestBody(
+                    content: new ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                    'badge' => [
+                                        'type' => 'string',
+                                        'format' => 'iri',
+                                        'example' => 'api/badges/2',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])
+                )
+            ),
             denormalizationContext: ['groups' => ['badge:image:create']],
             security: 'is_granted("BADGE_IMAGE_CREATE")',
         ),
