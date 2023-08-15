@@ -36,10 +36,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                         'type' => 'string',
                                         'format' => 'binary',
                                     ],
-                                    'badge' => [
-                                        'type' => 'string',
-                                        'format' => 'iri',
-                                        'example' => 'api/badges/2',
+                                    'badgeId' => [
+                                        'type' => 'integer',
+                                        'example' => '2',
                                     ],
                                 ],
                             ],
