@@ -4,6 +4,7 @@ namespace App\Serializer\Denormalizer;
 
 use ApiPlatform\Api\UrlGeneratorInterface;
 use App\Entity\Masterclass;
+use App\Entity\Section;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -32,7 +33,7 @@ final class MasterclassDenormalizer implements DenormalizerInterface, Denormaliz
         $array = [];
         $sections = $this->denormalizer->denormalize(
             $data['sectionsContent'],
-            'App\Entity\Section[]',
+            Section::class . '[]',
             $format,
             $context
         );

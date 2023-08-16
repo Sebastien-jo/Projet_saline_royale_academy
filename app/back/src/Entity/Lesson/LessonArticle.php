@@ -9,8 +9,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity()]
 class LessonArticle extends Lesson
 {
+    final public const TYPE = 'lesson_article';
+
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['masterclass:write'])]
+    #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass:read:item'])]
     private ?string $content = null;
 
     public function getContent(): ?string

@@ -27,6 +27,8 @@ class Lesson extends AbstractEntity
 {
     use TimestampableTrait;
 
+    public const TYPE = 'lesson';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -45,7 +47,7 @@ class Lesson extends AbstractEntity
     #[Groups(['masterclass:write', 'masterclass:read:item'])]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::SMALLINT, )]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass:read:item'])]
     private ?int $position = null;
 
