@@ -36,7 +36,7 @@ final readonly class MasterclassProcessor implements ProcessorInterface
             /** @var User $user */
             $user = $this->security->getUser();
 
-            if (!$masterclass->getTeacher() instanceof \App\Entity\User) {
+            if (!$masterclass->getTeacher() instanceof User) {
                 $masterclass->setTeacher($user);
             }
 

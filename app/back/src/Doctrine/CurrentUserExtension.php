@@ -7,6 +7,7 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
+use App\Entity\Favorites\Favorites;
 use App\Entity\Favorites\FavoritesComposer;
 use App\Entity\Favorites\FavoritesMasterclass;
 use App\Entity\Favorites\FavoritesWork;
@@ -37,6 +38,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
                 case FavoritesComposer::class:
                 case FavoritesMasterclass::class:
                 case FavoritesWork::class:
+                case Favorites::class:
                     $this->addWhereCurrentUser($queryBuilder, 'user');
                     break;
                 default:

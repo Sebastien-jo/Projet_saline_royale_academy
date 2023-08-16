@@ -19,19 +19,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[
-    ORM\Entity(repositoryClass: MasterclassRepository::class)]
+#[ORM\Entity(repositoryClass: MasterclassRepository::class)]
 #[ApiResource(operations: [
     new Get(normalizationContext: ['groups' => ['masterclass:read:item']]),
-    new GetCollection(),
+    new GetCollection(normalizationContext: ['groups' => ['masterclass:read']]),
     new Delete(),
     new Put(),
     new Post(
         security: "is_granted('ROLE_TEACHER') or is_granted('ROLE_ADMIN')",
+        validationContext: ['groups' => ['masterclass:write']],
         processor: MasterclassProcessor::class
     ),
 ], normalizationContext: [
-    'groups' => ['masterclass:read'],
+    'groups' => ['masterclass:normalization'],
 ], denormalizationContext: ['groups' => ['masterclass:write']])]
 #[ORM\HasLifecycleCallbacks()]
 class Masterclass extends AbstractEntity
@@ -42,7 +42,7 @@ class Masterclass extends AbstractEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass_user:read:item'])]
+    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass_user:read:item', 'masterclass:normalization'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -55,7 +55,7 @@ class Masterclass extends AbstractEntity
     private ?Work $work = null;
 
     #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: Section::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass:read:item', 'masterclass:write'])]
+    #[Groups(['masterclass:read:item', 'masterclass:write', 'masterclass:normalization'])]
     #[ApiProperty(readableLink: true, writableLink: true)]
     private Collection $sections;
 

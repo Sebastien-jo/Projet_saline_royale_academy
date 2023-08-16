@@ -13,32 +13,39 @@ final class SectionDenormalizer implements DenormalizerInterface, DenormalizerAw
 {
     use DenormalizerAwareTrait;
 
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly EntityManagerInterface $em
+    ) {
     }
 
     /**
      * {@inheritdoc}
      *
      * @param array<mixed> $context
+     *
+     * @return array<Section>
      */
-    public function denormalize($data, string $type, string $format = null, array $context = []): Section
+    public function denormalize($data, string $type, string $format = null, array $context = []): array
     {
-        $array = [];
-        $lessons = $this->denormalizer->denormalize(
-            $data['lessonsContent'],
-            'App\Entity\Lesson\Lesson[]',
-            $format,
-            $context + [self::class => true]
-        );
-        unset($data['lessonsContent']);
-        foreach ($lessons as $lesson) {
-            $this->em->persist($lesson);
-            $this->em->flush();
-            $array[] = $this->urlGenerator->generate('api_lessons_get_item', ['id' => $lesson->getId()]);
-        }
+        foreach ($data as $i => $sectionContent) {
+            $array = [];
 
-        $data['lessons'] = $array;
+            $lessons = $this->denormalizer->denormalize(
+                $sectionContent['lessonsContent'],
+                'App\Entity\Lesson\Lesson[]',
+                $format,
+                $context + [self::class => true]
+            );
+            unset($data[$i]['lessonsContent']);
+
+            foreach ($lessons as $lesson) {
+                $this->em->persist($lesson);
+                $this->em->flush();
+                $array[] = $this->urlGenerator->generate('api_lessons_get_item', ['id' => $lesson->getId()]);
+            }
+            $data[$i]['lessons'] = $array;
+        }
 
         return $this->denormalizer->denormalize($data, $type, $format, $context + [self::class => true]);
     }
@@ -49,10 +56,10 @@ final class SectionDenormalizer implements DenormalizerInterface, DenormalizerAw
     public function supportsDenormalization($data, $type, $format = null): bool
     {
         /* @phpstan-ignore-next-line */
-        return in_array($format, ['json', 'jsonld'], true) && is_a(
-            $type,
-            Section::class,
+        return in_array(
+            $format,
+            ['json', 'jsonld'],
             true
-        ) && isset($data['lessonsContent']);
+        ) && $type === Section::class . '[]' && isset($data[0]['lessonsContent']);
     }
 }
