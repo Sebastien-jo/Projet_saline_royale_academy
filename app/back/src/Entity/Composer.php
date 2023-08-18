@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Enum\Nationality;
 use App\Repository\ComposerRepository;
+use App\State\ComposerProvider;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,8 +33,8 @@ use Symfony\Component\Validator\Constraints as Assert;
             securityMessage: 'Only admin can delete a composer',
         ),
         new Put(securityPostDenormalize: "is_granted('COMPOSER_EDIT')"),
-        new Get(security: "is_granted('COMPOSER_VIEW')"),
-        new GetCollection(security: "is_granted('COMPOSER_VIEW_LIST')"),
+        new Get(security: "is_granted('COMPOSER_VIEW')", provider: ComposerProvider::class),
+        new GetCollection(security: "is_granted('COMPOSER_VIEW_LIST')", provider: ComposerProvider::class),
     ],
     normalizationContext: ['groups' => ['composer:read']],
     denormalizationContext: ['groups' => ['composer:create']]
@@ -94,6 +95,9 @@ class Composer extends AbstractEntity
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'composers')]
     #[Groups(['composer:read'])]
     private Collection $categories;
+
+    #[Groups(['composer:read'])]
+    private bool $isFavorite = false;
 
     public function __construct()
     {
@@ -233,5 +237,17 @@ class Composer extends AbstractEntity
     public function setNationality(Nationality $nationality): void
     {
         $this->nationality = $nationality;
+    }
+
+    public function setIsFavorite(bool $isFavorite): static
+    {
+        $this->isFavorite = $isFavorite;
+
+        return $this;
+    }
+
+    public function getIsFavorite(): bool
+    {
+        return $this->isFavorite;
     }
 }

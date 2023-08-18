@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['user', 'work'], groups: ['favorites_work:write'])]
 class FavoritesWork extends Favorites
 {
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'favoritesWorks')]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['favorites:read', 'favorites_work:write'])]
     #[Assert\NotBlank(allowNull: false, groups: ['favorites_work:write'])]
