@@ -10,8 +10,10 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\WorkController;
+use App\Entity\Favorites\FavoritesWork;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\WorkRepository;
+use App\State\WorkProvider;
 use ArrayObject;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -72,9 +74,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         ),
         new Get(
             security: 'is_granted("WORK_VIEW")',
+            provider: WorkProvider::class
         ),
         new GetCollection(
             security: 'is_granted("WORK_VIEW_LIST")',
+            provider: WorkProvider::class
         ),
         new Delete(
             security: 'is_granted("WORK_DELETE")',
@@ -124,11 +128,18 @@ class Work extends AbstractEntity
     #[Groups(['work:read'])]
     private Collection $workScores;
 
+    #[ORM\OneToMany(mappedBy: 'work', targetEntity: FavoritesWork::class, orphanRemoval: true)]
+    private Collection $favoritesWorks;
+
+    #[Groups(['work:read'])]
+    private bool $isFavorite = false;
+
     public function __construct($array = [])
     {
         parent::__construct($array);
         $this->masterclasses = new ArrayCollection();
         $this->workScores = new ArrayCollection();
+        $this->favoritesWorks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -265,5 +276,45 @@ class Work extends AbstractEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoritesWork>
+     */
+    public function getFavoritesWorks(): Collection
+    {
+        return $this->favoritesWorks;
+    }
+
+    public function addFavoritesWork(FavoritesWork $favoritesWork): static
+    {
+        if (!$this->favoritesWorks->contains($favoritesWork)) {
+            $this->favoritesWorks->add($favoritesWork);
+            $favoritesWork->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritesWork(FavoritesWork $favoritesWork): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->favoritesWorks->removeElement($favoritesWork) && $favoritesWork->getWork() === $this) {
+            $favoritesWork->setWork(null);
+        }
+
+        return $this;
+    }
+
+    public function setIsFavorite(bool $isFavorite): static
+    {
+        $this->isFavorite = $isFavorite;
+
+        return $this;
+    }
+
+    public function getIsFavorite(): bool
+    {
+        return $this->isFavorite;
     }
 }

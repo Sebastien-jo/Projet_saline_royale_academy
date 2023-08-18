@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Composer;
+use App\Entity\Favorites\FavoritesComposer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,5 +38,64 @@ class ComposerRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return array<Composer>
+     */
+    public function FindAllWithFavorite(int $userId): array
+    {
+        $composersWithFavorites = [];
+        $dql = '
+            SELECT c,
+            CASE WHEN (f.user = :userId AND c.id = f.composer) THEN true ELSE false END AS isFavorite
+            FROM ' . Composer::class . ' c
+            LEFT JOIN ' . FavoritesComposer::class . ' f WITH c.id = f.composer AND f.user = :userId
+        ';
+
+        $results = $this->getEntityManager()->createQuery($dql)
+                ->setParameter('userId', $userId)
+                ->getResult()
+        ;
+
+        foreach ($results as $result) {
+            $isFavorite = (bool) $result['isFavorite'];
+
+            /** @var Composer $composer */
+            $composer = $result[0];
+            $composer->setIsFavorite($isFavorite);
+
+            $composersWithFavorites[] = $composer;
+        }
+
+        return $composersWithFavorites;
+    }
+
+    public function FindWithFavorite(int $id, int $userId): ?Composer
+    {
+        $dql = '
+            SELECT c,
+            CASE WHEN (f.user = :userId AND c.id = f.composer) THEN true ELSE false END AS isFavorite
+            FROM ' . Composer::class . ' c
+            LEFT JOIN ' . FavoritesComposer::class . ' f WITH c.id = f.composer AND f.user = :userId
+            WHERE c.id = :id
+        ';
+
+        $results = $this->getEntityManager()->createQuery($dql)
+                ->setParameter('userId', $userId)
+                ->setParameter('id', $id)
+                ->getResult()
+        ;
+        foreach ($results as $result) {
+            /** @var Composer $composer */
+            $composer = $result[0];
+            $isFavorite = $result['isFavorite'];
+
+            $composer->setIsFavorite($isFavorite); // Assuming you have a setter for the isFavorite property
+
+            return $composer;
+        }
+
+        return null;
     }
 }

@@ -15,6 +15,7 @@ use App\Entity\Favorites\FavoritesMasterclass;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MasterclassRepository;
 use App\State\MasterclassProcessor;
+use App\State\MasterclassProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,8 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MasterclassRepository::class)]
 #[ApiResource(operations: [
-    new Get(normalizationContext: ['groups' => ['masterclass:read:item']]),
-    new GetCollection(normalizationContext: ['groups' => ['masterclass:read']]),
+    new Get(normalizationContext: ['groups' => ['masterclass:read:item']], provider: MasterclassProvider::class),
+    new GetCollection(normalizationContext: ['groups' => ['masterclass:read']], provider: MasterclassProvider::class),
     new Delete(),
     new Put(),
     new Post(
@@ -81,6 +82,9 @@ class Masterclass extends AbstractEntity
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['masterclass:read', 'masterclass:write'])]
     private ?Category $category = null;
+
+    #[Groups(['masterclass:read'])]
+    private bool $isFavorite = false;
 
     public function __construct(array $array = [])
     {
@@ -225,5 +229,17 @@ class Masterclass extends AbstractEntity
         $this->category = $category;
 
         return $this;
+    }
+
+    public function setIsFavorite(bool $isFavorite): static
+    {
+        $this->isFavorite = $isFavorite;
+
+        return $this;
+    }
+
+    public function getIsFavorite(): bool
+    {
+        return $this->isFavorite;
     }
 }
