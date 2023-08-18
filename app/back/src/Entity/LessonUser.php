@@ -2,14 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Patch;
 use App\Entity\Lesson\Lesson;
 use App\Entity\Traits\IdentifiableTrait;
 use App\Repository\LessonUserRepository;
+use App\State\LessonUserProcessor;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    operations: [
+        new Patch(
+            uriTemplate: '/lesson_users/{id}/validate',
+            denormalizationContext: ['groups' => ['lesson_user:patch']],
+            security: "is_granted('LESSON_USER_VALIDATE', object)",
+            processor: LessonUserProcessor::class
+        ),
+    ],
+    normalizationContext: ['groups' => ['lesson_user:read']],
+    denormalizationContext: ['groups' => ['lesson_user:write']]
+)]
 #[ORM\Entity(repositoryClass: LessonUserRepository::class)]
 class LessonUser extends AbstractEntity
 {

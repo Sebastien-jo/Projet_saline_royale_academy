@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Lesson\Lesson;
 use App\Entity\LessonUser;
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class LessonUserManager
@@ -24,5 +25,11 @@ readonly class LessonUserManager
         }
 
         return $lessonUser;
+    }
+
+    public function validate(LessonUser $lessonUser, DateTimeImmutable $date = null): void
+    {
+        $lessonUser->setValidatedAt($date ?? new DateTimeImmutable());
+        $this->entityManager->flush();
     }
 }
