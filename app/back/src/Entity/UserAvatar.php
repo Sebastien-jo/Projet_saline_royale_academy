@@ -36,6 +36,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                         'type' => 'string',
                                         'format' => 'binary',
                                     ],
+                                    'userId' => [
+                                        'type' => 'integer',
+                                        'format' => 'id',
+                                    ],
                                 ],
                             ],
                         ],
@@ -49,7 +53,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             security: 'is_granted("USER_AVATAR_DELETE", object)',
         ),
     ],
-    normalizationContext: ['groups' => ['avatar:read', 'timestamp']],
+    normalizationContext: ['groups' => ['avatar:read', 'timestamp', 'id']],
 )]
 #[Vich\Uploadable]
 class UserAvatar extends AbstractEntity
@@ -95,7 +99,7 @@ class UserAvatar extends AbstractEntity
 
     public function getContentUrl(): ?string
     {
-        return 'files/avatar/' . $this->getImagePath();
+        return 'files/avatars/' . $this->getImagePath();
     }
 
     public function getUser(): ?User
