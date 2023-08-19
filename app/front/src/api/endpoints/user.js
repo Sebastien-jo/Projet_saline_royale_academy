@@ -1,5 +1,5 @@
 import React from "react";
-import {getRequest, deleteRequest, putRequest, postRequestJsonNotToken} from "../helpers/request";
+import {getRequest, deleteRequest, putRequest, postRequestJsonNotToken, postRequestFormData} from "../helpers/request";
 
 
 export const getUsers = () => {
@@ -20,5 +20,13 @@ export const addUser = (data) => {
 
 export const updateUser = (id, data) => {
     return putRequest(`/users/${id}`, data);
+}
+
+export const addUserImage = (data) => {
+    return postRequestFormData(`/user_avatars`, data);
+}
+
+export const deleteUserImage = (id) => {
+    return deleteRequest(`/user_images/${id}`);
 }
 

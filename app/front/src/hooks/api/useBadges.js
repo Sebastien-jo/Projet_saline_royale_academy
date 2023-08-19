@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {getBadges, getBadge, addBadge, updateBadge, deleteBadge} from "../../api/endpoints/badge";
+import {getBadges, getBadge, addBadge, updateBadge, deleteBadge, addBadgeImage, deleteBadgeImage} from "../../api/endpoints/badge"
 
 const useBagdes = () => {
 
@@ -62,6 +62,28 @@ const useBagdes = () => {
         }
     }
 
+    const handleAddBadgeImage = async (data) => {
+        try{
+            const response = await addBadgeImage(data);
+            // Handle the response if needed
+        } catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    const handleDeleteBadgeImage = async (id) => {
+        try{
+            const response = await deleteBadgeImage(id);
+            // Handle the response if needed
+        } catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }
+
 
     return {
         loading,
@@ -70,7 +92,9 @@ const useBagdes = () => {
         handleGet,
         handlePost,
         handleDelete,
-        handleUpdate
+        handleUpdate,
+        handleAddBadgeImage,
+        handleDeleteBadgeImage
     }
 }
 

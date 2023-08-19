@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {getUsers, getUser, deleteUser, updateUser, addUser} from '../../api/endpoints/user';
+import {getUsers, getUser, deleteUser, updateUser, addUser, addUserImage, deleteUserImage} from '../../api/endpoints/user';
 
 const useUsers = () => {
     const [loading, setLoading] = useState(false);
@@ -60,14 +60,38 @@ const useUsers = () => {
         }
     }
 
+    const handleAddUserImage = async (data) => {
+        try {
+            const response = await addUserImage(data);
+            return response; // Return the response from the function
+        } catch (e) {
+            setError(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleDeleteUserImage = async (id) => {
+        try {
+            const response = await deleteUserImage(id);
+            return response; // Return the response from the function
+        } catch (e) {
+            setError(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return {
         handleDelete,
         handleUpdate,
         handleGet,
         handleGetAll,
         handlePost,
+        handleAddUserImage,
+        handleDeleteUserImage,
         loading,
-        error,
+        error
     };
 };
 

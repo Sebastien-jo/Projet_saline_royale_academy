@@ -5,26 +5,12 @@ import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import useUsers from "../../hooks/api/useUsers";
+import logo_user from "../../assets/logo/logo_user.png";
 
-const ListUsers= ({text}) => {
+const ListUsers= ({text, users, setId, handleRemove}) => {
 
     const [openPopup, setOpen] = useState(false);
-    const [id, setId] = useState(null);
-    const [users, setUsers] = useState([]);
-    const [refresh, setRefresh] = useState(false);
-    const {loading, error, handleDelete, handleGetAll} = useUsers();
-
-    const handleRemove = () => {
-        handleDelete(id).then((response) => {setRefresh(!refresh)}).catch((err) => {console.log(err);});
-    }
-
-    useEffect(() => {
-        handleGetAll().then((response) => {
-            setUsers(response);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }, [refresh]);
+    console.log(users);
 
     return (
         <div className="container-list">
@@ -41,7 +27,13 @@ const ListUsers= ({text}) => {
                             return(
                                 <div className={"card-column"} key={index}>
                                     <div className={"card_avatar"}>
-                                        <img src={"https://picsum.photos/200/300"} alt={"avatar"} />
+                                        {
+                                            user.userAvatar ?
+                                                <img src={user.userAvatar.contentUrl} alt={"avatar"} />
+                                                :
+                                                <img src={logo_user} alt={"avatar"} />
+                                        }
+
                                     </div>
                                     <div>
                                         <p className={"card-column__title"}>{user.firstName}</p>
@@ -51,7 +43,15 @@ const ListUsers= ({text}) => {
                                     <p className={"card-column__text"}>{ user.roles[0]}</p>
                                     <div className={"card-column__buttons"}>
                                         <Button text="Modifier" link={`#/users/edit/${user.id}`} className={"blue-stroke"} isIcon={true} icon={edit} />
-                                        <Button text="Supprimer" click={() => { setOpen(true); setId(user.id)}} className={"red-full"} isIcon={true} icon={trash} />
+                                        <Button text="Supprimer"
+                                                click={() => {
+                                                    setOpen(true);
+                                                    //setId({badgeId: badge.id, imageId: badge.badgeImage ? badge.badgeImage.id : null})
+                                                    setId({userId: user.id, imageId: user.image ? user.image.id : null})
+                                                }}
+                                                className={"red-full"}
+                                                isIcon={true}
+                                                icon={trash} />
                                     </div>
                                 </div>
                             )

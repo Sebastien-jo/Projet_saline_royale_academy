@@ -5,12 +5,11 @@ import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import '../../styles/components/badge.css';
+import useBadges from "../../hooks/api/useBadges";
 
-const ListBadges= ({text, badges}) => {
+const ListBadges= ({text, badges, handleRemove, setId}) => {
 
     const [openPopup, setOpen] = useState(false);
-
-    console.log(badges.id);
 
     return (
         <div className="container-list">
@@ -27,7 +26,12 @@ const ListBadges= ({text, badges}) => {
                             return(
                                 <div className={"card-column"} key={index}>
                                     <div className={"card_avatar"}>
-                                        <img src={badge.imagePath} alt={"avatar"} />
+                                        {
+                                            badge.badgeImage ?
+                                                <img src={badge.badgeImage.contentUrl} alt={"avatar"} />
+                                                :
+                                                <img src={"https://picsum.photos/200/300"} alt={"avatar"} />
+                                        }
                                     </div>
                                     <div>
                                         <p className={"card-column__title"}>{badge.name}</p>
@@ -36,7 +40,15 @@ const ListBadges= ({text, badges}) => {
                                     <p className={"card-column__text"}>{badge.category}</p>
                                     <div className={"card-column__buttons"}>
                                         <Button text="Modifier" link={`#/badges/edit/${index}`} className={"blue-stroke"} isIcon={true} icon={edit} />
-                                        <Button text="Supprimer" click={() => setOpen(true)} className={"red-full"} isIcon={true} icon={trash} />
+                                        <Button text="Supprimer"
+                                                click={() => {
+                                                    setOpen(true);
+                                                    setId({badgeId: badge.id, imageId: badge.badgeImage ? badge.badgeImage.id : null})
+                                                }}
+                                                className={"red-full"}
+                                                isIcon={true}
+                                                icon={trash}
+                                        />
                                     </div>
                                 </div>
                             )
@@ -44,7 +56,7 @@ const ListBadges= ({text, badges}) => {
                     }
                 </div>
 
-                <PopupDelete openPopup={openPopup} setOpen={setOpen} title={"Supprimer un badge"} text={"Êtes-vous sûr de vouloir supprimer ce badge ?"} />
+                <PopupDelete openPopup={openPopup} setOpen={setOpen} title={"Supprimer un badge"} text={"Êtes-vous sûr de vouloir supprimer ce badge ?"} deleteFunc={handleRemove} />
             </div>
         </div>
     );

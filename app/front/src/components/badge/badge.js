@@ -6,22 +6,20 @@ import img2 from '../../assets/logo/logo_badge_2.png';
 import img3 from '../../assets/logo/logo_badge_3.png';
 
 
-const Badge = () => {
-
-    const test = [img, img2, img3];
+const Badge = ({name, image}) => {
 
     return (
         <div className={"badge"}>
             <div className={"badge-card"}>
                 <div className={"badge-card-img"}>
-                    <img src={test[Math.floor(Math.random() * test.length)]} alt=""/>
+                    <img src={image} alt={image}/>
                 </div>
 
                 <Tooltip />
             </div>
 
             <div className={"badge-card-infos"}>
-                <h3>Nom du badge</h3>
+                <h3>{ name }</h3>
             </div>
 
         </div>
