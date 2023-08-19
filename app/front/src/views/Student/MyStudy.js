@@ -34,7 +34,7 @@ const MyStudy = () => {
                         {
                             masterclass.map((item, index) => {
                                 return(
-                                    <CardFullSmall key={index} title={item.name} subtitle={`Professeur: ${item.teacher.firstName} ${item.teacher.lastName}`} background={"https://picsum.photos/900/1000"} link={"#/masterclass/" + item.id} />
+                                    <CardFullSmall key={index} title={item.name} subtitle={`Professeur: ${item.teacher.firstName} ${item.teacher.lastName}`} background={"https://picsum.photos/900/1000"} link={"#/masterclass/" + item.id} id={item.id}/>
                                 )
                             })
                         }

@@ -39,7 +39,15 @@ const ListForum = ({text, setSidebar, setActiveSidebar}) => {
                         forums ?
                             forums.map((item, index) => {
                                 return(
-                                    <CardForum key={index} forum={item} setSidebar={setSidebar} handleSelect={() => handleForumSelect(item.id)} isSelected={selectedForumId === item.id} setActiveSidebar={setActiveSidebar} setRefresh={setRefresh} refresh={refresh}/>
+                                    <CardForum
+                                        key={index}
+                                        forum={item}
+                                        setSidebar={setSidebar}
+                                        handleSelect={() => handleForumSelect(item.id)}
+                                        isSelected={selectedForumId === item.id}
+                                        setActiveSidebar={setActiveSidebar}
+                                        setRefresh={setRefresh}
+                                        refresh={refresh}/>
                                 )
                             }).reverse()
                             : <Loader />

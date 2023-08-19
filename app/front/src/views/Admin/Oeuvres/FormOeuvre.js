@@ -1,11 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import {getCompositor} from "../../../api/endpoints/compositor";
 import Input from "../../../components/form/input";
 import Textarea from "../../../components/form/textarea";
 import Button from "../../../components/button/button";
 import Select from "../../../components/form/select";
 import {getOeuvre} from "../../../api/endpoints/oeuvres";
+import InputFile from "../../../components/form/inputFile";
+import SubmitBtn from "../../../components/form/submitBtn";
+import useCompositors from "../../../hooks/api/useCompositors";
+import useCategories from "../../../hooks/api/useCategories";
+import useOeuvres from "../../../hooks/api/useOeuvres";
+
 
 const FormOeuvre = ({title}) => {
 
@@ -14,14 +20,55 @@ const FormOeuvre = ({title}) => {
     const [oeuvre, setOeuvre] = useState([]);
 
     const [name, setName] = useState(id ? oeuvre.name : "");
-    const [partitionImage, setPartitionImage] = useState(id ? oeuvre.partitionImage : "");
     const [composer, setComposer] = useState(id ? oeuvre.composer : "");
-    const [instrument, setInstrument] = useState(id ? oeuvre.instrument : "");
+    const [category, setCategory] = useState(id ? oeuvre.category : "");
     const [description, setDescription] = useState(id ? oeuvre.description : "");
-    const [audioPartition, setAudioPartition] = useState(id ? oeuvre.audioPartition : "");
-    const [pdf, setPDF] = useState(id ? oeuvre.pdf : "");
+    const [audioPartition, setAudioPartition] = useState(id ? oeuvre.workAudio : "");
+    const [partition, setPartition] = useState(id ? oeuvre.workScores : "");
+
+    const fileInputRefAudio = useRef(null);
+    const fileInputRefPartition = useRef(null);
+
+    const navigate = useNavigate();
+
+    //get compositors & categories
+    const {loading: loadingCompositors, error: errorCompositors, handleGetAll : handleGetAllCompositors } = useCompositors();
+    const {loading: loadingCategories, error: errorCategories, handleGetAll: handleGetAllCategories } = useCategories();
+    const {handlePost} = useOeuvres();
 
 
+    const [compositors, setCompositors] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+
+    const handleFileChange = (e, {type}) => {
+        if(type === "audio"){
+            setAudioPartition(e.target.files[0]);
+        }
+        else if(type === "partition"){
+            setPartition(e.target.files[0]);
+        }
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const date = new Date();
+        //form data
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("composer", `api/composers/${composer}`);
+        formData.append("date", date.toISOString());
+        formData.append("category", `api/categories/${category}`);
+        formData.append("description", description);
+        formData.append("workAudio", audioPartition);
+        formData.append("workScores", partition);
+
+        handlePost(formData).then((response) => {
+            navigate("/oeuvres");
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 
     useEffect(() => {
         if(id !== undefined){
@@ -31,31 +78,43 @@ const FormOeuvre = ({title}) => {
                 console.log(error);
             });
         }
+
+        handleGetAllCompositors().then((response) => {
+            // Filter out items that are already in the listWorks
+            const newItems = response.filter(element => !compositors.some(item => item.id === element.id));
+            // Update the state only once with the new items
+            setCompositors([...compositors, ...newItems]);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        handleGetAllCategories().then((response) => {
+            // Filter out items that are already in the listWorks
+            const newItems = response.filter(element => !categories.some(item => item.id === element.id));
+            // Update the state only once with the new items
+            setCategories([...categories, ...newItems]);
+        }).catch((err) => {
+            console.log(err);
+        });
     }, []);
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(event.target);
-    }
 
     return (
         <div className="main-container">
             <div className="main-content">
                 <h2>{ title }</h2>
-                <form onSubmit={handleSubmit} method="POST">
+                <form onSubmit={handleSubmit} method="POST" enctype="multipart/form-data">
                     <div className={`form-first`}>
-                        {/* Name => text, PartitionImage => file, Composer => select, Instrument => select, Description => textarea, AudioPartition => file, PDF => file */}
 
                         <Input type="text" name="name" label="Nom de l'oeuvre" onChange={e => setName(e.target.value)} value={name}/>
-                        <Input type="file" name="PartitionImage" label="Image de la partition" onChange={e => setPartitionImage(e.target.value)} value={partitionImage}/>
-                        <Select name="Composer" label="Compositeur" list={[]} onChange={e => setComposer(e.target.value)} value={composer}/>
-                        <Select name="Instrument" label="Instrument" list={[]} onChange={e => setInstrument(e.target.value)} value={instrument}/>
+                        <Select name="Composer" label="Compositeur" list={compositors !== [] ? compositors : [] } onChange={e => setComposer(e.target.value)} value={composer} isId={true}/>
+                        <Select name="Category" label="Category" list={categories !== [] ? categories : []} onChange={e => setCategory(e.target.value)} value={category} isId={true}/>
                         <Textarea name="Description" label="Description" onChange={e => setDescription(e.target.value)} value={description}/>
-                        <Input type="file" name="AudioPartition" label="Audio de la partition" onChange={e => setAudioPartition(e.target.value)} value={audioPartition}/>
-                        <Input type="file" name="PDF" label="PDF" onChange={e => setPDF(e.target.value)} value={pdf}/>
 
-                        <Button text="Ajouter" className={"red-full"} type="submit" isArrow={true} />
+                        <InputFile reference={fileInputRefAudio} name={"workAudio"} label={"Audio de l'oeuvre"} onChange={(e) => handleFileChange(e, {type: "audio"})} accept={".mp3"}/>
+                        <InputFile reference={fileInputRefPartition} name={"workScores"} label={"Partition de l'ouvres"} onChange={(e) => handleFileChange(e, {type: "partition"})} accept={".pdf"}/>
+
+
+                        <SubmitBtn title={"Ajouter"} />
                     </div>
                 </form>
             </div>

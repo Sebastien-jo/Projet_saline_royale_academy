@@ -3,10 +3,11 @@ import "../../../styles/singleOeuvre.css";
 import { useParams } from 'react-router-dom';
 import {getCompositor} from "../../../api/endpoints/compositor";
 import Loader from "../../../components/loader/loader";
+import Pastille from "../../../components/pastille/pastille";
 
 const SingleCompositeur = () => {
 
-        const [compositor, setCompositor] = useState({});
+        const [compositor, setCompositor] = useState(false);
 
        const {id} = useParams();
 
@@ -19,6 +20,7 @@ const SingleCompositeur = () => {
            });
        }, [id]);
 
+
     return compositor ? (
         <div className="main-container">
             <div className="main-content">
@@ -26,13 +28,21 @@ const SingleCompositeur = () => {
                     <div className="oeuvre-content">
 
                         <div className="oeuvre-img">
-                            <img src={compositor.picture} alt="oeuvre"/>
+                           <img src={compositor.picture} alt="oeuvre"/>
                         </div>
 
                         <div className="oeuvre-infos">
                             <h2 className="oeuvre-title">{compositor.name}</h2>
                             <span className={"subtitle"}>Née le : { compositor.birth }</span>
-                            <span className={"subtitle"}>Instrument : { compositor.categories }</span>
+                            <span className={"subtitle"}>Instrument :
+                                {
+                                    compositor.categories.map((item, index) => {
+                                        return(
+                                           <Pastille key={index} text={item.name} className={item.name} />
+                                        )
+                                    })
+                                }
+                            </span>
                            <p className={"oeuvre-description"}>{ compositor.description}</p>
                         </div>
 

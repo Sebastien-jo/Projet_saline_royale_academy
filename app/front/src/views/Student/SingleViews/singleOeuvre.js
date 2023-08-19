@@ -38,9 +38,13 @@ const SingleOeuvre = () => {
                             <span className={"subtitle"}>Instrument : {oeuvre.category.name}</span>
                             <p className={"oeuvre-description"}>{ oeuvre.description}</p>
                             <div className="oeuvre-infos-row">
-                                <Button text={"Voir la partition"} link={"#"} className={"red-full"} isIcon={true}/>
-                                <Button text={"Télécharger l'audio"} link={"#"} className={"red-stroke"} isArrow={true}/>
-                            </div>
+                                {
+                                    oeuvre.workScores ? <Button text={"Voir la partition"} link={"#"} className={"red-full"} isIcon={true}/> : null
+                                }
+                                {
+                                    oeuvre.workAudio ? <Button text={"Télécharger l'audio"} link={"#"} className={"red-stroke"} isArrow={true}/> : null
+                                }
+                               </div>
                         </div>
 
                     </div>

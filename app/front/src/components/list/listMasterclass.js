@@ -21,9 +21,18 @@ const ListMasterclass = ({masterclass, error, favoris}) => {
                         masterclass ?
                             masterclass.map((item, index) => {
                                 return(
-                                    <CardColumn key={index} image={"https://picsum.photos/200/300"} title={item.name} description={""} link={"#/masterclass/" + item.id} favoris={favoris} id={item.id}/>
+                                    <CardColumn
+                                        key={index}
+                                        image={"https://picsum.photos/200/300"}
+                                        title={item.name}
+                                        description={""}
+                                        link={"#/masterclass/" + item.id}
+                                        favoris={favoris}
+                                        id={item.id}
+                                        category={[]}
+                                    />
                                 )
-                        })
+                        }).reverse()
                          : error ?
                             <p>Une erreur est survenue</p>
                         :

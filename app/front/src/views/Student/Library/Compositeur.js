@@ -4,11 +4,15 @@ import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
 import useCompositors from "../../../hooks/api/useCompositors";
+import useSidebarContent from "../../../hooks/useSidebarContent";
 
 const CompositeurLibrary = () => {
 
     const [compositors, setCompositors] = useState(false); // [state, function to update state
     const {loading, error, handleGetAll} = useCompositors();
+
+    const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
+
 
     useEffect(() => {
         handleGetAll().then((response) => {
@@ -17,6 +21,8 @@ const CompositeurLibrary = () => {
             console.log(err);
         });
     }, []);
+
+    console.log(sidebarContent);
 
     return (
         <div className="main-container">
@@ -39,9 +45,9 @@ const CompositeurLibrary = () => {
 
                     }]}/>
 
-                <ListCompositors compositors={compositors ? compositors : false} error={error} favoris={"composer"}/>
+                <ListCompositors compositors={compositors ? compositors : false} error={error} favoris={"composer"} updateSidebarContent={updateSidebarContent} />
             </div>
-            <SidebarLibrary/>
+            <SidebarLibrary sidebarContent={sidebarContent} clearSidebarContent={clearSidebarContent} type={"composer"} />
         </div>
     );
 }

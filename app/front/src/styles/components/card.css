@@ -142,6 +142,7 @@
 }
 .card-row__image{
     width: 100%;
+    position: relative;
 }
 .card-row__image img{
     border-radius: 10px;

@@ -52,6 +52,10 @@ const FiltersCard = () => {
                 Filtres <span className="filter-icon"></span>{" "}
             </div>
 
+            <div className="filter-button" onClick={() => setOpen(true)}>
+                Trier <span className="filter-icon"></span>{" "}
+            </div>
+
             <div className={`filters-card ${open ? "active" : ""}`}>
                 <div className="filters-card__header">
                     <h2>Filtrer par</h2>
@@ -60,7 +64,6 @@ const FiltersCard = () => {
 
                 <div className="filters-card__content">
                     <div className="filters-card__content__item">
-                        <h3>Instruments</h3>
                         <div className="item__list">
                             <div className="item__list__item">
                                 <label htmlFor="guitare">Guitare</label>
@@ -92,30 +95,6 @@ const FiltersCard = () => {
                                     onChange={handleInstrumentChange}
                                 />
                             </div>
-                        </div>
-                    </div>
-
-                    <div className="item__list">
-                        <div className="other__list__item">
-                            <label htmlFor="recent">Plus récents</label>
-                            <input
-                                type="checkbox"
-                                id="recent"
-                                name="recent"
-                                value="recent"
-                                onChange={handleOptionChange}
-                            />
-                        </div>
-
-                        <div className="other__list__item">
-                            <label htmlFor="alphabetique">Ordre alphabétique</label>
-                            <input
-                                type="checkbox"
-                                id="alphabetique"
-                                name="alphabetical"
-                                value="alphabetical"
-                                onChange={handleOptionChange}
-                            />
                         </div>
                     </div>
                 </div>

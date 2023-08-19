@@ -12,6 +12,35 @@
     font-weight: 600;
 }
 
+.courses,
+.work,
+.composer{
+    color: var(--tertiary-black-30);
+    background: transparent;
+}
+
+.courses:hover,
+.work:hover,
+.composer:hover{
+    background-color:#00000010;
+    color: #00000080;
+}
+
+.courses.active{
+    background-color: #FF8E7C33;
+    color: var(--primary-red-100);
+}
+
+.work.active{
+    background-color: #68B65B33;
+    color: var(--primary-green-100);
+}
+
+.composer.active{
+    background-color: #55648B33;
+    color: var(--primary-blue-40);
+}
+
 .violon{
     background-color: #e6f5f3;
     color: #00bfa5;

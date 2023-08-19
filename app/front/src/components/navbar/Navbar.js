@@ -68,7 +68,7 @@ const Navbar = () => {
                 <div className={`navbar__links_link ${activeLink === "params" ? "active" : ""}`} onClick={() => handleLinkClick("params")}><span className="navbar__icon parameters"></span><p>{t('navbar.links.9.text')}</p></div>
                 <Link to="/account" className="navbar__user__avatar">
                     <div className="navbar__user__avatar__img">
-                        <img src={logo_user} alt={"avatar"} />
+                        <img src={ user.userAvatar ? user.userAvatar.contentUrl : logo_user} alt={"avatar"} />
                     </div>
                     <div className="navbar__user__infos">
                         <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>

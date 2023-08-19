@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Button from "../../../components/button/button";
 import Input from "../../../components/form/input";
 import Select from "../../../components/form/select";
@@ -6,6 +6,8 @@ import {useParams} from "react-router-dom";
 import {getUser} from "../../../api/endpoints/user";
 import useUsers from "../../../hooks/api/useUsers";
 import {useNavigate} from "react-router-dom";
+import InputFile from "../../../components/form/inputFile";
+import SubmitBtn from "../../../components/form/submitBtn";
 
 
 
@@ -13,7 +15,7 @@ const FormUser = () => {
 
     const id = parseInt(useParams().id);
     const [user, setUser] = useState([]);
-    const {loading, error, handlePost} = useUsers();
+    const {loading, error, handlePost, handleAddUserImage} = useUsers();
 
 
     const [open, setOpen] = useState(false);
@@ -26,6 +28,8 @@ const FormUser = () => {
     const [instrument, setInstrument] = useState("");
 
     const [preview, setPreview] = useState(null);
+    const fileInputRef = useRef(null); // Ref to the file input element
+    const [file, setFile] = useState(); // State to store the selected file
 
     const listRole = ["User", "Teacher", "Admin"];
     const listInstrument = ["Violon", "Violoncelle", "Alto", "Flute", "Clarinette", "Trombone", "Haut-bois", "Piano", "Chant", "Chef d'orchestre"]
@@ -50,22 +54,25 @@ const FormUser = () => {
 
         handlePost({ lastName, firstName, email, plainPassword})
         .then((response) => {
-            navigate("/#/users");
+
+            const formData = new FormData();
+            formData.append("file", file); // Append the selected file to the FormData
+
+            handleAddUserImage(formData).then((response) => {
+                console.log(response);
+            }).then((error) => {
+                navigate("/users");
+            }).catch((error) => {
+                console.log(error);
+            });
+
         }).catch((error) => {
             console.log(error);
         });
     }
 
-    const handleFileSelect = (files) => {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-            setPreview(e.target.result);
-        };
-
-        if (files.length > 0) {
-            reader.readAsDataURL(files[0]);
-        }
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]); // Access the file object and update the state
     }
 
 
@@ -93,19 +100,10 @@ const FormUser = () => {
 
                     <div className={`avatar-container`}>
                         <p>Choisissez un avatar</p>
-                        <input
-                            name="avatar"
-                            label="Avatar"
-                            type="file"
-                            onChange={handleFileSelect}
-                        />
-                        <div className="image-preview">
-                            {preview && <img src={preview} alt="Preview" />}
-                        </div>
+                        <InputFile reference={fileInputRef} name="file" label="Image" onChange={handleFileChange} />
                     </div>
 
-                    <Button className={"btn red-full"}  text={"Continuer"} isArrow={true} />
-                    <input type={"submit"} value={"Envoyer"} className={"btn red-full"} />
+                    <SubmitBtn title={"Ajouter"} />
 
                 </form>
             </div>

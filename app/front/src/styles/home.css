@@ -16,6 +16,15 @@
 }
 
 /* LIST */
+
+.container__filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
 .container-home{
     display: flex;
     flex-direction: column;

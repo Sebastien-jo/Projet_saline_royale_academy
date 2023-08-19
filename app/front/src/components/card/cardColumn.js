@@ -2,14 +2,18 @@ import React from "react";
 import "../../styles/components/card.css";
 import Button from "../button/button";
 import Pastille from "../pastille/pastille";
-import icon from "../../assets/icones/icon-chevron-White-stroke.svg";
+import icon from "../../assets/icones/icon-infos-White-stroke.svg";
 import ButtonFavoris from "../button/ButtonFavoris";
 
 
-const CardColumn = ({image, title, subtitle, description, link, category, favoris = false , id}) => {
+const CardColumn = ({image, title, subtitle, description, link, category, favoris = false , id, handleSelect, isSelected}) => {
+
+        const handleClick = () => {
+            handleSelect();
+        }
 
         return (
-            <div className="card-column">
+            <div className={`card-column ${isSelected ? "selected" : ""}`}>
                 <div className="card-image">
                     {favoris ? <ButtonFavoris favoris={favoris} id={id}/> : null}
                     <img src={image} alt="image" />
@@ -21,14 +25,23 @@ const CardColumn = ({image, title, subtitle, description, link, category, favori
                             <h3>{ title }</h3>
                             <span className={"title-subtitle"}>{ subtitle }</span>
                         </div>
-                        <Pastille text={category} className={category} />
+                        {
+                            category.length > 0 ?
+                                category.map((item, index) => {
+                                    return(
+                                        <Pastille key={index} text={item.name} className={item.name} />
+                                    )
+                                }
+                            ) :
+                                <Pastille text={category.name} className={category.name} />
+                        }
                     </div>
 
                     <div className="card-body">
                         <p>{description}</p>
                     </div>
 
-                    <Button className={"blue-full"} isIcon={true} icon={icon} link={link} />
+                    <Button className={"blue-full"} isIcon={true} icon={icon} link={link} text={"Voir"} click={handleClick} />
                 </div>
 
             </div>

@@ -106,6 +106,7 @@ const Routing = () => {
                             </Route>
                         ) : user.roles[0] === "ROLE_ADMIN" ? (
                             <Route path="/" element={<GlobalLayout />}>
+                                <Route index exact element={<MasterclassAdmin />} title="Masterclass" />
                                 <Route path="/masterclass/*">
                                     <Route index element={<MasterclassAdmin />} title="Masterclass" />
                                     <Route path=":id" element={<SingleMasterclass />} />

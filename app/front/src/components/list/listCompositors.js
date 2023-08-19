@@ -3,7 +3,14 @@ import CardColumn from "../card/cardColumn";
 import FiltersCard from "../filters/filtersCard";
 import Loader from "../loader/loader";
 
-const ListCompositors = ({compositors, error, favoris= false}) => {
+const ListCompositors = ({compositors, error, favoris= false, updateSidebarContent}) => {
+
+    const [selectedComposerId, setSelectedComposerId] = useState(null);
+
+    const handleItemSelect = (item) => {
+        setSelectedComposerId(item.id);
+        updateSidebarContent(item);
+    };
 
     return (
         <div className="container-list">
@@ -19,9 +26,20 @@ const ListCompositors = ({compositors, error, favoris= false}) => {
                         compositors ?
                             compositors.map((item, index) => {
                                 return(
-                                    <CardColumn key={index} image={item.picture} title={item.name} subtitle={item.birth} description={item.description} link={`#/compositeur/${item.id}`} category={item.categories} favoris={favoris} id={item.id}/>
+                                    <CardColumn
+                                        key={index}
+                                        image={item.picture}
+                                        title={item.name}
+                                        subtitle={item.birth}
+                                        description={item.description}
+                                        category={item.categories}
+                                        favoris={favoris}
+                                        id={item.id}
+                                        handleSelect={() => handleItemSelect(item)}
+                                        isSelected={selectedComposerId === item.id}
+                                    />
                                 )
-                            })
+                            }).reverse()
                             : error ?
                                 <p>Une erreur est survenue</p>
                                 :

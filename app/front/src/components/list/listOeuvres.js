@@ -3,8 +3,15 @@ import CardColumn from "../card/cardColumn";
 import FiltersCard from "../filters/filtersCard";
 import useOeuvres from "../../hooks/api/useOeuvres";
 import Loader from "../loader/loader";
+import useSidebarContent from "../../hooks/useSidebarContent";
 
-const ListOeuvres = ({oeuvres, error, favoris}) => {
+const ListOeuvres = ({oeuvres, error, favoris, updateSidebarContent}) => {
+    const [selectedWorkId, setSelectedWorkId] = useState(null);
+
+    const handleItemSelect = (item) => {
+        setSelectedWorkId(item.id);
+        updateSidebarContent(item);
+    };
 
     return (
         <div className="container-list">
@@ -20,9 +27,20 @@ const ListOeuvres = ({oeuvres, error, favoris}) => {
                         oeuvres ?
                             oeuvres.map((item, index) => {
                                 return(
-                                    <CardColumn key={index} image={"https://picsum.photos/200/300"} title={item.name} subtitle={item.composer.name} description={""} link={`#/oeuvre/${item.id}`} category={item.category.name} favoris={favoris} id={item.id}/>
+                                    <CardColumn
+                                        key={index}
+                                        image={"https://picsum.photos/200/300"}
+                                        title={item.name}
+                                        subtitle={item.composer.name}
+                                        description={item.description}
+                                        category={item.category}
+                                        favoris={favoris}
+                                        id={item.id}
+                                        handleSelect={() => handleItemSelect(item)}
+                                        isSelected={selectedWorkId === item.id}
+                                    />
                                 )
-                            })
+                            }).reverse()
                         : error ?
                                 <p>Une erreur est survenue</p>
                                 :
