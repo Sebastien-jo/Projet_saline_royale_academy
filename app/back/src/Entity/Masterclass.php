@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
@@ -34,6 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'groups' => ['masterclass:normalization'],
 ], denormalizationContext: ['groups' => ['masterclass:write']])]
 #[ORM\HasLifecycleCallbacks()]
+#[ApiFilter(SearchFilter::class, properties: ['work' => 'exact', 'teacher' => 'exact', 'category' => 'exact'])]
 class Masterclass extends AbstractEntity
 {
     use TimestampableTrait;
