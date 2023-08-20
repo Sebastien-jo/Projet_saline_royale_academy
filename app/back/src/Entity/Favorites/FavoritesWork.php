@@ -2,7 +2,6 @@
 
 namespace App\Entity\Favorites;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
@@ -32,7 +31,6 @@ class FavoritesWork extends Favorites
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['favorites:read', 'favorites_work:write'])]
     #[Assert\NotBlank(allowNull: false, groups: ['favorites_work:write'])]
-    #[ApiProperty(readableLink: false)]
     private ?Work $work = null;
 
     public function getType(): string
