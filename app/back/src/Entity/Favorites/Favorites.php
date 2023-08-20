@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: FavoritesRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(name: 'SELF'),
+        new GetCollection(normalizationContext: ['groups' => ['favorites:read', 'work:read', 'composer:read', 'masterclass:read']], name: 'SELF'),
         new Post(processor: SetUserProcessor::class),
         new Delete(),
     ],
