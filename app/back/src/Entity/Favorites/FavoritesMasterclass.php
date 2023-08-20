@@ -2,7 +2,6 @@
 
 namespace App\Entity\Favorites;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
@@ -32,7 +31,6 @@ class FavoritesMasterclass extends Favorites
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['favorites:read', 'favorites_masterclass:write'])]
     #[Assert\NotBlank(allowNull: false, groups: ['favorites_composer:write'])]
-    #[ApiProperty(readableLink: false)]
     private ?Masterclass $masterclass = null;
 
     public function getType(): string
