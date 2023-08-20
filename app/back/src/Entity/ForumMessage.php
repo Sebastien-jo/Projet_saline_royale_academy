@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
@@ -19,14 +20,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ForumMessageRepository::class)]
 #[ApiResource(
-    uriTemplate: '/forums/{id}/messages.{_format}',
     operations: [
-        new GetCollection(uriVariables: [
-            'id' => new Link(
-                fromProperty: 'forumMessages',
-                fromClass: Forum::class
-            ),
-        ], ),
+        new Get(),
+        new GetCollection(
+            uriTemplate: '/forums/{id}/messages.{_format}',
+            uriVariables: [
+                'id' => new Link(
+                    fromProperty: 'forumMessages',
+                    fromClass: Forum::class
+                ),
+            ],
+        ),
         new Post(uriTemplate: '/forum_messages'),
     ],
     normalizationContext: ['groups' => ['forum:message:read', 'timestamp']],
