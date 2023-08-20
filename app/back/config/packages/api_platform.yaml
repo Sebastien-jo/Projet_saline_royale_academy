@@ -14,7 +14,7 @@ api_platform:
   patch_formats:
     json: [ 'application/json' ]
   formats:
-    jsonld: [ 'application/json' ]
+    jsonld: [ 'application/ld+json' ]
     json: [ 'application/json' ]
     html: [ 'text/html' ]
     form:
