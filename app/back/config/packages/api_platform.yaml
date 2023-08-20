@@ -1,14 +1,21 @@
 api_platform:
-    swagger:
-         api_keys:
-             JWT:
-                name: Authorization
-                type: header
-    patch_formats:
-      json: [ 'application/json' ]
-    formats:
-      json: [ 'application/json' ]
-      jsonld: [ 'application/ld+json' ]
-      html: [ 'text/html' ]
-      form:
-        mime_types: [ 'multipart/form-data' ]
+  collection:
+    pagination:
+      enabled_parameter_name: pagination # optional
+  defaults:
+    pagination_client_enabled: true
+    pagination_enabled: false
+    pagination_items_per_page: 30
+  swagger:
+    api_keys:
+      JWT:
+        name: Authorization
+        type: header
+  patch_formats:
+    json: [ 'application/json' ]
+  formats:
+    jsonld: [ 'application/json' ]
+    json: [ 'application/json' ]
+    html: [ 'text/html' ]
+    form:
+      mime_types: [ 'multipart/form-data' ]

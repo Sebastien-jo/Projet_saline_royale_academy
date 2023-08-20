@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Section;
 use App\Entity\SectionUser;
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SectionUserManager
@@ -29,5 +30,22 @@ class SectionUserManager
         }
 
         return $sectionUser;
+    }
+
+    public function isValidated(SectionUser $sectionUser): bool
+    {
+        foreach ($sectionUser->getLessonUsers() as $lessonUser) {
+            if (!$lessonUser->getValidatedAt() instanceof DateTimeImmutable) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function validate(SectionUser $sectionUser, DateTimeImmutable $dateTime = null): void
+    {
+        $sectionUser->setValidatedAt($dateTime ?? new DateTimeImmutable());
+        $this->entityManager->flush();
     }
 }

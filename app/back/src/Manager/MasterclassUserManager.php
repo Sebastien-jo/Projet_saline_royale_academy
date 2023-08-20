@@ -7,6 +7,7 @@ use App\Entity\Masterclass;
 use App\Entity\MasterclassUser;
 use App\Entity\User;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
@@ -60,5 +61,22 @@ readonly class MasterclassUserManager
             $this->entityManager->remove($masterclassUser);
             $this->entityManager->flush();
         }
+    }
+
+    public function isValidated(MasterclassUser $masterclassUser): bool
+    {
+        foreach ($masterclassUser->getSectionUsers() as $sectionUser) {
+            if (!$sectionUser->getValidatedAt() instanceof DateTimeImmutable) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function validate(MasterclassUser $masterclassUser, DateTimeImmutable $dateTime = null): void
+    {
+        $masterclassUser->setValidatedAt($dateTime ?? new DateTimeImmutable());
+        $this->entityManager->flush();
     }
 }
