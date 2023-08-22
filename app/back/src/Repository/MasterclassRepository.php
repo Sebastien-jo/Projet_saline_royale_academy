@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Favorites\FavoritesMasterclass;
 use App\Entity\Masterclass;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,59 +44,36 @@ class MasterclassRepository extends ServiceEntityRepository
     /**
      * @return array<Masterclass>
      */
-    public function FindAllWithFavorite(int $userId): array
+    public function findAllWithFavorite(int $userId): array
     {
-        $masterclassesWithFavorites = [];
         $dql = '
-            SELECT m,
-            CASE WHEN (f.user = :userId AND m.id = f.masterclass) THEN true ELSE false END AS isFavorite
+            SELECT m 
             FROM ' . Masterclass::class . ' m
-            LEFT JOIN ' . FavoritesMasterclass::class . ' f WITH m.id = f.masterclass AND f.user = :userId
+            INNER JOIN ' . FavoritesMasterclass::class . ' f WITH m.id = f.masterclass AND f.user = :userId
         ';
 
-        $results = $this->getEntityManager()->createQuery($dql)
+        return $this->getEntityManager()->createQuery($dql)
                 ->setParameter('userId', $userId)
                 ->getResult()
         ;
-
-        foreach ($results as $result) {
-            $isFavorite = (bool) $result['isFavorite'];
-
-            /** @var Masterclass $masterclass */
-            $masterclass = $result[0];
-            $masterclass->setIsFavorite($isFavorite);
-
-            $masterclassesWithFavorites[] = $masterclass;
-        }
-
-        return $masterclassesWithFavorites;
     }
 
-    public function FindWithFavorite(int $id, int $userId): ?Masterclass
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findWithFavorite(int $id, int $userId): ?Masterclass
     {
         $dql = '
-            SELECT m,
-            CASE WHEN (f.user = :userId AND m.id = f.masterclass) THEN true ELSE false END AS isFavorite
+            SELECT m
             FROM ' . Masterclass::class . ' m
-            LEFT JOIN ' . FavoritesMasterclass::class . ' f WITH m.id = f.masterclass AND f.user = :userId
+            INNER JOIN ' . FavoritesMasterclass::class . ' f WITH m.id = f.masterclass AND f.user = :userId
             WHERE m.id = :id
         ';
 
-        $results = $this->getEntityManager()->createQuery($dql)
+        return $this->getEntityManager()->createQuery($dql)
                 ->setParameter('userId', $userId)
                 ->setParameter('id', $id)
-                ->getResult()
+                ->getOneOrNullResult()
         ;
-        foreach ($results as $result) {
-            /** @var Masterclass $masterclass */
-            $masterclass = $result[0];
-            $isFavorite = $result['isFavorite'];
-
-            $masterclass->setIsFavorite($isFavorite); // Assuming you have a setter for the isFavorite property
-
-            return $masterclass;
-        }
-
-        return null;
     }
 }
