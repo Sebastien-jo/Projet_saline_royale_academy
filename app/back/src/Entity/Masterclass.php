@@ -37,7 +37,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'groups' => ['masterclass:normalization'],
 ], denormalizationContext: ['groups' => ['masterclass:write']])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiFilter(SearchFilter::class, properties: ['work' => 'exact', 'teacher' => 'exact', 'category' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['work' => 'exact', 'teacher' => 'exact', 'category' => 'exact', 'work.composer' => 'exact'])]
 class Masterclass extends AbstractEntity
 {
     use TimestampableTrait;
