@@ -75,7 +75,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
      */
     #[ORM\Column(type: 'json')]
     #[Groups(['user:read', 'admin:write'])]
-    private array $roles = [];
+    private array $roles = ['ROLE_STUDENT'];
 
     #[ORM\Column]
     private string $password;
@@ -111,6 +111,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?UserAvatar $userAvatar = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?Category $instrument = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favorites::class, orphanRemoval: true)]
