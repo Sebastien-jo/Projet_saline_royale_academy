@@ -95,6 +95,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friends-of-behat/symfony-extension": "^2.4",
         "friendsofphp/php-cs-fixer": "^3.16",
+        "guzzlehttp/guzzle": "^7.7",
         "phpro/grumphp": "^1.16",
         "phpstan/phpstan": "^1.10",
         "rector/rector": "^0.16.0",
