@@ -23,34 +23,44 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MasterclassRepository::class)]
-#[ApiResource(operations: [
-    new Get(normalizationContext: ['groups' => ['masterclass:read:item']], provider: MasterclassProvider::class),
-    new GetCollection(normalizationContext: ['groups' => ['masterclass:read']], provider: MasterclassProvider::class),
-    new Delete(),
-    new Put(),
-    new Post(
-        security: "is_granted('ROLE_TEACHER') or is_granted('ROLE_ADMIN')",
-        validationContext: ['groups' => ['masterclass:write']],
-        processor: MasterclassProcessor::class
-    ),
-], normalizationContext: [
-    'groups' => ['masterclass:normalization'],
-], denormalizationContext: ['groups' => ['masterclass:write']])]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['masterclass:read:item', 'timestamp']],
+            provider: MasterclassProvider::class
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['masterclass:read', 'timestamp']],
+            provider: MasterclassProvider::class
+        ),
+        new Delete(),
+        new Put(),
+        new Post(
+            security: "is_granted('ROLE_TEACHER') or is_granted('ROLE_ADMIN')",
+            validationContext: ['groups' => ['masterclass:write']],
+            processor: MasterclassProcessor::class
+        ),
+    ],
+    denormalizationContext: ['groups' => ['masterclass:write']]
+)]
 #[ORM\HasLifecycleCallbacks()]
 #[ApiFilter(SearchFilter::class, properties: ['work' => 'exact', 'teacher' => 'exact', 'category' => 'exact'])]
 class Masterclass extends AbstractEntity
 {
-    use TimestampableTrait;
     use SoftDeleteableEntity;
+    use TimestampableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass_user:read:item', 'masterclass:normalization'])]
+    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass_user:read:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['masterclass:read', 'masterclass:read:item', 'masterclass:write', 'masterclass_user:read:item', 'masterclass_user:read'])]
+    #[Groups([
+        'masterclass:read', 'masterclass:read:item', 'masterclass:write', 'masterclass_user:read:item',
+        'masterclass_user:read',
+    ])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
@@ -59,7 +69,7 @@ class Masterclass extends AbstractEntity
     private ?Work $work = null;
 
     #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: Section::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['masterclass:read:item', 'masterclass:write', 'masterclass:normalization'])]
+    #[Groups(['masterclass:read:item', 'masterclass:write'])]
     #[ApiProperty(readableLink: true, writableLink: true)]
     private Collection $sections;
 

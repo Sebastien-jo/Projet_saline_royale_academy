@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Patch;
 use App\Entity\Lesson\Lesson;
 use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LessonUserRepository;
 use App\State\LessonUserProcessor;
 use DateTimeImmutable;
@@ -22,14 +23,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: LessonUserProcessor::class
         ),
     ],
-    normalizationContext: ['groups' => ['lesson_user:read']],
+    normalizationContext: ['groups' => ['lesson_user:read', 'timestamp']],
     denormalizationContext: ['groups' => ['lesson_user:write']]
 )]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: LessonUserRepository::class)]
 class LessonUser extends AbstractEntity
 {
     use IdentifiableTrait;
     use SoftDeleteableEntity;
+    use TimestampableTrait;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
