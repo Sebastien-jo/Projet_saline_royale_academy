@@ -22,51 +22,51 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ForumRepository::class)]
 #[hasLifecycleCallbacks]
 #[ApiResource(
-        operations: [
-                new Delete(
-                        security: "is_granted('FORUM_DELETE',object)",
-                        securityMessage: 'Vous n\'avez pas accès à ce forum'
+    operations: [
+        new Delete(
+            security: "is_granted('FORUM_DELETE',object)",
+            securityMessage: 'Vous n\'avez pas accès à ce forum'
+        ),
+        new Get(
+            security: "is_granted('FORUM_VIEW',object)",
+            securityMessage: 'Vous n\'avez pas accès à ce forum'
+        ),
+        new GetCollection(
+            security: "is_granted('FORUM_VIEW_LIST')",
+            securityMessage: 'Vous n\'avez pas accès à ce forum'
+        ),
+        new Post(
+            uriTemplate: 'admin/forums',
+            denormalizationContext: ['groups' => ['admin:write', 'forum:write']],
+            security: 'is_granted("ADMIN:FORUM_CREATE")',
+            securityMessage: 'Accès refusé',
+            validationContext: ['groups' => ['Default', 'admin:write', 'forum:write']],
+        ),
+        new Post(
+            uriTemplate: ' forums/{id}/likes',
+            uriVariables: [
+                'id' => new Link(
+                    toProperty: 'user',
+                    fromClass: MasterclassUser::class
                 ),
-                new Get(
-                        security: "is_granted('FORUM_VIEW',object)",
-                        securityMessage: 'Vous n\'avez pas accès à ce forum'
-                ),
-                new GetCollection(
-                        security: "is_granted('FORUM_VIEW_LIST')",
-                        securityMessage: 'Vous n\'avez pas accès à ce forum'
-                ),
-                new Post(
-                        uriTemplate: 'admin/forums',
-                        denormalizationContext: ['groups' => ['admin:write', 'forum:write']],
-                        security: 'is_granted("ADMIN:FORUM_CREATE")',
-                        securityMessage: 'Accès refusé',
-                        validationContext: ['groups' => ['Default', 'admin:write', 'forum:write']],
-                ),
-                new Post(
-                        uriTemplate: ' forums/{id}/likes',
-                        uriVariables: [
-                                'id' => new Link(
-                                        toProperty: 'user',
-                                        fromClass: MasterclassUser::class
-                                ),
-                        ],
-                ),
-                new Post(
-                        security: "is_granted('FORUM_CREATE')",
-                        securityMessage: 'Vous devez être connecté pour créer un forum',
-                        validationContext: ['groups' => ['Default', 'forum:write']],
-                        processor: SetUserProcessor::class
-                ), new Put(
-                        denormalizationContext: ['groups' => ['forum:edit']],
-                        securityPostDenormalize: "is_granted('FORUM_EDIT')",
-                        securityPostDenormalizeMessage: 'Vous n\'avez pas les droits pour modifier ce forum',
-                        validationContext: ['groups' => ['Default']]
-                ),
-        ],
-        normalizationContext: ['groups' => ['forum:read']],
-        denormalizationContext: ['groups' => ['forum:write']]
+            ],
+        ),
+        new Post(
+            security: "is_granted('FORUM_CREATE')",
+            securityMessage: 'Vous devez être connecté pour créer un forum',
+            validationContext: ['groups' => ['Default', 'forum:write']],
+            processor: SetUserProcessor::class
+        ), new Put(
+            denormalizationContext: ['groups' => ['forum:edit']],
+            securityPostDenormalize: "is_granted('FORUM_EDIT')",
+            securityPostDenormalizeMessage: 'Vous n\'avez pas les droits pour modifier ce forum',
+            validationContext: ['groups' => ['Default']]
+        ),
+    ],
+    normalizationContext: ['groups' => ['forum:read', 'timestamp']],
+    denormalizationContext: ['groups' => ['forum:write']]
 )]
-class Forum
+class Forum extends AbstractEntity
 {
     use TimestampableTrait;
 
@@ -100,8 +100,9 @@ class Forum
     #[Assert\NotBlank(message: 'Champ obligatoire', allowNull: false)]
     private ?string $title = null;
 
-    public function __construct()
+    public function __construct($array = [])
     {
+        parent::__construct($array);
         $this->forumMessages = new ArrayCollection();
         $this->likes = new ArrayCollection();
     }
@@ -144,7 +145,7 @@ class Forum
     public function removeForumMessage(ForumMessage $forumMessage): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->forumMessages->removeElement($forumMessage) && $forumMessage->getForum()===$this) {
+        if ($this->forumMessages->removeElement($forumMessage) && $forumMessage->getForum() === $this) {
             $forumMessage->setForum(null);
         }
 

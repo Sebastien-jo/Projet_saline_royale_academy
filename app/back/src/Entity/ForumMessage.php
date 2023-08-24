@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     provider: ForumMessageStateProvider::class,
     processor: ForumMessageStateProcessor::class
 )]
-class ForumMessage
+class ForumMessage extends AbstractEntity
 {
     use TimestampableTrait;
 

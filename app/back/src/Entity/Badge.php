@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\Translation\BadgeTranslation;
 use App\Enum\BadgeCategory;
 use App\Repository\BadgeRepository;
@@ -18,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new GetCollection(),
@@ -34,13 +36,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
             security: 'is_granted("BADGE_DELETE")'
         ),
     ],
-    normalizationContext: ['groups' => ['badge:read']],
+    normalizationContext: ['groups' => ['badge:read', 'timestamp']],
     denormalizationContext: ['groups' => ['badge:post:write']],
     filters: ['translation.groups'],
 )]
 class Badge extends AbstractEntityTranslator
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badges')]
     private Collection $users;

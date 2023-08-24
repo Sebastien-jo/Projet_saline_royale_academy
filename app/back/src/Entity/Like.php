@@ -7,12 +7,14 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LikeRepository;
 use App\State\LikeProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: '`like`')]
 #[ApiResource(
     uriTemplate: ' forums/{id}/likes',
@@ -27,12 +29,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
             fromClass: Forum::class
         ),
     ],
-    normalizationContext: ['groups' => ['like:read']],
+    normalizationContext: ['groups' => ['like:read', 'timestamp']],
     denormalizationContext: ['groups' => ['like:write']],
     validationContext: ['groups' => ['Default']]
 )]
-class Like
+class Like extends AbstractEntity
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

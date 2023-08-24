@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Entity\Traits\TimestampableTrait;
 use App\Enum\Nationality;
 use App\Repository\ComposerRepository;
 use App\State\ComposerProvider;
@@ -21,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ComposerRepository::class)]
 #[ApiResource(
     operations: [
@@ -36,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(security: "is_granted('COMPOSER_VIEW')", provider: ComposerProvider::class),
         new GetCollection(security: "is_granted('COMPOSER_VIEW_LIST')", provider: ComposerProvider::class),
     ],
-    normalizationContext: ['groups' => ['composer:read']],
+    normalizationContext: ['groups' => ['composer:read', 'timestamp']],
     denormalizationContext: ['groups' => ['composer:create']]
 )]
 #[uniqueEntity(
@@ -46,6 +48,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Composer extends AbstractEntity
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
