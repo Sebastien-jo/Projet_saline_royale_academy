@@ -12,6 +12,7 @@ use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\WorkController;
 use App\Entity\Favorites\FavoritesWork;
 use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\WorkRepository;
 use App\State\WorkProvider;
 use ArrayObject;
@@ -24,6 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: WorkRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new Post(
@@ -88,12 +90,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             security: 'is_granted("WORK_EDIT")',
         ),
     ],
-    normalizationContext: ['groups' => ['work:read', 'id']],
+    normalizationContext: ['groups' => ['work:read', 'id', 'timestamp']],
 )]
 #[Vich\Uploadable]
 class Work extends AbstractEntity
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     #[ORM\Column(length: 255, nullable: false)]
     #[Groups(['work:read', 'work:create', 'work:update'])]

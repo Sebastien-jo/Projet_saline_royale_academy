@@ -4,13 +4,17 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Lesson\LessonExercise;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ExerciseResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExerciseResponseRepository::class)]
 #[ApiResource]
+#[ORM\HasLifecycleCallbacks]
 class ExerciseResponse extends AbstractEntity
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

@@ -51,7 +51,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: MasterclassUserStateProcessor::class
         ),
     ],
-    normalizationContext: ['groups' => ['masterclass_user:read']],
+    normalizationContext: ['groups' => ['masterclass_user:read', 'timestamp']],
     denormalizationContext: ['groups' => ['masterclass_user:write']]
 )]
 #[ORM\HasLifecycleCallbacks]

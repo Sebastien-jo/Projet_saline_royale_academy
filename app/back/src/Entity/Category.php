@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Traits\IdentifiableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,16 +14,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new Get(),
         new GetCollection(),
     ],
-    normalizationContext: ['groups' => ['category:read', 'id']]
+    normalizationContext: ['groups' => ['category:read', 'id', 'timestamp']]
 )]
 class Category extends AbstractEntity
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     #[ORM\Column(length: 255)]
     #[Groups(['work:read', 'masterclass_user:read:item', 'composer:read', 'masterclass:read', 'category:read'])]
