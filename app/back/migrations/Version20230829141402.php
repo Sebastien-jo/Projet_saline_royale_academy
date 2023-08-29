@@ -7,14 +7,11 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20230829141402 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'migration to up to date all schemas';
     }
 
     public function up(Schema $schema): void
@@ -29,7 +26,6 @@ final class Version20230829141402 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE badge DROP created_at, DROP updated_at');
         $this->addSql('ALTER TABLE category DROP description, DROP created_at, DROP updated_at');
         $this->addSql('ALTER TABLE lesson_exercise DROP content, DROP url');
