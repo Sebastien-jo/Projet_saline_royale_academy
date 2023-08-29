@@ -99,19 +99,19 @@ class Work extends AbstractEntity
     use TimestampableTrait;
 
     #[ORM\Column(length: 255, nullable: false)]
-    #[Groups(['work:read', 'work:create', 'work:update'])]
+    #[Groups(['work:read', 'work:create', 'work:update', 'masterclass:read', 'masterclass:read:item'])]
     private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'works')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['work:read', 'masterclass_user:read:item', 'work:create', 'work:update'])]
+    #[Groups(['work:read', 'masterclass_user:read:item', 'work:create', 'work:update', 'masterclass:read'])]
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['work:read', 'work:create', 'work:update'])]
     private ?DateTimeInterface $date = null;
 
-    #[ORM\OneToMany(mappedBy: 'work', targetEntity: Masterclass::class)]
+    #[ORM\OneToMany(mappedBy: 'work', targetEntity: Masterclass::class, orphanRemoval: true)]
     private Collection $masterclasses;
 
     #[ORM\ManyToOne(inversedBy: 'works')]

@@ -28,7 +28,7 @@ class Category extends AbstractEntity
     use TimestampableTrait;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['work:read', 'masterclass_user:read:item', 'composer:read', 'masterclass:read', 'category:read'])]
+    #[Groups(['work:read', 'masterclass_user:read:item', 'composer:read', 'masterclass:read', 'category:read', 'masterclass:read', 'masterclass:read:item'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Work::class)]
