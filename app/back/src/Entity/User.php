@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', hardDelete: false)]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', hardDelete: true)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [

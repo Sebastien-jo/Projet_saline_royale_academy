@@ -93,11 +93,11 @@ class Composer extends AbstractEntity
     #[Groups(['composer:read', 'composer:create'])]
     private Nationality $nationality;
 
-    #[ORM\OneToMany(mappedBy: 'composer', targetEntity: Work::class)]
+    #[ORM\OneToMany(mappedBy: 'composer', targetEntity: Work::class, orphanRemoval: true)]
     private Collection $works;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'composers')]
-    #[Groups(['composer:read'])]
+    #[Groups(['composer:read', 'composer:create'])]
     private Collection $categories;
 
     #[Groups(['composer:read'])]
