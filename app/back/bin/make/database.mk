@@ -1,5 +1,6 @@
 db-init: ##@database Validate DB schemas
 	@$(MAKE) db-create ENV=dev
+	@$(MAKE) db-load-fixtures
 
 db-create: ##@database create
 	@echo "${BLUE}Drop dev database if exist${RESET}"
