@@ -2,13 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Enum\Instrument;
 use App\Factory\CategoryFactory;
 use App\Factory\ComposerFactory;
 use App\Factory\ForumFactory;
 use App\Factory\ForumMessageFactory;
 use App\Factory\UserFactory;
 use App\Factory\WorkFactory;
-use App\Story\BadgeStory;
 use App\Story\MasterClassStory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -32,8 +32,13 @@ class AppFixtures extends Fixture
             'email' => 'admin@gmail.com',
             'password' => 'admin',
         ]);
-        CategoryFactory::createMany(5);
-        //        BadgeStory::load();
+
+        foreach (Instrument::cases() as $instrument) {
+            CategoryFactory::createOne([
+                'name' => $instrument->value,
+            ]);
+        }
+
         ForumFactory::createMany(10);
         ForumMessageFactory::createMany(10);
 

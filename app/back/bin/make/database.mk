@@ -9,7 +9,6 @@ db-create: ##@database create
 	$(call run-php, bin/console doctrine:database:create --env=${ENV})
 	@echo "${BLUE}Dropping/recreating dev database schema${RESET}"
 	$(call run-php, bin/console doctrine:migrations:migrate --allow-no-migration --no-interaction --env=${ENV})
-	$(MAKE) db-load-fixtures
 
 db-load-fixtures:
 	@echo "${BLUE}Loading fixtures${RESET}"
