@@ -44,6 +44,7 @@ security:
     - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
     - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
     - { path: ^/api/(login|users), roles: PUBLIC_ACCESS ,methods: [ POST ] } # Allows accessing the Swagger UI docs
+    - { path: ^/api/categories, roles: PUBLIC_ACCESS ,methods: [ GET ] } # Allows accessing the Swagger UI docs
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/profile, roles: ROLE_USER }
 
