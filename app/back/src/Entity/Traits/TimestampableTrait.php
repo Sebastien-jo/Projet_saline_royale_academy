@@ -11,12 +11,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 // class MUST implement @ORM\HasLifecycleCallbacks
 trait TimestampableTrait
 {
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     #[Groups(['timestamp'])]
     #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
     private DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     #[Groups(['timestamp'])]
     #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
     private DateTimeInterface $updatedAt;
