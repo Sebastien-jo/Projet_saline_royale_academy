@@ -67,3 +67,6 @@ services:
     App\State\ComposerProvider:
         arguments:
             $collectionExtensions: !tagged api_platform.doctrine.orm.query_extension.collection
+    App\State\ForumProvider:
+        arguments:
+            $collectionExtensions: !tagged api_platform.doctrine.orm.query_extension.collection

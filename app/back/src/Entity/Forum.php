@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ForumRepository;
+use App\State\ForumProvider;
 use App\State\SetUserProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,11 +30,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Get(
             security: "is_granted('FORUM_VIEW',object)",
-            securityMessage: 'Vous n\'avez pas accès à ce forum'
+            securityMessage: 'Vous n\'avez pas accès à ce forum',
+            provider: ForumProvider::class
         ),
         new GetCollection(
             security: "is_granted('FORUM_VIEW_LIST')",
-            securityMessage: 'Vous n\'avez pas accès à ce forum'
+            securityMessage: 'Vous n\'avez pas accès à ce forum',
+            provider: ForumProvider::class
         ),
         new Post(
             uriTemplate: 'admin/forums',
@@ -99,6 +102,9 @@ class Forum extends AbstractEntity
     #[Groups(['forum:read', 'forum:write', 'admin:write'])]
     #[Assert\NotBlank(message: 'Champ obligatoire', allowNull: false)]
     private ?string $title = null;
+
+    #[Groups(['forum:read'])]
+    private bool $isLiked = false;
 
     public function __construct($array = [])
     {
@@ -216,9 +222,27 @@ class Forum extends AbstractEntity
         return $this;
     }
 
+    public function getIsLiked(): bool
+    {
+        return $this->isLiked;
+    }
+
+    public function setIsLiked(bool $isLiked): static
+    {
+        $this->isLiked = $isLiked;
+
+        return $this;
+    }
+
     #[Groups(['forum:read'])]
     public function getCountLikes(): int
     {
         return $this->likes->count();
+    }
+
+    #[Groups(['forum:read'])]
+    public function getCountMessages(): int
+    {
+        return $this->getForumMessages()->count();
     }
 }
