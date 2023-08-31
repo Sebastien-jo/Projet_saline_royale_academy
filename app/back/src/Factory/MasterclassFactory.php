@@ -38,7 +38,6 @@ final class MasterclassFactory extends ModelFactory
             'name' => self::faker()->text(20),
             'teacher' => UserFactory::new(['roles' => ['TEACHER']]),
             'work' => WorkFactory::random(),
-            'category' => CategoryFactory::random(),
         ];
     }
 

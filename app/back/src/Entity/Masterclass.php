@@ -26,11 +26,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            normalizationContext: ['groups' => ['masterclass:read:item', 'timestamp']],
+            normalizationContext: ['groups' => ['masterclass:read:item', 'id', 'timestamp']],
             provider: MasterclassProvider::class
         ),
         new GetCollection(
-            normalizationContext: ['groups' => ['masterclass:read', 'timestamp']],
+            normalizationContext: ['groups' => ['masterclass:read', 'id', 'timestamp']],
             provider: MasterclassProvider::class
         ),
         new Delete(),
@@ -85,13 +85,8 @@ class Masterclass extends AbstractEntity
     #[Groups(['masterclass:read', 'admin:write', 'masterclass_user:read:item'])]
     private ?User $teacher = null;
 
-    #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: FavoritesMasterclass::class)]
+    #[ORM\OneToMany(mappedBy: 'masterclass', targetEntity: FavoritesMasterclass::class, orphanRemoval: true)]
     private Collection $favoritesMasterclasses;
-
-    #[ORM\ManyToOne(inversedBy: 'masterclasses')]
-    #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['masterclass:read', 'masterclass:write'])]
-    private ?Category $category = null;
 
     #[Groups(['masterclass:read'])]
     private bool $isFavorite = false;
@@ -225,18 +220,6 @@ class Masterclass extends AbstractEntity
         if ($this->favoritesMasterclasses->removeElement($favoritesMasterclass) && $favoritesMasterclass->getMasterclass() === $this) {
             $favoritesMasterclass->setMasterclass(null);
         }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
