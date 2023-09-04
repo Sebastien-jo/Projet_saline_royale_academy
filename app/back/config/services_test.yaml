@@ -3,5 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\Tests\Behat\:
-        resource: '../tests/Behat/*'
+    Hetic\Behat\:
+        resource: '../features/bootstrap/*'
