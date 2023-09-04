@@ -91,6 +91,9 @@ class Masterclass extends AbstractEntity
     #[Groups(['masterclass:read'])]
     private bool $isFavorite = false;
 
+    #[ORM\OneToOne(mappedBy: 'masterclass', cascade: ['persist', 'remove'])]
+    private ?MasterclassImage $masterclassImage = null;
+
     public function __construct(array $array = [])
     {
         parent::__construct($array);
@@ -234,5 +237,22 @@ class Masterclass extends AbstractEntity
     public function getIsFavorite(): bool
     {
         return $this->isFavorite;
+    }
+
+    public function getMasterclassImage(): ?MasterclassImage
+    {
+        return $this->masterclassImage;
+    }
+
+    public function setMasterclassImage(MasterclassImage $masterclassImage): static
+    {
+        // set the owning side of the relation if necessary
+        if ($masterclassImage->getMasterclass() !== $this) {
+            $masterclassImage->setMasterclass($this);
+        }
+
+        $this->masterclassImage = $masterclassImage;
+
+        return $this;
     }
 }

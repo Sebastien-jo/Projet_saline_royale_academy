@@ -103,6 +103,9 @@ class Composer extends AbstractEntity
     #[Groups(['composer:read'])]
     private bool $isFavorite = false;
 
+    #[ORM\OneToOne(mappedBy: 'composer', cascade: ['persist', 'remove'])]
+    private ?ComposerImage $composerImage = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -253,5 +256,22 @@ class Composer extends AbstractEntity
     public function getIsFavorite(): bool
     {
         return $this->isFavorite;
+    }
+
+    public function getComposerImage(): ?ComposerImage
+    {
+        return $this->composerImage;
+    }
+
+    public function setComposerImage(ComposerImage $composerImage): static
+    {
+        // set the owning side of the relation if necessary
+        if ($composerImage->getComposer() !== $this) {
+            $composerImage->setComposer($this);
+        }
+
+        $this->composerImage = $composerImage;
+
+        return $this;
     }
 }
