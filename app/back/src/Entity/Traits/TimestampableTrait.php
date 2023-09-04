@@ -13,12 +13,12 @@ trait TimestampableTrait
 {
     #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     #[Groups(['timestamp'])]
-    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d\TH:i:sP'])]
     private DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     #[Groups(['timestamp'])]
-    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d H:i:s'])]
+    #[Context(normalizationContext: ['datetime_format' => 'Y-m-d\TH:i:sP'])]
     private DateTimeInterface $updatedAt;
 
     public function getCreatedAt(): ?DateTimeInterface
