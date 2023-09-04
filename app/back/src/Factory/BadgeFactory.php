@@ -37,8 +37,6 @@ final class BadgeFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'description' => self::faker()->text(),
-            'image_path' => self::faker()->imageUrl(80, 80),
             'name' => self::faker()->userName(),
             'currentLocale' => self::faker()->locale(),
         ];
@@ -51,7 +49,7 @@ final class BadgeFactory extends ModelFactory
     {
         return $this;
         //             ->afterInstantiate(function(Badge $badge): void {
-        //                 $badge->setCurrentLocale(self::faker()->locale());
+        //                         $badge->setCurrentLocale(self::faker()->locale());
         //    });
     }
 
