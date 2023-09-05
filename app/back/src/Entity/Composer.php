@@ -69,11 +69,6 @@ class Composer extends AbstractEntity
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['composer:read', 'composer:create'])]
     #[Assert\Url(groups: ['import', 'Default'])]
-    private ?string $picture = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['composer:read', 'composer:create'])]
-    #[Assert\Url(groups: ['import', 'Default'])]
     private ?string $description = null;
 
     #[ORM\Column(type: 'date')]
@@ -104,6 +99,7 @@ class Composer extends AbstractEntity
     private bool $isFavorite = false;
 
     #[ORM\OneToOne(mappedBy: 'composer', cascade: ['persist', 'remove'])]
+    #[Groups(['composer:read'])]
     private ?ComposerImage $composerImage = null;
 
     public function __construct()
@@ -140,16 +136,6 @@ class Composer extends AbstractEntity
         $this->completeName = $completeName;
 
         return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): void
-    {
-        $this->picture = $picture;
     }
 
     public function getBirth(): DateTimeInterface
