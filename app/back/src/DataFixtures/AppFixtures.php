@@ -32,6 +32,13 @@ class AppFixtures extends Fixture
             'email' => 'admin@gmail.com',
             'password' => 'admin',
         ]);
+        UserFactory::createOne([
+            'firstName' => 'teacher',
+            'lastName' => 'test',
+            'roles' => ['ROLE_TEACHER'],
+            'email' => 'teacher@gmail.com',
+            'password' => 'password',
+        ]);
 
         foreach (Instrument::cases() as $instrument) {
             CategoryFactory::createOne([
