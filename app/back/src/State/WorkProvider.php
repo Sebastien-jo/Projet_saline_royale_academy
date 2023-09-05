@@ -57,7 +57,7 @@ readonly class WorkProvider implements ProviderInterface
                      * @var Work $work
                      */
                     foreach ($queryResults as $work) {
-                        $work->setIsFavorite(in_array($work, (array) $favoritesWork));
+                        $work->setIsFavorite(in_array($work, (array) $favoritesWork, true));
                         $result[] = $work;
                     }
 
@@ -71,7 +71,7 @@ readonly class WorkProvider implements ProviderInterface
                 return $queryResults;
             }
             foreach ($queryResults as $work) {
-                $work->setIsFavorite(in_array($work, $favoritesWork));
+                $work->setIsFavorite(in_array($work, $favoritesWork, true));
                 $result[] = $work;
             }
 

@@ -63,7 +63,7 @@ readonly class ComposerProvider implements ProviderInterface
                      * @var Composer $composer
                      */
                     foreach ($queryResults as $composer) {
-                        $composer->setIsFavorite(in_array($composer, (array) $favoritesComposer));
+                        $composer->setIsFavorite(in_array($composer, (array) $favoritesComposer, true));
                         $result[] = $composer;
                     }
 
@@ -77,7 +77,7 @@ readonly class ComposerProvider implements ProviderInterface
                 return $queryResults;
             }
             foreach ($queryResults as $composer) {
-                $composer->setIsFavorite(in_array($composer, $favoritesComposer));
+                $composer->setIsFavorite(in_array($composer, $favoritesComposer, true));
                 $result[] = $composer;
             }
 
