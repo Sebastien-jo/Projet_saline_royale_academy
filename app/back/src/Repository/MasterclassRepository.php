@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Favorites\FavoritesMasterclass;
 use App\Entity\Masterclass;
+use App\Entity\MasterclassUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,6 +60,23 @@ class MasterclassRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return array<Masterclass>
+     */
+    public function findMasterclassesStardedByUser(int $userId): array
+    {
+        $dql = '
+            SELECT m 
+            FROM ' . Masterclass::class . ' m
+            INNER JOIN ' . MasterclassUser::class . ' mu WITH m.id = mu.masterclass AND mu.user = :userId
+        ';
+
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter('userId', $userId)
+                ->getResult()
+        ;
+    }
+
+    /**
      * @throws NonUniqueResultException
      */
     public function findWithFavorite(int $id, int $userId): ?Masterclass
@@ -67,6 +85,25 @@ class MasterclassRepository extends ServiceEntityRepository
             SELECT m
             FROM ' . Masterclass::class . ' m
             INNER JOIN ' . FavoritesMasterclass::class . ' f WITH m.id = f.masterclass AND f.user = :userId
+            WHERE m.id = :id
+        ';
+
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter('userId', $userId)
+                ->setParameter('id', $id)
+                ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneMasterclassStartedByUser(int $id, int $userId): ?Masterclass
+    {
+        $dql = '
+            SELECT m 
+            FROM ' . Masterclass::class . ' m
+            INNER JOIN ' . MasterclassUser::class . ' mu WITH m.id = mu.masterclass AND mu.user = :userId
             WHERE m.id = :id
         ';
 
