@@ -60,7 +60,7 @@ readonly class MasterclassProvider implements ProviderInterface
                      * @var Masterclass $masterclass
                      */
                     foreach ($queryResults as $masterclass) {
-                        $masterclass->setIsFavorite(in_array($masterclass, (array) $favoritesMasterclass));
+                        $masterclass->setIsFavorite(in_array($masterclass, (array) $favoritesMasterclass, true));
                         $result[] = $masterclass;
                     }
 
@@ -74,7 +74,7 @@ readonly class MasterclassProvider implements ProviderInterface
                 return $queryResults;
             }
             foreach ($queryResults as $masterclass) {
-                $masterclass->setIsFavorite(in_array($masterclass, $favoritesMasterclass));
+                $masterclass->setIsFavorite(in_array($masterclass, $favoritesMasterclass, true));
                 $result[] = $masterclass;
             }
 
