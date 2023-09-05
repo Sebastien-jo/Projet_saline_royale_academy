@@ -11,7 +11,6 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MasterclassUserRepository;
-use App\State\MasterclassUserProvider;
 use App\State\MasterclassUserStateProcessor;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new GetCollection(
             normalizationContext: ['groups' => ['masterclass_user:read', 'id']],
             security: "is_granted('MASTERCLASS_USER_VIEW_LIST')",
-            provider: MasterclassUserProvider::class
+            name: 'SELF'
         ),
         new Post(
             uriTemplate: 'masterclass_users/add_masterclass/{masterclassId}',

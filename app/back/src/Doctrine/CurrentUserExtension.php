@@ -51,7 +51,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         }
     }
 
-    private function addWhereCurrentUser(QueryBuilder $queryBuilder, string $columName = 'user_id'): void
+    private function addWhereCurrentUser(QueryBuilder $queryBuilder, string $columName = 'user'): void
     {
         /** @var User|null $user */
         $user = $this->security->getUser();

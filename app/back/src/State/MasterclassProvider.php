@@ -11,6 +11,7 @@ use App\Entity\Masterclass;
 use App\Entity\User;
 use App\Repository\MasterclassRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class MasterclassProvider implements ProviderInterface
@@ -27,10 +28,13 @@ readonly class MasterclassProvider implements ProviderInterface
      * @param array<mixed> $context
      *
      * @return object|array<Masterclass>|null
+     *
+     * @throws NonUniqueResultException
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $favoritesMasterclass = null;
+        $startedMasterclass = null;
         /**
          * @var User $user
          */
@@ -49,6 +53,7 @@ readonly class MasterclassProvider implements ProviderInterface
         if ($operation instanceof CollectionOperationInterface) {
             if ($user->getId() !== null) {
                 $favoritesMasterclass = $masterclassRepository->findAllWithFavorite($user->getId());
+                $startedMasterclass = $masterclassRepository->findMasterclassesStardedByUser($user->getId());
             }
             //                Filters ApiPlatform
             foreach ($this->collectionExtensions as $extension) {
@@ -60,7 +65,8 @@ readonly class MasterclassProvider implements ProviderInterface
                      * @var Masterclass $masterclass
                      */
                     foreach ($queryResults as $masterclass) {
-                        $masterclass->setIsFavorite(in_array($masterclass, (array) $favoritesMasterclass, true));
+                        $masterclass->setFavorite(in_array($masterclass, (array) $favoritesMasterclass, true));
+                        $masterclass->setStarted(in_array($masterclass, (array) $startedMasterclass, true));
                         $result[] = $masterclass;
                     }
 
@@ -70,11 +76,13 @@ readonly class MasterclassProvider implements ProviderInterface
 
             $queryResults = $queryBuilder->getQuery()->getResult();
 
-            if ($favoritesMasterclass == null) {
+            if ($favoritesMasterclass == null && $startedMasterclass == null) {
                 return $queryResults;
             }
+
             foreach ($queryResults as $masterclass) {
-                $masterclass->setIsFavorite(in_array($masterclass, $favoritesMasterclass, true));
+                $masterclass->setFavorite(in_array($masterclass, (array) $favoritesMasterclass, true));
+                $masterclass->setStarted(in_array($masterclass, (array) $startedMasterclass, true));
                 $result[] = $masterclass;
             }
 
@@ -85,7 +93,12 @@ readonly class MasterclassProvider implements ProviderInterface
             if ($user->getId()) {
                 $queryResult = $masterclassRepository->findWithFavorite($id, $user->getId());
                 if ($queryResult === $masterclass) {
-                    $masterclass?->setIsFavorite(true);
+                    $masterclass?->setFavorite(true);
+                }
+
+                $queryResult = $masterclassRepository->findOneMasterclassStartedByUser($id, $user->getId());
+                if ($queryResult === $masterclass) {
+                    $masterclass?->setStarted(true);
                 }
             }
 

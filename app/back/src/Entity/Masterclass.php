@@ -26,11 +26,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            normalizationContext: ['groups' => ['masterclass:read:item', 'id', 'timestamp']],
             provider: MasterclassProvider::class
         ),
         new GetCollection(
-            normalizationContext: ['groups' => ['masterclass:read', 'id', 'timestamp']],
             provider: MasterclassProvider::class
         ),
         new Delete(),
@@ -41,6 +39,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: MasterclassProcessor::class
         ),
     ],
+    normalizationContext: ['groups' => ['masterclass:read', 'id', 'timestamp']],
     denormalizationContext: ['groups' => ['masterclass:write']]
 )]
 #[ORM\HasLifecycleCallbacks()]
@@ -89,7 +88,10 @@ class Masterclass extends AbstractEntity
     private Collection $favoritesMasterclasses;
 
     #[Groups(['masterclass:read'])]
-    private bool $isFavorite = false;
+    private bool $favorite = false;
+
+    #[Groups(['masterclass:read'])]
+    private bool $started = false;
 
     #[ORM\OneToOne(mappedBy: 'masterclass', cascade: ['persist', 'remove'])]
     #[Groups(['masterclass:read'])]
@@ -228,16 +230,16 @@ class Masterclass extends AbstractEntity
         return $this;
     }
 
-    public function setIsFavorite(bool $isFavorite): static
+    public function setFavorite(bool $favorite): static
     {
-        $this->isFavorite = $isFavorite;
+        $this->favorite = $favorite;
 
         return $this;
     }
 
-    public function getIsFavorite(): bool
+    public function isFavorite(): bool
     {
-        return $this->isFavorite;
+        return $this->favorite;
     }
 
     public function getMasterclassImage(): ?MasterclassImage
@@ -255,5 +257,15 @@ class Masterclass extends AbstractEntity
         $this->masterclassImage = $masterclassImage;
 
         return $this;
+    }
+
+    public function isStarted(): bool
+    {
+        return $this->started;
+    }
+
+    public function setStarted(bool $started): void
+    {
+        $this->started = $started;
     }
 }
