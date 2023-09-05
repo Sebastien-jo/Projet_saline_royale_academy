@@ -26,7 +26,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            provider: MasterclassProvider::class
+            normalizationContext: ['groups' => ['masterclass:read:item', 'id', 'timestamp']],
+            provider: MasterclassProvider::class,
         ),
         new GetCollection(
             provider: MasterclassProvider::class
