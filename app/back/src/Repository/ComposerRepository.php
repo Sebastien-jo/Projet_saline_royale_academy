@@ -63,7 +63,7 @@ class ComposerRepository extends ServiceEntityRepository
     public function FindWithFavorite(int $id, int $userId): ?Composer
     {
         $dql = '
-            SELECT c,
+            SELECT c
             FROM ' . Composer::class . ' c
             INNER JOIN ' . FavoritesComposer::class . ' f WITH c.id = f.composer AND f.user = :userId
             WHERE c.id = :id
