@@ -92,6 +92,7 @@ class Masterclass extends AbstractEntity
     private bool $isFavorite = false;
 
     #[ORM\OneToOne(mappedBy: 'masterclass', cascade: ['persist', 'remove'])]
+    #[Groups(['masterclass:read'])]
     private ?MasterclassImage $masterclassImage = null;
 
     public function __construct(array $array = [])
