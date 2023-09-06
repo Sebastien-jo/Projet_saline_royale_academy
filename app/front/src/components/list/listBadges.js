@@ -1,28 +1,35 @@
-import React, {useState} from 'react';
-import FiltersCard from "../filters/filtersCard";
+import React, {useEffect, useState} from 'react';
+import FiltersModal from "../filters/filtersModal";
 import Button from "../button/button";
 import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import '../../styles/components/badge.css';
 import useBadges from "../../hooks/api/useBadges";
+import SortModal from "../filters/sortModal";
 
 const ListBadges= ({text, badges, handleRemove, setId}) => {
 
     const [openPopup, setOpen] = useState(false);
+    const [sortedList, setSortedList] = useState([]);
+
+    useEffect(() => {
+        badges ? setSortedList(badges) : setSortedList([]);
+    }, [badges]);
 
     return (
         <div className="container-list">
             <div className="list-row">
                 <div className="container__header">
                     <h2>{ text }</h2>
-                    <FiltersCard/>
+                    <SortModal list={sortedList} setSortedList={setSortedList} />
                 </div>
 
                 <div className="container-list__content">
 
                     {
-                        badges.map((badge, index) => {
+                        sortedList.length > 0 ?
+                        sortedList.map((badge, index) => {
                             return(
                                 <div className={"card-column"} key={index}>
                                     <div className={"card_avatar"}>
@@ -53,6 +60,10 @@ const ListBadges= ({text, badges, handleRemove, setId}) => {
                                 </div>
                             )
                         })
+                        :
+                        <p>Aucun badge ajouté pour le moment </p>
+
+
                     }
                 </div>
 

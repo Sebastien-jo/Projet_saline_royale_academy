@@ -7,8 +7,8 @@ const useUsers = () => {
 
     const handleDelete = async (id) => {
         try {
+            console.log(id);
             const response = await deleteUser(id);
-            // Handle the response if needed
         } catch (e) {
             setError(e);
         } finally {
@@ -16,10 +16,10 @@ const useUsers = () => {
         }
     };
 
-    const handleUpdate = async (id) => {
+    const handleUpdate = async (id, data) => {
         try {
-            const response = await updateUser(id);
-            // Handle the response if needed
+            const response = await updateUser(id, data);
+           return response; // Return the response from the function
         } catch (e) {
             setError(e);
         } finally {

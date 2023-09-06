@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
 import "../../../styles/library.css";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import ListOeuvres from "../../../components/list/listOeuvres";
 import useOeuvres from "../../../hooks/api/useOeuvres";
 import useSidebarContent from "../../../hooks/useSidebarContent";
+import {useReload} from "../../../hooks/useReload";
 
 const OeuvresLibrary = () => {
     const [oeuvres, setOeuvres] = useState(false);
-    const { loading, error, handleGetAll } = useOeuvres();
+    const {loading, error, handleGetAll, handleDelete} = useOeuvres();
 
     const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
 
     useEffect(() => {
         handleGetAll().then((response) => {
             setOeuvres(response);
+            console.log(response);
         }).catch((err) => {
             console.log(err);
         });

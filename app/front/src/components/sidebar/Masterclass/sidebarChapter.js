@@ -2,8 +2,12 @@ import React from 'react';
 import CardLesson from "../../card/masterclass/cardLesson";
 import Pastille from "../../pastille/pastille";
 import Button from "../../button/button";
+import {Link} from "react-router-dom";
 
-const sidebarChapter = ({chapter, setChapter}) => {
+const sidebarChapter = ({chapter, setChapter, idMasterclass}) => {
+    console.log(chapter);
+
+
 
     return(
         <div className="sidebar">
@@ -12,7 +16,7 @@ const sidebarChapter = ({chapter, setChapter}) => {
                     <div className="lesson_icon"></div>
                     <div className="lesson_title">Chapitre 1: {chapter.name}</div>
                 </div>
-               <div className="lesson_nb">2/5</div>
+               <div className="lesson_nb">0/{chapter.lessons.length}</div>
             </div>
             <div className="sidebar__content">
                 <div className="sidebar__content lesson_accordion_content">
@@ -23,7 +27,12 @@ const sidebarChapter = ({chapter, setChapter}) => {
                         })
                     }
                     </div>
-                    <Button text={"Commencer"} link={"#/masterclass/1"} className={"btn red-full"}/>
+                    {/*<Button text={"Commencer"} link={`#/masterclass/${idMasterclass}/chapter`} className={"btn btn-primary btn-lg btn-block"} params={chapter}/>*/}
+{/*
+                    <Link to={`/masterclass/${idMasterclass}/chapter`} params={{chapter: chapterObjectString}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
+*/}
+
+                    <Link to={`/masterclass/${idMasterclass}/chapter`} state={{chapter: chapter, id: idMasterclass}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
                 </div>
             </div>
         </div>

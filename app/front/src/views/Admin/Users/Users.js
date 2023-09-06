@@ -36,7 +36,7 @@ const Users = () => {
 
     useEffect(() => {
         handleGetAll().then((response) => {
-            setUsers(response);
+            setUsers(response.reverse());
         }).catch((err) => {
             console.log(err);
         });

@@ -10,20 +10,26 @@ const SectionMasterclass = ({index, sectionsContent, setSectionsContent}) => {
 
     const [name, setName] = useState("");
     const [position, setPosition] = useState(index);
-    const [lessonsContent, setLessonsContent] = useState({});
+    const [lessonsContent, setLessonsContent] = useState([]);
     const [lessons, setLessons] = useState([]);
     const [nbLessons, setNbLessons] = useState(0);
     const [activeSection, setActiveSection] = useState(0);
 
     useEffect(() => {
-        setSectionsContent((prevSectionsContent) => ({
-            ...prevSectionsContent,
-            [position]: {
+        setSectionsContent((prevSectionsContent) => {
+            const updatedContent = [...prevSectionsContent]; // Create a copy of the array
+
+            // Adjusting 'position' to array index
+            const arrayIndex = position - 1;
+
+            updatedContent[arrayIndex] = {
                 name: name,
                 lessonsContent: lessonsContent,
-                position: nbLessons
-            }
-        }));
+                position: position
+            };
+
+            return updatedContent;
+        });
     }, [name, lessonsContent, nbLessons]);
 
     return (

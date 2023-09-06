@@ -1,6 +1,6 @@
 import React from "react";
 
-import {deleteRequest, getRequest, putRequest, postRequestFormData} from "../helpers/request";
+import {deleteRequest, getRequest, putRequest, postRequestJson, postRequestFormData} from "../helpers/request";
 
 
 export const getCompositors = () => {
@@ -12,7 +12,7 @@ export const getCompositor = (id) => {
 }
 
 export const addCompositor = (data) => {
-    return postRequestFormData(`/composers`, data);
+    return postRequestJson(`/composers`, data);
 }
 export const deleteCompositor = (id) => {
     return deleteRequest(`/composers/${id}`);
@@ -20,5 +20,9 @@ export const deleteCompositor = (id) => {
 
 export const updateCompositor = (id, data) => {
     return putRequest(`/composers/${id}`, data);
+}
+
+export const addCompositorImage = (data) => {
+    return postRequestFormData(`/composer_images`, data);
 }
 

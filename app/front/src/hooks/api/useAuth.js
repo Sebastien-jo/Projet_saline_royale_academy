@@ -6,11 +6,8 @@ const useAuth = () => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const user = useSelector(state => state.auth.user);
 
-
-
     const handleLogin = (user, token) => {
         dispatch(login({ user, token }));
-
     }
 
     const handleLogout = () => {

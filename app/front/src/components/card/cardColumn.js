@@ -3,10 +3,13 @@ import "../../styles/components/card.css";
 import Button from "../button/button";
 import Pastille from "../pastille/pastille";
 import icon from "../../assets/icones/icon-infos-White-stroke.svg";
-import ButtonFavoris from "../button/ButtonFavoris";
+import ButtonFavoris from "../button/buttonFavoris";
+import {useParseDate} from "../../hooks/useParseDate";
 
 
-const CardColumn = ({image, title, subtitle, description, link, category, favoris = false , id, handleSelect, isSelected}) => {
+const CardColumn = ({ setReload, image, title, subtitle, description, link, category, favoris = false , id, handleSelect, isSelected, isFavorite = false, create, isAdmin, handleDelete }) => {
+
+    const {parseDate} = useParseDate();
 
         const handleClick = () => {
             handleSelect();
@@ -15,7 +18,7 @@ const CardColumn = ({image, title, subtitle, description, link, category, favori
         return (
             <div className={`card-column ${isSelected ? "selected" : ""}`}>
                 <div className="card-image">
-                    {favoris ? <ButtonFavoris favoris={favoris} id={id}/> : null}
+                    {favoris ? <ButtonFavoris favoris={favoris} id={id} isFavorite={isFavorite} setReload={setReload}/> : null}
                     <img src={image} alt="image" />
                 </div>
 
@@ -26,22 +29,36 @@ const CardColumn = ({image, title, subtitle, description, link, category, favori
                             <span className={"title-subtitle"}>{ subtitle }</span>
                         </div>
                         {
-                            category.length > 0 ?
+                            category.length > 1 ?
                                 category.map((item, index) => {
                                     return(
-                                        <Pastille key={index} text={item.name} className={item.name} />
+                                        <Pastille key={index} text={item.name} className={item.name.toLowerCase()} />
                                     )
                                 }
                             ) :
-                                <Pastille text={category.name} className={category.name} />
-                        }
+
+                                category.length === 1 ?
+                                    <Pastille text={category[0].name} className={category[0].name.toLowerCase()} />
+                                : category.name ?
+                                    <Pastille text={category.name} className={category.name.toLowerCase()} />
+                                    : null
+                            }
                     </div>
 
                     <div className="card-body">
                         <p>{description}</p>
                     </div>
 
+                    {
+                        create &&
+                        <p className={"subtitle"}>Ajouté le {parseDate(create)}</p>
+                    }
+
                     <Button className={"blue-full"} isIcon={true} icon={icon} link={link} text={"Voir"} click={handleClick} />
+                    {
+                        isAdmin &&
+                        <Button className={"red-full"} text={"Supprimer"} click={handleDelete} />
+                    }
                 </div>
 
             </div>

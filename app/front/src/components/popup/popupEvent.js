@@ -24,11 +24,11 @@ const PopupEvent = ({openPopup = false, setOpen}) => {
                 <div className="popup-close" onClick={() => handleLinkClick()}></div>
                 <div className="popup-header">
                     <h1 className="popup-title">Nos prochaines masterclass</h1>
-                    <span>Recevez une notifications dès qu'un de nos nouvelles masterclass seras ajoutés </span>
+                    <span>Recevez une notifications dès qu'une de nos nouvelles masterclass seras ajoutés </span>
                 </div>
 
                 <div className="popup-body">
-                    <div className="popup-body-grid">
+                    {/*<div className="popup-body-grid">
                         {
                             test.map((item, index) => {
                                 return (
@@ -36,7 +36,12 @@ const PopupEvent = ({openPopup = false, setOpen}) => {
                                 )
                             })
                         }
-                    </div>
+                    </div>*/}
+                    <p>
+                        Aucun évènement n'est prévu pour le moment.
+                        <br/>
+                        Mais vous pourrez prochainement retrouver ici toutes nos prochains évènements.
+                    </p>
                 </div>
             </div>
         </div>

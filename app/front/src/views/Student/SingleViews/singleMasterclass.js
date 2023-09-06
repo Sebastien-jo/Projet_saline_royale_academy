@@ -17,7 +17,7 @@ const SingleMasterclass = () => {
 
     useEffect(() => {
         handleGet(id).then((response) => {
-            setMasterclass(response);
+              setMasterclass(response);
             console.log(response);
         }).catch((error) => {
             console.log(error);
@@ -43,7 +43,7 @@ const SingleMasterclass = () => {
                 </div>
             </div>
             {
-                isOpen ? <SidebarChapter key={masterclass.id} chapter={chapter} setChapter={setChapter}/> : null
+                isOpen ? <SidebarChapter key={masterclass.id} chapter={chapter} setChapter={setChapter} idMasterclass={masterclass.id}/> : null
             }
         </div>
     );

@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from "react";
 import "../../../styles/singleOeuvre.css";
 import { useParams } from 'react-router-dom';
-import {getCompositor} from "../../../api/endpoints/compositor";
+
 import Loader from "../../../components/loader/loader";
 import Pastille from "../../../components/pastille/pastille";
+import useCompositors from "../../../hooks/api/useCompositors";
+import useMasterclass from "../../../hooks/api/useMasterclass";
 
 const SingleCompositeur = () => {
 
         const [compositor, setCompositor] = useState(false);
+        const [composer, setComposer] = useState(false); // [state, function to update state
+        const {loading, error, handleGet: getCompositor} = useCompositors();
+        const {loading: masterclassLoading, error: masterclassError, handleGetByComposer: getMasterclassByComposer} = useMasterclass();
 
        const {id} = useParams();
 
@@ -18,6 +23,13 @@ const SingleCompositeur = () => {
            }).catch((error) => {
                     console.log(error);
            });
+
+           getMasterclassByComposer(compositor.id).then((response) => {
+            setComposer(response);
+            console.log(response);
+          }).catch((error) => {
+            console.log(error);
+          });
        }, [id]);
 
 
@@ -28,7 +40,7 @@ const SingleCompositeur = () => {
                     <div className="oeuvre-content">
 
                         <div className="oeuvre-img">
-                           <img src={compositor.picture} alt="oeuvre"/>
+                           <img src={compositor.composerImage ? compositor.composerImage.contentUrl : ""} alt={compositor.name} />
                         </div>
 
                         <div className="oeuvre-infos">

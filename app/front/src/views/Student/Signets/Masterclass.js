@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import {getMasterclasses} from "../../../api/endpoints/masterclass";
 import useMasterclass from "../../../hooks/api/useMasterclass";
 import ListMasterclass from "../../../components/list/listMasterclass";
@@ -13,7 +13,9 @@ const Masterclass = () => {
 
     useEffect(() => {
         handleGetAllFavorisMasterclass().then((response) => {
-            setMasterclass(response);
+            setMasterclass(response.map((masterclass) => {
+                return masterclass.masterclass;
+            }));
             console.log(response);
         }).catch((error) => {
             console.log(error);

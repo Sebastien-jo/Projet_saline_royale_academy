@@ -2,14 +2,16 @@ import React, {useEffect, useState} from 'react';
 import MenuBar from "../../../components/navbar/MenuBar";
 import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import useCompositors from "../../../hooks/api/useCompositors";
 import useSidebarContent from "../../../hooks/useSidebarContent";
+import {useReload} from "../../../hooks/useReload";
 
 const CompositeurLibrary = () => {
 
     const [compositors, setCompositors] = useState(false); // [state, function to update state
     const {loading, error, handleGetAll} = useCompositors();
+    const {reload} = useReload();
 
     const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
 
@@ -20,9 +22,9 @@ const CompositeurLibrary = () => {
         }).catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [reload]);
 
-    console.log(sidebarContent);
+    console.log(reload);
 
     return (
         <div className="main-container">

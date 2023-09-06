@@ -1,28 +1,44 @@
 import React, {useEffect, useState} from 'react';
-import FiltersCard from "../filters/filtersCard";
+import FiltersModal from "../filters/filtersModal";
 import CardForum from "../card/forum/cardForum";
 import Button from "../button/button";
 import useForum from "../../hooks/api/useForum";
 import Loader from "../loader/loader";
-
-
-const ListForum = ({text, setSidebar, setActiveSidebar}) => {
+import SortModal from "../filters/sortModal";
+import {useSelector} from "react-redux";
+const ListForum = ({text, setSidebar, setActiveSidebar, myforum = false }) => {
 
     const [forums, setForums] = useState(false); // [state, function to update state
-    const {loading, error, handleGetAll} = useForum()
+    const {loading, error, handleGetAll, handleGet } = useForum();
     const [refresh, setRefresh] = useState(false); // [state, function to update state
     const [selectedForumId, setSelectedForumId] = useState(null);
+    const [sortedList, setSortedList] = useState([]);
+
+    const user = useSelector(state => state.auth.user);
+
 
     const handleForumSelect = (forumId) => {
         setSelectedForumId(forumId);
     };
 
     useEffect(() => {
-        handleGetAll().then((response) => {
-            setForums(response);
-        }).catch((err) => {
-            console.log(err);
-        });
+        setSortedList(forums);
+    }, [forums]);
+
+    useEffect(() => {
+        !myforum ?
+            handleGetAll().then((response) => {
+                setForums(response);
+                console.log(response);
+            }).catch((err) => {
+                console.log(err);
+            })
+            :
+            handleGet(user.id).then((response) => {
+                setForums(response);
+            }).catch((err) => {
+                console.log(err);
+            })
     }, [refresh]);
 
     return (
@@ -30,14 +46,14 @@ const ListForum = ({text, setSidebar, setActiveSidebar}) => {
             <div className="forum-row">
                 <div className="container__header">
                     <Button text={"Poser une question"} className={"red-full"} isArrow={true} click={() => setActiveSidebar("addForum")} />
-                    <FiltersCard/>
+                    <SortModal list={forums} setSortedList={setForums} />
                 </div>
 
                 <div className="container-forum__content">
 
                     {
-                        forums ?
-                            forums.map((item, index) => {
+                        sortedList ?
+                            sortedList.map((item, index) => {
                                 return(
                                     <CardForum
                                         key={index}
@@ -49,7 +65,7 @@ const ListForum = ({text, setSidebar, setActiveSidebar}) => {
                                         setRefresh={setRefresh}
                                         refresh={refresh}/>
                                 )
-                            }).reverse()
+                            })
                             : <Loader />
                     }
                 </div>

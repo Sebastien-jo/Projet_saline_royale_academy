@@ -18,15 +18,23 @@
     padding: 18px 0 0 0;
     gap: 20px;
 }
-.menu-bar__item{
+.menu-bar__item {
     border-bottom: 1px solid var(--primary-blue-dark-100);
-}
-
-.menu-bar__item a{
+    height: 32px;
+    padding: 0 10px;
+    min-width: 100px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
     font-family: var(--text-font-family-semi-bold);
     font-size: var(--text-corps-size);
     color: var(--primary-blue-dark-100);
-    padding: 0 25px 12px 25px;
+}
+
+.menu-bar__item{
+    font-family: var(--text-font-family-semi-bold);
+    font-size: var(--text-corps-size);
+    color: var(--primary-blue-dark-100);
 }
 .menu-bar__item.active{
     border-bottom: 1px solid var(--secondary-red-100);

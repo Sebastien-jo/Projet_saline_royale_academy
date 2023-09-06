@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import CardRow from "../card/cardRow";
-import FiltersCard from "../filters/filtersCard";
 import Pastille from "../pastille/pastille";
 import useMasterclass from "../../hooks/api/useMasterclass";
 import Loader from "../loader/loader";
 import useOeuvres from "../../hooks/api/useOeuvres";
 import useCompositors from "../../hooks/api/useCompositors";
+import bg_work from "../../assets/images/bg_work.jpg";
 
 
 const ListHome = ({title}) => {
@@ -31,19 +31,19 @@ const ListHome = ({title}) => {
     useEffect(() => {
         filter === "courses" ?
             masterclassHandleGetAll().then((response) => {
-                setList(response);
+                setList(response.reverse());
             }).catch((error) => {
                 console.log(error);
             })
         : filter === "work" ?
             oeuvreHandleGetAll().then((response) => {
-                setList(response);
+                setList(response.reverse());
             }).catch((error) => {
                 console.log(error);
             }
         ) : filter === "composer" ?
             composerHandleGetAll().then((response) => {
-                setList(response);
+                setList(response.reverse());
             }).catch((error) => {
                 console.log(error);
             }
@@ -67,7 +67,7 @@ const ListHome = ({title}) => {
                 {
                     list ?
                         list.map((item, index) => {
-                            return(
+                            return index < 8 && (
                                 <CardRow
                                     key={index}
                                     title={item.name}
@@ -79,14 +79,20 @@ const ListHome = ({title}) => {
                                       : filter === "composer" ? "#/compositeur/" + item.id
                                       : "#"
                                     }
-                                    image={"https://picsum.photos/200/300"}
+                                    image={
+                                        filter === "courses" ? item.masterclassImage ? item.masterclassImage.contentUrl : ""
+                                        : filter === "work" ? bg_work
+                                        : filter === "composer" ? item.composerImage ? item.composerImage.contentUrl : ""
+                                        : ""
+                                    }
                                     favoris={filter}
+                                    isFavorite={item.isFavorite}
                                     //category or categories
                                     category={ filter === "composer" ? item.categories : item.category }
                                     id={item.id}
                                 />
                             )
-                        }).reverse()
+                        })
                         : masterclassError || oeuvreError || composerError ?
                         <p>Une erreur est survenue</p>
                         :

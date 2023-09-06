@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getRequest} from "../helpers/request";
+import {getRequest, getRequestNoToken} from "../helpers/request";
 
 
 export const getCategories = () => {
@@ -9,5 +9,9 @@ export const getCategories = () => {
 
 export const getCategory = (id) => {
     return getRequest(`/categories/${id}`);
+}
+
+export const getCategoriesNoToken = () => {
+    return getRequestNoToken("/categories");
 }
 

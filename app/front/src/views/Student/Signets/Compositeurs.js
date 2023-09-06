@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
 import ListCompositors from "../../../components/list/listCompositors";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 
 import useFavoris from "../../../hooks/api/useFavoris";
 
@@ -13,7 +13,10 @@ const Compositeurs = () => {
 
     useEffect(() => {
         handleGetAllFavorisComposer().then((response) => {
-            setCompositors(response);
+            setCompositors(response.map((composer) => {
+                return composer.composer;
+            }));
+            console.log(response);
         }).catch((err) => {
             console.log(err);
         });

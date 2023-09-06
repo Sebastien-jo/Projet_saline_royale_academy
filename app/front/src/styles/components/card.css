@@ -5,7 +5,7 @@
   justify-content: flex-start;
   align-items: center;
     gap: 20px;
-  width: 100%;
+  width: auto;
   height: 100%;
   padding: 15px;
   border-radius: 20px;
@@ -124,6 +124,17 @@
     font-family: var(--title-font-family);
 }
 
+.card-row__content__pastille{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    overflow: scroll;
+}
+
 
 /* CARD ROW */
 
@@ -157,6 +168,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    overflow: hidden;
+    width: inherit;
 }
 .subtitle{
     color: var(--primary-blue-40);
@@ -175,7 +188,6 @@
 
     background: var(--primary-white-100);
     border-radius: 20px;
-    min-height: 40%;
 }
 
 .mystudy-card{
@@ -328,15 +340,29 @@
 
 .card_sidebar_answer{
     display: flex;
-    width: 100%;
-    height: 100%;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
-    border-radius: 20px;
     padding: 10px;
-    background: var(--primary-blue-light-100);
+
+    border-top: 1px solid #e1e1e1;
+    position: relative;
+}
+
+
+
+.card_sidebar_answer:after{
+    /*line vertical*/
+    content: "";
+    width: 1px;
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: fill-available;
+    background-color: #e5e4e4;
+    position: absolute;
+    top: 80px;
+    left: 40px;
 }
 
 .card-row_col{
@@ -346,6 +372,10 @@
     justify-content: flex-start;
     gap: 20px;
     width: auto;
+}
+
+.card_answer{
+    padding-left: 70px;
 }
 
 /*.card-forum-answer.form{

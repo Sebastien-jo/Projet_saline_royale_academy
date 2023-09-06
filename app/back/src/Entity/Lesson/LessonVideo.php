@@ -12,7 +12,7 @@ class LessonVideo extends Lesson
     final public const TYPE = 'lesson_video';
 
     #[Groups(['masterclass_user:read', 'masterclass:write', 'masterclass:read:item'])]
-    #[ORM\Column(length: 5000, nullable: true)]
+    #[ORM\Column(length: 10000, nullable: true)]
     private ?string $videoUrl = null;
 
     public function getVideoUrl(): ?string

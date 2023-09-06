@@ -21,7 +21,7 @@ const NavBarMobile = () => {
     return (
         <div className="navbar-mobile">
                 {
-                    user.roles[0] == "ROLE_USER" ?
+                    user.roles[0] == "ROLE_STUDENT" ?
                     <div className="navbar__links">
                         <Link to="/" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}><span className="navbar__icon home"></span></Link>
                         <Link to="/signets" className={activeLink === "signets" ? "active" : ""} onClick={() => handleLinkClick("signets")}><span className="navbar__icon signets"></span></Link>

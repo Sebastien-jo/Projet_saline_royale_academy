@@ -1,7 +1,7 @@
 import React from 'react';
 import arrow from "../../assets/icones/icon-arrow-White.svg";
 
-const ButtonIcon = ({icon, className, link = ""}) => {
+const ButtonIcon = ({icon, className, link = "", click}) => {
     return(
         <>
             {
@@ -10,7 +10,7 @@ const ButtonIcon = ({icon, className, link = ""}) => {
                         <img src={icon} className={"isArrow"}/>
                     </a>
                     :
-                    <button className={`button-round ${className}`}>
+                    <button className={`button-round ${className}`} onClick={click}>
                         <img src={icon} className={"isArrow"}/>
                     </button>
 

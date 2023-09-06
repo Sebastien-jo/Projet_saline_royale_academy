@@ -6,9 +6,9 @@ import backward from "../../assets/icones/icon-backward-White.svg";
 import forward from "../../assets/icones/icon-forward-White.svg";
 import unmute from "../../assets/icones/icon-sound-Default.svg";
 import "../../styles/components/videoPlayer.css";
-import useVideoPlayer from "../../hooks/useVideoPlayer";
+import useVideoPlayer from "../../hooks/video/useVideoPlayer";
 
-const VideoPlayer = () => {
+const VideoPlayer = (url) => {
 
     const videoElement = useRef(null);
     const {
@@ -27,8 +27,7 @@ const VideoPlayer = () => {
 
     return (
         <div className="container-player">
-            <video id="video-player" ref={videoElement} onTimeUpdate={handleOnTimeUpdate} className="video" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
-
+            <video id="video-player" ref={videoElement} onTimeUpdate={handleOnTimeUpdate} className="video" src={'https://d1a2y8pfnfh44t.cloudfront.net/b9fe11607cc311e49fc083969fd37b20/full/540p/index.mp4'} />
 
             <div className="controlsContainer">
                 <div className={"actions"}>

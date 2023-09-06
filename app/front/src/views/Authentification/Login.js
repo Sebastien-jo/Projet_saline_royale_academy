@@ -3,16 +3,22 @@ import Input from "../../components/form/input";
 import logo from "../../assets/logo/logo-login.svg";
 import "../../styles/components/form.css";
 import useLogin from "../../hooks/api/useLogin";
+import SubmitBtn from "../../components/form/submitBtn";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {loading, error, handleLogin} = useLogin();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleLogin( email, password );
+        handleLogin( email, password ).then( () => {
+            console.log("Login success");
+            navigate("/");
+        });
 
     }
 
@@ -26,9 +32,8 @@ const Login = () => {
                     <Input name="email" label="Email" type="email" onChange={e => setEmail(e.target.value)} />
                     <Input name="password" label="Password" type="password" onChange={e => setPassword(e.target.value)} />
                     <p>Vous n'avez pas encore de compte ? <a href={"#/signin"}>S’enregistrer</a></p>
-                    <button type="submit" className="btn btn-primary" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
-                    </button>
+
+                    <SubmitBtn text={ loading ? 'Logging in...' : 'Login'} className={"blue-full"}/>
 
                     {error && <p className="error">{error.message}</p>}
                 </form>

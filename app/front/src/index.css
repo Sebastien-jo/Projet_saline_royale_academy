@@ -1,12 +1,16 @@
 html{
-  min-height: calc(100vh - 120px)!important;
-  height: fit-content!important;
+ min-height: 100vh;
+  height: auto;
+  display: flex;
+  align-items: stretch;
 }
 body, #root, .App{
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100%!important;
+  height: inherit;
+  display: flex;
+  align-items: stretch;
 }
 
 code {

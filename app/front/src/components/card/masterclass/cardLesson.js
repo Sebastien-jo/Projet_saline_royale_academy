@@ -12,7 +12,12 @@ const cardLesson = ({lesson}) => {
 
             <div className={"lesson_details_content"}>
                 <div className={"lesson_details_infos_time"}>Temps: 2m30</div>
-                <div className={"lesson_details_infos_type"}>Type: Article</div>
+                {
+                    lesson.videoUrl ?
+                        <div className={"lesson_details_infos_type"}>Type: Vidéo</div>
+                        :
+                        <div className={"lesson_details_infos_type"}>Type: Article</div>
+                }
             </div>
         </div>
     )

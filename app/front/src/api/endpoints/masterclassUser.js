@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getRequest, patchRequest, postRequestFormData, deleteRequest} from "../helpers/request";
+import {getRequest, patchRequest, postRequestFormData, deleteRequest, postRequestJson} from "../helpers/request";
 
 
 export const getMasterclassUsers = () => {
@@ -11,8 +11,8 @@ export const getMasterclassUser = (id) => {
     return getRequest(`/masterclass_users/${id}`);
 }
 
-export const addMasterclassUser = (id, data) => {
-    return postRequestFormData(`/masterclass_users/add_masterclass/${id}`, data);
+export const addMasterclassUser = (id) => {
+    return postRequestJson(`/masterclass_users/add_masterclass/${id}`, {});
 }
 
 export const deleteMasterclassUser = (id) => {
@@ -21,4 +21,8 @@ export const deleteMasterclassUser = (id) => {
 
 export const updateMasterclassUser = (id, data) => {
     return patchRequest(`/masterclass_users/${id}`, data);
+}
+
+export const validateMasterclassUser = (id) => {
+    return patchRequest(`/lesson_users/${id}/validate`);
 }

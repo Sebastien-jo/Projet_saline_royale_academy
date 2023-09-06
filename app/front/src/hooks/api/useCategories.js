@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getCategory, getCategories} from "../../api/endpoints/category";
+import {getCategory, getCategories, getCategoriesNoToken}  from "../../api/endpoints/category";
 
 const useCategories = () => {
     const [loading, setLoading] = React.useState(false);
@@ -28,11 +28,23 @@ const useCategories = () => {
         }
     };
 
+    const handleGetNoToken = async () => {
+        try {
+            const response = await getCategoriesNoToken();
+            return response; // Return the response from the function
+        } catch (e) {
+            setError(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return {
         loading,
         error,
         handleGet,
-        handleGetAll
+        handleGetAll,
+        handleGetNoToken
     };
 }
 

@@ -7,7 +7,7 @@ import useBadges from "../../../hooks/api/useBadges";
 
 const Badges = () => {
 
-    const [badges, setBadges] = useState([]);
+    const [badges, setBadges] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [id, setId] = useState({}); // [1
     const {loading, error, handleDelete, handleGetAll, handleDeleteBadgeImage} = useBadges();
@@ -27,8 +27,7 @@ const Badges = () => {
 
     useEffect(() => {
         handleGetAll().then((response) => {
-            console.log(response);
-            setBadges(response);
+            setBadges(response.reverse());
         }).catch((err) => {
             console.log(err);
         });
@@ -39,7 +38,7 @@ const Badges = () => {
         <div className="main-container">
             <div className="main-content">
                 <Button text="Ajouter un badge" link={"#/badges/add"} className={"red-full"} isIcon={true} icon={icon_add} />
-                <ListBadges text={"Liste des badges"} badges={badges} handleRemove={handleRemove} setId={setId} />
+                <ListBadges text={"Liste des badges"} badges={badges.length > 0 ? badges : false } handleRemove={handleRemove} setId={setId} />
             </div>
         </div>
     );

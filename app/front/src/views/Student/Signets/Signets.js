@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import Button from "../../../components/button/button";
 import "../../../styles/signets.css";
 import {useTranslation} from "react-i18next";
@@ -14,7 +14,7 @@ const Signets = () => {
             <div className="main-content">
                 <h2>{ t('signets.title') }</h2>
                 <div className="signets-container">
-                    <div className="signets-card">
+                    <div className="signets-card masterclass">
                         <div className="signets-card-header">
                             <h1>{ t('signets.masterclass_title') }</h1>
                             <span className="subtitle">{ t('signets.masterclass_subtitle') }</span>
@@ -22,7 +22,7 @@ const Signets = () => {
                         <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"#/signets/masterclass"}/>
                     </div>
 
-                    <div className="signets-card">
+                    <div className="signets-card work">
                         <div className="signets-card-header">
                             <h1>{ t('signets.oeuvres_title') }</h1>
                             <span className="subtitle">{ t('signets.oeuvres_subtitle') }</span>
@@ -30,7 +30,7 @@ const Signets = () => {
                         <Button className={"red-full"} text={ t('bouton.voir_tout') } isArrow={true} link={"#/signets/oeuvres"}/>
                     </div>
 
-                    <div className="signets-card">
+                    <div className="signets-card composer">
                         <div className="signets-card-header">
                             <h1>{ t('signets.composer_title') }</h1>
                             <span className="subtitle">{ t('signets.composer_subtitle') }</span>

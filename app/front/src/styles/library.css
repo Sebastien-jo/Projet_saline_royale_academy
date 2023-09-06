@@ -3,7 +3,8 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
-    width: 100%;
+    width: auto;
+    padding: 0 20px;
 }
 
 .list-row{
@@ -17,7 +18,7 @@
 .container-list__content{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 20px;
     width: 100%;
 }

@@ -46,7 +46,8 @@
     color: #00bfa5;
 }
 
-.violoncelle{
+.violoncelle,
+.red{
     background-color: #ffebee;
     color: #f44336;
 }
@@ -56,7 +57,7 @@
     color: #3f51b5;
 }
 
-.flute{
+.flute, .green{
     background-color: #e8f5e9;
     color: #4caf50;
 }

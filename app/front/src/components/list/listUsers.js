@@ -1,23 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import FiltersCard from "../filters/filtersCard";
+import FiltersModal from "../filters/filtersModal";
 import Button from "../button/button";
 import edit from "../../assets/icones/icon-edit-Blue-stroke.svg";
 import trash from "../../assets/icones/icon-trash-White.svg";
 import PopupDelete from "../popup/popupDelete";
 import useUsers from "../../hooks/api/useUsers";
 import logo_user from "../../assets/logo/logo_user.png";
+import SortModal from "../filters/sortModal";
 
 const ListUsers= ({text, users, setId, handleRemove}) => {
 
     const [openPopup, setOpen] = useState(false);
-    console.log(users);
+    const [sortedList, setSortedList] = useState([]);
+
+    useEffect(() => {
+        setSortedList(users);
+    }, [users]);
 
     return (
         <div className="container-list">
             <div className="list-row">
                 <div className="container__header">
                     <h2>{ text }</h2>
-                    <FiltersCard/>
+                    <SortModal list={sortedList} setSortedList={setSortedList} />
                 </div>
 
                 <div className="container-list__content">

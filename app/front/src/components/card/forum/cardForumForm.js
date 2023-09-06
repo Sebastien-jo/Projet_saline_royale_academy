@@ -2,6 +2,7 @@ import React,{ useState} from 'react';
 import Textarea from "../../form/textarea";
 import Button from "../../button/button";
 import useForumMessage from "../../../hooks/api/useForumMessage";
+import SubmitBtn from "../../form/submitBtn";
 
 const CardForumForm = ({forumId,  setNewMessage}) => {
 
@@ -25,7 +26,7 @@ const CardForumForm = ({forumId,  setNewMessage}) => {
             <h2>Répondre à nom</h2>
             <form className={"form_forum"} onSubmit={handleSubmit}>
                 <Textarea name={"content"} label={"Votre réponse"} onChange={e => setContent(e.target.value)} value={content} />
-                <input type={"submit"} value={"Envoyer"} className={"btn blue-full"}/>
+                <SubmitBtn label={"Répondre"} className={"blue-full"} loading={loadingMessage} />
             </form>
         </div>
     );

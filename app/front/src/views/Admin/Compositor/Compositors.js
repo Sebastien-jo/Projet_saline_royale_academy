@@ -8,22 +8,33 @@ import useCompositors from "../../../hooks/api/useCompositors";
 const Compositors = () => {
 
     const [compositors, setCompositors] = useState(false); // [state, function to update state
-    const {loading, error, handleGetAll} = useCompositors();
+    const {loading, error, handleGetAll, handleDelete} = useCompositors();
+    const [id, setId] = useState(null);
+    const [refresh, setRefresh] = useState(false);
+
 
     useEffect(() => {
         handleGetAll().then((response) => {
-            setCompositors(response);
+            setCompositors(response.reverse());
         }).catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [refresh]);
+
+    const handleCompositorDelete = () => {
+        handleDelete(id).then((response) => {
+            setRefresh(!refresh);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 
     return (
         <div className="main-container">
             <div className="main-content">
                 <Button text="Ajouter un compositeur" link={"#/compositeurs/add"} className={"red-full"} isIcon={true} icon={icon_add} />
 
-                <ListCompositors compositors={compositors ? compositors : false} error={error}/>
+                <ListCompositors compositors={compositors ? compositors : false} error={error} loading={loading} isAdmin={true} deleteFunction={handleCompositorDelete} setId={setId} />
             </div>
         </div>
     );

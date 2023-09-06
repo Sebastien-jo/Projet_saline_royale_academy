@@ -1,6 +1,6 @@
 import React from 'react';
 import CardColumn from "../card/cardColumn";
-import FiltersCard from "../filters/filtersCard";
+import FiltersModal from "../filters/filtersModal";
 
 const ListNotations = ({text}) => {
 
@@ -11,7 +11,7 @@ const ListNotations = ({text}) => {
             <div className="list-row">
                 <div className="container__header">
                     <h2>{ text }</h2>
-                    <FiltersCard/>
+                    <FiltersModal/>
                 </div>
 
                 <div className="container-list__content">

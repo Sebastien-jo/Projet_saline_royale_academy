@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { getCompositors,  getCompositor, deleteCompositor, updateCompositor, addCompositor} from "../../api/endpoints/compositor";
+import { getCompositors,  getCompositor, deleteCompositor, updateCompositor, addCompositor, addCompositorImage } from "../../api/endpoints/compositor";
 
 
 const useCompositors = () => {
@@ -62,12 +62,23 @@ const useCompositors = () => {
         }
     }
 
+    const handleAddCompositorImage = async (data) => {
+        try {
+            const response = await addCompositorImage(data);
+        } catch (e) {
+            setError(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return{
         handleDelete,
         handleUpdate,
         handleGet,
         handleGetAll,
         handlePost,
+        handleAddCompositorImage,
         loading,
         error,
     }

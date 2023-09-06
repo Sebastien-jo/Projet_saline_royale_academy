@@ -10,15 +10,16 @@ const MenuBar = ({items}) => {
         setIsLinkActive(name);
     }
 
+
     return (
         <div className="menu-bar">
             <div className="menu-bar__row">
                 {
                     items.map((item, index) => {
                         return (
-                            <div key={index} className={`menu-bar__item ${isLinkActive === item.name ? "active" : ""}`} onClick={() => handleLinkToggle(item.name)}>
-                                <Link to={item.link} >{item.name}</Link>
-                            </div>
+                            <Link to={item.link} state={{title: item.name }} key={index} onClick={() => handleLinkToggle(item.name)} className={`menu-bar__item ${isLinkActive === item.name ? "active" : null}`} >
+                                <div key={index} className={`menu-bar__item ${isLinkActive === item.name ? "active" : ""}`} >{item.name}</div>
+                            </Link>
                         );
                     })
                 }

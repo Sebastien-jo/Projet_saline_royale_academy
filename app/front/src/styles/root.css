@@ -291,6 +291,9 @@
     --icon-badge-blue-stroke: url('../assets/icones/icon-badge-Blue-full.svg');
     --icon-badge-grey: url('../assets/icones/icon-badge-Grey.svg');
 
+    --icon-sort-black: url('../assets/icones/icon-sort-Default.svg');
+    --icon-sort-white: url('../assets/icones/icon-sort-White-stroke.svg');
+    --icon-sort-blue-stroke: url('../assets/icones/icon-sort-Blue-full.svg');
 }
 
 .dark-mode{
@@ -309,27 +312,23 @@
     --primary-red-hover-100: #FF816C;
     --secondary-red-100: #FF8E7C;
 
-    --primary-white-100: #ffffff; /* Darker shade of #FFFFFF */
+
+    --primary-white-100: #3e4956; /* Inverted from #000000 */
     --secondary-white-100: #AFBAC6; /* Darker shade of #F5F5F5 */
 
     --primary-black-100: #FFFFFF; /* Inverted from #000000 */
 }
 
 /* ----------------------------- */
-body, #root, .App{
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100%;
-}
 
 a{
     text-decoration: none;
 }
 
 .main{
-    margin-left: 6vw;
+    margin-left: 7vw;
     height: 100%;
+    width: 100%;
 }
 
 h1{
@@ -383,6 +382,7 @@ p{
     align-items: center;
     justify-content: center;
     gap: 40px;
+    width: 100%;
 
 }
 
@@ -402,8 +402,9 @@ p{
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: flex-start;
+    width: 100%;
 }
 
 .isMenu{
@@ -429,9 +430,21 @@ p{
     width: 100%;
 }
 
+.container__header__buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
 /* MOBILE */
 .mobile .main{
     margin-left: 0vw;
+}
+
+.mobile .main-container{
+    overflow: scroll;
 }
 
 

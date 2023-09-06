@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getRequest, postRequest, putRequest, deleteRequest, postRequestFormData, patchRequest} from "../helpers/request";
+import {getRequest, deleteRequest, postRequestFormData, patchRequest} from "../helpers/request";
 
 
 export const getOeuvres = () => {

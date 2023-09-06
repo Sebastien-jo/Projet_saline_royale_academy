@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { getMasterclassUsers, getMasterclassUser, addMasterclassUser, deleteMasterclassUser, updateMasterclassUser } from "../../api/endpoints/masterclassUser";
+import { getMasterclassUsers, getMasterclassUser, addMasterclassUser, deleteMasterclassUser, updateMasterclassUser, validateMasterclassUser} from "../../api/endpoints/masterclassUser";
 
 const useMasterclassUser = () => {
 
@@ -29,9 +29,9 @@ const [loading, setLoading] = useState(false);
         }
     }
 
-    const handlePost = async (data) => {
+    const handlePost = async (id) => {
         try{
-            const response = await addMasterclassUser(data);
+            const response = await addMasterclassUser(id);
             return response; // Return the response from the function
         } catch(e){
             setError(e);
@@ -62,6 +62,17 @@ const [loading, setLoading] = useState(false);
         }
     }
 
+    const handleValidate = async (id) => {
+        try{
+            const response = await validateMasterclassUser(id);
+            // Handle the response if needed
+        } catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }
+
     return {
         loading,
         error,
@@ -69,7 +80,8 @@ const [loading, setLoading] = useState(false);
         handleGet,
         handlePost,
         handleDelete,
-        handleUpdate
+        handleUpdate,
+        handleValidate
     };
 }
 

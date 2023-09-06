@@ -4,9 +4,12 @@ import Textarea from "../../form/textarea";
 import useForum from "../../../hooks/api/useForum";
 import Input from "../../form/input";
 import {useSelector} from "react-redux";
+import SubmitBtn from "../../form/submitBtn";
+import ButtonIcon from "../../button/buttonIcon";
+import close from "../../../assets/icones/icon-cross-Blue-full.svg";
 
 
-const SidebarForumAdd = () => {
+const SidebarForumAdd = ({closeSidebar}) => {
 
 
     const {loading, error, handlePost} = useForum();
@@ -25,6 +28,8 @@ const SidebarForumAdd = () => {
 
     return (
         <div className="sidebar isForum">
+            <ButtonIcon className={"blue"} click={closeSidebar} icon={close} />
+
             <div className="sidebar__header">
                 <h2>Poser votre question :</h2>
             </div>
@@ -35,7 +40,7 @@ const SidebarForumAdd = () => {
                         <div className={"card-row_container infos"}>
                             <Input type="text" name="title" label="Votre question" onChange={e => setTitle(e.target.value)} value={title}/>
                             <Textarea name={"description"} label="Un peu de détails ?" onChange={e => setDescription(e.target.value)} value={description}/>
-                            <input type={"submit"} value={"Envoyer"} className={"btn blue-full"}/>
+                            <SubmitBtn label={"Poser ma question"} className={"blue-full"} loading={loading} text={"Poser ma question"} />
                         </div>
                     </form>
                 </div>
