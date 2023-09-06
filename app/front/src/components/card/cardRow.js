@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from "../button/button";
-import ButtonFavoris from "../button/buttonFavoris";
+import ButtonFavoris from "../button/ButtonFavoris";
 import Pastille from "../pastille/pastille";
 import {useParseDate} from "../../hooks/useParseDate";
 

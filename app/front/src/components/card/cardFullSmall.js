@@ -1,6 +1,6 @@
 import React from 'react';
 import chevron from "../../assets/icones/icon-chevron-White-stroke.svg";
-import ButtonFavoris from "../button/buttonFavoris";
+import ButtonFavoris from "../button/ButtonFavoris";
 import ButtonIcon from "../button/buttonIcon";
 
 const CardFullSmall = ({id, title, subtitle, background, link, isFavorite}) => {

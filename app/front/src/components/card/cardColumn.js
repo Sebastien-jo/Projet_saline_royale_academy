@@ -3,7 +3,7 @@ import "../../styles/components/card.css";
 import Button from "../button/button";
 import Pastille from "../pastille/pastille";
 import icon from "../../assets/icones/icon-infos-White-stroke.svg";
-import ButtonFavoris from "../button/buttonFavoris";
+import ButtonFavoris from "../button/ButtonFavoris";
 import {useParseDate} from "../../hooks/useParseDate";
 
 
