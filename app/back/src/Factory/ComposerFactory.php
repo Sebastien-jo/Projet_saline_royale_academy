@@ -41,7 +41,6 @@ final class ComposerFactory extends ModelFactory
             'death' => self::faker()->dateTime(),
             'name' => self::faker()->name(255),
             'nationality' => Nationality::Az,
-            'picture' => self::faker()->imageUrl(640, 480, ''),
         ];
     }
 
