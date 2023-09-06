@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Patch(
             uriTemplate: '/lesson_users/{id}/validate',
             denormalizationContext: ['groups' => ['lesson_user:patch']],
-            security: "is_granted('LESSON_USER_VALIDATE', object)",
+            security: "is_granted('ROLE_STUDENT') or is_granted('ROLE_ADMIN')",
             processor: LessonUserProcessor::class
         ),
     ],

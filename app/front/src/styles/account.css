@@ -1,0 +1,16 @@
+/* AVATAR */
+
+.form-avatar > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    max-width: 350px;
+    max-height: 250px;
+}
+.avatar-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}

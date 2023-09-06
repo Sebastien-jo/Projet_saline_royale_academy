@@ -1,6 +1,6 @@
 import React from "react";
 
-import {getRequest} from "../helpers/request";
+import {getRequest, deleteRequest, postRequestFormData, patchRequest} from "../helpers/request";
 
 
 export const getOeuvres = () => {
@@ -10,4 +10,18 @@ export const getOeuvres = () => {
 export const getOeuvre = (id) => {
     return getRequest(`/works/${id}`);
 }
+
+export const addOeuvre = (data) => {
+    return postRequestFormData("/works", data);
+}
+
+export const deleteOeuvre = (id) => {
+    return deleteRequest(`/works/${id}`);
+}
+
+export const updateOeuvre = (id, data) => {
+    return patchRequest(`/works/${id}`, data);
+}
+
+
 

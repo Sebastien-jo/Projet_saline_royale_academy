@@ -1,6 +1,6 @@
 import React from "react";
 
-import {postRequestFormData, postRequestJson, postRequestJsonNotToken} from "../helpers/request";
+import { postRequestJsonNotToken} from "../helpers/request";
 
 export const Login = (email, password) => {
     const credentials = {
@@ -8,7 +8,7 @@ export const Login = (email, password) => {
         password
     };
 
-    return postRequestJson("/login", credentials);
+    return postRequestJsonNotToken("/login", credentials);
 }
 
 export const Register = (userData) => {

@@ -10,7 +10,7 @@ const initialState = {
         isAuthenticated: false,
         user: null,
         token: null,
-    },
+    }
 };
 
 const persistConfig = {
@@ -18,7 +18,7 @@ const persistConfig = {
     storage,
 };
 
-const rootReducer = combineReducers({ auth: authReducer });
+const rootReducer = combineReducers({ auth: authReducer});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({

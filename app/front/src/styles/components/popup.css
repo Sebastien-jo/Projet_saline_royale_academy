@@ -29,7 +29,7 @@
     justify-content: center;
     background: var(--primary-white-100);
     border-radius: 20px;
-    padding: 20px 40px;
+    padding: 50px 40px;
     position: relative;
 }
 
@@ -101,7 +101,7 @@
 
 .popup-content{
     width: 60%;
-    height: 70%;
+    height: fit-content;
 }
 
 .popup-body{

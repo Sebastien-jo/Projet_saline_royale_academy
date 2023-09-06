@@ -76,6 +76,7 @@ class Forum extends AbstractEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['forum:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
@@ -84,6 +85,7 @@ class Forum extends AbstractEntity
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'forum', targetEntity: ForumMessage::class, orphanRemoval: true)]
+    #[Groups(['forum:read'])]
     private Collection $forumMessages;
 
     #[ORM\Column]

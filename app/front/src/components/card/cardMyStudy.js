@@ -1,7 +1,6 @@
 import React from 'react';
 import CardFull from "./cardFull";
 import Pastille from "../pastille/pastille";
-
 import "../../styles/components/card.css";
 
 const CardMyStudy = () => {
@@ -28,9 +27,6 @@ const CardMyStudy = () => {
                 <div className={"mystudy-progress"}>
 
                 </div>
-
-
-
 
 
             </div>

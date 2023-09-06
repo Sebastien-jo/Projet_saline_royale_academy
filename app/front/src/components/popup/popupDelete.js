@@ -5,7 +5,7 @@ import Button from "../button/button";
 import icon_delete from "../../assets/icones/icon-trash-White.svg";
 import icon_cross from "../../assets/icones/icon-cross-Blue-full.svg";
 
-const PopupEvent = ({openPopup = false, setOpen, title, text}) => {
+const PopupEvent = ({openPopup = false, setOpen, title, text, deleteFunc}) => {
 
     const [isOpened, setIsOpened] = useState(openPopup);
     const { i18n, t } = useTranslation();
@@ -19,7 +19,6 @@ const PopupEvent = ({openPopup = false, setOpen, title, text}) => {
         setIsOpened(openPopup);
     }, [openPopup]);
 
-
     return(
         <div className={`popup-container small ${isOpened ? "open" : "close"}`}>
             <div className="popup-content">
@@ -31,7 +30,7 @@ const PopupEvent = ({openPopup = false, setOpen, title, text}) => {
 
                 <div className="popup-body">
                     <Button text={"Annuler"} className={"blue-stroke"} isIcon={true} icon={icon_cross} click={() => setOpen(false)} />
-                    <Button text={"Supprimer"} className={"red-full"} isIcon={true} icon={icon_delete} onClick={() => handleDelete()} />
+                    <Button text={"Supprimer"} className={"red-full"} isIcon={true} icon={icon_delete} click={() => {deleteFunc(); setOpen(false)}} />
                 </div>
             </div>
         </div>

@@ -21,3 +21,14 @@
     gap: 20px;
     width: 100%;
 }
+
+.container-forum__content.sidebarOpen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.isForum{
+    position: relative;
+}

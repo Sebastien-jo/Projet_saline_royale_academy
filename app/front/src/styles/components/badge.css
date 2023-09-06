@@ -33,7 +33,7 @@
 }
 
 .badge-card-img img{
-    width: 120px;
+    width: 200px;
     height: 100%;
     border-radius: 100%
 
@@ -42,4 +42,11 @@
 .badge h3{
     font-size: var(--font-size-regular);
     font-family: var(--text-font-family-regular);
+}
+
+.card_avatar img{
+    width: 100px!important;
+    height: 100px!important;
+    border-radius: 100%;
+    background-color: var(--primary-white-100);
 }

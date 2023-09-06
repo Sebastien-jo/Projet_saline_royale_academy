@@ -1,8 +1,8 @@
 import React from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import ListLibraryCompositors from "../../../components/list/listLibraryCompositors";
+import ListCompositors from "../../../components/list/listCompositors";
 import "../../../styles/library.css";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 
 const Library = () => {
     return (

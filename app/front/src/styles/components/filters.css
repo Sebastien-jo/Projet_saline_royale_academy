@@ -31,8 +31,19 @@
     background: url('../../assets/icones/icon-params-Default.svg') no-repeat center/contain;
 }
 
+.sort-icon{
+    width: 13px;
+    height: 13px;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    background: url('../../assets/icones/icon-sort-Default.svg') no-repeat center/contain;
+}
+
 .filter-button:hover .filter-icon{
     background: url('../../assets/icones/icon-params-White-stroke.svg') no-repeat center/contain;
+}
+.filter-button:hover .sort-icon{
+    background: url('../../assets/icones/icon-sort-White-stroke.svg') no-repeat center/contain;
 }
 
 .filters-card{
@@ -113,8 +124,25 @@
 
 .filters-card input{
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border: 1px solid var(--primary-blue-40);
     border-radius: 5px;
+    padding: 0;
+    position: relative;
+    cursor: pointer;
 }
+
+.filters-card .active:after{
+    content: "";
+    display: block;
+    width: 15px; /* Adjust this value to your desired size */
+    height: 15px; /* Adjust this value to your desired size */
+    background: var(--primary-blue-dark-100);
+    border-radius: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+

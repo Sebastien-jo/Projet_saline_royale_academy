@@ -77,8 +77,8 @@
 
 .button-round{
     border-radius: 50%;
-    width: 40px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     padding: 8px;
     display: flex;
     align-items: center;
@@ -108,5 +108,26 @@
     width: 30px;
     height: 30px;
     padding: 5px;
+}
+
+/* FAVORITE BUTTON */
+.favorite{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background-color: var(--primary-white-100);
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.favorite img{
+    width: 20px!important;
+    height: 20px!important;
+    min-height: 20px!important;
+    min-width: 20px!important;
+    object-fit: contain;
 }
 

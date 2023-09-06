@@ -46,6 +46,7 @@ class ForumMessage extends AbstractEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['forum:message:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]

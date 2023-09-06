@@ -18,24 +18,28 @@
     gap: 20px;
 }
 
-.signets-card:nth-child(1){
+.signets-card.masterclass{
     grid-column: 1;
     grid-row: 1 / 3;
-    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('https://picsum.photos/900/1000') ;
+    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('../assets/images/masterclass.jpg') ;
+    background-position: center;
+    background-size: cover;
 }
 
-.signets-card:nth-child(2){
+.signets-card.work{
     grid-column: 2;
     grid-row: 1;
-    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('https://picsum.photos/900/1000') ;
-
+    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('../assets/images/work.jpg') ;
+    background-position: center;
+    background-size: cover;
 }
 
-.signets-card:nth-child(3){
+.signets-card.composer{
     grid-column: 2;
     grid-row: 2;
-    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('https://picsum.photos/900/1000') ;
-
+    background-image: linear-gradient(rgba(255, 142, 124, 0.5), rgba(255, 142, 124, 0.5)), url('../assets/images/composer.jpg') ;
+    background-position: center;
+    background-size: cover;
 }
 
 .signets-card h1, .signets-card span{

@@ -63,6 +63,7 @@ class UserAvatar extends AbstractEntity
 
     #[Vich\UploadableField(mapping: 'avatarFile', fileNameProperty: 'imagePath')]
     #[Assert\NotNull(groups: ['avatar:create'])]
+    #[Groups(['avatar:read', 'user:read'])]
     public ?File $imageFile = null;
 
     #[Groups(['avatar:read', 'user:read'])]

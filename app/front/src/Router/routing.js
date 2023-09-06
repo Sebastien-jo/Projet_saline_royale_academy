@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {BrowserRouter, Routes, Route, Router, useNavigate, HashRouter} from "react-router-dom";
 import "../index.css";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/api/useAuth";
 
 import "../styles/root.css";
 import GlobalLayout from "../GlobalLayout";
@@ -10,7 +10,6 @@ import GlobalLayout from "../GlobalLayout";
 import Login from "../views/Authentification/Login";
 import SignIn from "../views/Authentification/SignIn";
 
-import Account from "../views/Student/Account/Account";
 import Informations from "../views/Student/Account/Informations";
 import Progress from "../views/Student/Account/Progress";
 import MentionsLegales from "../views/Student/Account/MentionsLegales";
@@ -18,7 +17,6 @@ import MentionsLegales from "../views/Student/Account/MentionsLegales";
 import Home from "../views/Student/Home";
 import MyStudy from "../views/Student/MyStudy";
 
-import Library from "../views/Student/Library/Library";
 import MasterclassLibrary from "../views/Student/Library/Masterclass";
 import OeuvresLibrary from "../views/Student/Library/Oeuvres";
 import CompositeurLibrary from "../views/Student/Library/Compositeur";
@@ -32,12 +30,10 @@ import SingleMasterclass from "../views/Student/SingleViews/singleMasterclass";
 import SingleOeuvre from "../views/Student/SingleViews/singleOeuvre";
 import SingleCompositeur from "../views/Student/SingleViews/singleCompositeur";
 
-import Forum from "../views/Student/Forum";
+import Forum from "../views/Student/Forum/Forum";
 
 import Courses from "../views/Teacher/Courses";
 import Notations from "../views/Teacher/Notations";
-import Gestion from "../views/Teacher/Gestion";
-import AddCourses from "../views/Teacher/AddCourses";
 
 import MasterclassAdmin from "../views/Admin/Masterclass/Masterclass";
 import OeuvresAdmin from "../views/Admin/Oeuvres/Oeuvres";
@@ -49,34 +45,46 @@ import FormBadge from "../views/Admin/Badges/FormBadge";
 import FormUser from "../views/Admin/Users/FormUser";
 import FormMasterclass from "../views/Admin/Masterclass/FormMasterclass";
 import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
+import SingleCompositor from "../views/Admin/Compositor/SingleCompositor";
+import MasterclassChapter from "../views/Student/SingleViews/Lessons/MasterclassChapter";
+import MyForum from "../views/Student/Forum/MyForum";
+
 
 
 const Routing = () => {
     const { isAuthenticated, user } = useAuth();
+
+    console.log(isAuthenticated);
 
     return (
         <HashRouter>
             <Routes>
                 {isAuthenticated ? (
                     <>
-                        {user.roles[0] === "ROLE_USER" ? (
+                        {user.roles[0] === "ROLE_STUDENT" ? (
                             <Route path="/" element={<GlobalLayout />}>
-                                <Route path="/" exact element={<Home />} title="Home" />
-                                <Route path="/mystudy" element={<MyStudy />} title="MyStudy" />
-                                <Route path="/forum" element={<Forum />} title={"Forum"} />
+                                <Route path="/" exact element={<Home />}/>
+                                <Route path="/mystudy" element={<MyStudy />}/>
+                                <Route path="/forum">
+                                    <Route index element={<Forum />} />
+                                    <Route path="/forum/myforum" element={<MyForum />}/>
+                                </Route>
                                 <Route path="/signets/*">
-                                    <Route index element={<Signets />} title="Signets" />
+                                    <Route index element={<Signets />}/>
                                     <Route path="masterclass" element={<MasterclassSignets />} />
                                     <Route path="oeuvres" element={<OeuvresSignets />} />
                                     <Route path="compositeur" element={<CompositeurSignets />} />
                                 </Route>
                                 <Route path="/library/*">
-                                    <Route index element={<Library />} title="Library" />
-                                    <Route path="masterclass" element={<MasterclassLibrary />} />
+                                    <Route index element={<MasterclassLibrary />}/>
+                                    <Route index path="masterclass" element={<MasterclassLibrary />} />
                                     <Route path="oeuvres" element={<OeuvresLibrary />} />
-                                    <Route path="compositeur" element={<CompositeurLibrary />} />
+                                    <Route path="compositeur" element={<CompositeurLibrary />}/>
                                 </Route>
-                                <Route path="/masterclass/:id" element={<SingleMasterclass />} />
+                                <Route path="/masterclass/:id/*">
+                                    <Route index element={<SingleMasterclass />} />
+                                    <Route path="chapter" element={<MasterclassChapter />} />
+                                </Route>
                                 <Route path="/oeuvre/:id" element={<SingleOeuvre />} />
                                 <Route path="/compositeur/:id" element={<SingleCompositeur />} />
                                 <Route path="/account/*">
@@ -87,10 +95,11 @@ const Routing = () => {
                             </Route>
                         ) : user.roles[0] === "ROLE_TEACHER" ? (
                             <Route path="/" element={<GlobalLayout />}>
-                                <Route path="/" exact element={<Courses />} title="MyCourses" />
+                                <Route path="/" title="MyCourses">
+                                    <Route index element={<Courses />} title="MyCourses" />
+                                    <Route path={"/masterclass/add"} element={<FormMasterclass />} />
+                                </Route>
                                 <Route path="/notations" element={<Notations />} title="Notations" />
-                                <Route path={"/gestion"} element={<Gestion />} title="Gestion" />
-                                <Route path={"/gestion/ajout"} element={<AddCourses />} title="Gestion" />
                                 <Route path="/account">
                                     <Route index element={<Informations />} title="Informations" />
                                     <Route path={"mentions-legales"} element={<MentionsLegales />} title="Mentions légales" />
@@ -98,8 +107,11 @@ const Routing = () => {
                             </Route>
                         ) : user.roles[0] === "ROLE_ADMIN" ? (
                             <Route path="/" element={<GlobalLayout />}>
+                                <Route index exact element={<MasterclassAdmin />} title="Masterclass" />
                                 <Route path="/masterclass/*">
                                     <Route index element={<MasterclassAdmin />} title="Masterclass" />
+                                    <Route path=":id" element={<SingleMasterclass />} />
+                                    <Route path=":id/chapter" element={<MasterclassChapter />} />
                                     <Route path="add" element={<FormMasterclass text={"Ajouter une masterclass"}/>} />
                                     <Route path="edit/:id" element={<FormMasterclass text={"Mettre à jour cette masterclass"}/>} />
                                 </Route>
@@ -113,6 +125,7 @@ const Routing = () => {
                                     <Route index element={<CompositorAdmin />} title="Compositeurs" />
                                     <Route path="add" element={<FormCompositor title={"Ajouter un compositeur"}/>} />
                                     <Route path="edit/:id" element={<FormCompositor title={"Mettre à jour ce compositeur"}/>} />
+                                    <Route path=":id" element={<SingleCompositor title={"Compositeur"}/>} />
                                 </Route>
                                 <Route path="/badges/*">
                                     <Route index element={<BadgesAdmin />} title="Badges" />
@@ -124,9 +137,6 @@ const Routing = () => {
                                     <Route path="add" element={<FormUser title={"Ajouter un utilisateur"}/>} />
                                     <Route path="edit/:id" element={<FormUser title={"Mettre à jour cet utilisateur"}/>} />
                                 </Route>
-                                <Route path="/account/*">
-                                    <Route index element={<CompositorAdmin />} title="Account" />
-                                </Route>
                             </Route>
                         ) : (
                             <Route path="/" element={<Login />} />
@@ -134,7 +144,8 @@ const Routing = () => {
                     </>
                 ) : (
                     <>
-                        <Route path="/" element={<Login />} />
+                        <Route index path="/" element={<Login />} />
+                        <Route index path="/login" element={<Login />} />
                         <Route path="/signin" element={<SignIn />} />
                     </>
                 )}

@@ -1,13 +1,25 @@
-import React from "react";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import React,{useState, useEffect} from "react";
 import Badge from "../../../components/badge/badge";
 import "../../../styles/progress.css";
 import SidebarProgress from "../../../components/sidebar/sidebarProgress";
 import MenuBar from "../../../components/navbar/MenuBar";
+import useBadges from "../../../hooks/api/useBadges";
 
 const Progress = () => {
 
-    const test =[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const [badges, setBadges] = useState([]);
+    const {loading, error, handleGetAll} = useBadges();
+
+    useEffect(() => {
+        handleGetAll().then((response) => {
+            console.log(response);
+            setBadges(response);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+
 
     return (
         <div className="main-container">
@@ -57,13 +69,13 @@ const Progress = () => {
                     </div>
 
                     <div className={"badge-container"}>
-                        <h2>Mes badges</h2>
+                        <h2>Les badges</h2>
 
                         <div className={"badge-list"}>
                             {
-                                test.map((item, index) => {
+                                badges.map((item, index) => {
                                     return (
-                                        <Badge key={index} />
+                                        <Badge key={index} name={item.category} image={item.badgeImage.contentUrl} />
                                     )
                                 })
                             }

@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
-import SidebarLibrary from "../../../components/sidebar/sidebarLibrary";
+import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import {getMasterclasses} from "../../../api/endpoints/masterclass";
+import useMasterclass from "../../../hooks/api/useMasterclass";
+import ListMasterclass from "../../../components/list/listMasterclass";
+import useFavoris from "../../../hooks/api/useFavoris";
 
 const Masterclass = () => {
 
-    const [masterclass, setMasterclass] = useState([]);
+    const [masterclass, setMasterclass] = useState(false); // [state, function to update state
+    const {loading, error, handleGetAllFavorisMasterclass} = useFavoris();
 
     useEffect(() => {
-        /*getMasterclasses().then((response) => {
+        handleGetAllFavorisMasterclass().then((response) => {
+            setMasterclass(response.map((masterclass) => {
+                return masterclass.masterclass;
+            }));
             console.log(response);
-            setMasterclass(response['hydra:member']);
         }).catch((error) => {
             console.log(error);
-        });*/
+        });
     }, []);
 
     return (
@@ -35,6 +41,8 @@ const Masterclass = () => {
                         link: "/signets/compositeur",
                         isLinkActive: false,
                     }]}/>
+
+                <ListMasterclass masterclass={masterclass ? masterclass : false} error={error}/>
             </div>
             <SidebarLibrary/>
         </div>

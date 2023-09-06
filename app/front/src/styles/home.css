@@ -16,6 +16,15 @@
 }
 
 /* LIST */
+
+.container__filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
 .container-home{
     display: flex;
     flex-direction: column;
@@ -38,9 +47,18 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 20px;
-    max-width: 65vw;
+    width: inherit;
     height: 100%;
     border-radius: 20px;
     overflow: scroll;
     padding: 20px 0;
+}
+
+
+/*MOBILE*/
+
+.mobile .container-home__content{
+    flex-direction: column;
+    overflow: auto;
+    max-width: 100%;
 }
