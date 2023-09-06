@@ -33,7 +33,8 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         array $context = []
     ): void {
         $operationName = $operation?->getName();
-        if ($operationName === 'SELF') {
+
+        if (preg_match('/SELF_\d+/', (string) $operationName) === 1) {
             switch ($resourceClass) {
                 case FavoritesComposer::class:
                 case FavoritesMasterclass::class:
