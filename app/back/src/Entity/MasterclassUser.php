@@ -24,14 +24,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            normalizationContext: ['groups' => ['masterclass_user:read:item', 'id']],
+            normalizationContext: ['groups' => ['masterclass_user:read:item', 'id', 'masterclass:read']],
             security: "is_granted('MASTERCLASS_USER_VIEW', object)",
             name: 'get_masterclass_user'
         ),
         new GetCollection(
-            normalizationContext: ['groups' => ['masterclass_user:read', 'id']],
+            normalizationContext: ['groups' => ['masterclass_user:read', 'masterclass:read', 'id']],
             security: "is_granted('MASTERCLASS_USER_VIEW_LIST')",
-            name: 'SELF'
+            name: 'SELF_0'
         ),
         new Post(
             uriTemplate: 'masterclass_users/add_masterclass/{masterclassId}',
