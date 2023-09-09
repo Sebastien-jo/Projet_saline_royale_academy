@@ -5,36 +5,15 @@ namespace App\Enum;
 enum Instrument: string
 {
     case PIANO = 'Piano';
-    case VIOLIN = 'Violin';
-    case GUITAR = 'Guitar';
-    case DOUBLE_BASS = 'Double bass';
-    case HARP = 'Harp';
-    case CELLO = 'Cello';
-    case VIOLA = 'Viola';
-    case FLUTE = 'flute';
-    case PICCOLO = 'Piccolo';
-    case OBOE = 'Oboe';
-    case ENGLISH_HORN = 'English Horn';
-    case CLARINET = 'Clarinet';
-    case BASS_CLARINET = 'Bass clarinet';
-    case BASSOON = 'Bassoon';
-    case CONTRABASSOON = 'Contrabassoon';
-    case TRUMPET = 'Trumpet';
-    case FRENCH_HORN = 'French horn';
+    case VIOLON = 'Violon';
+    case VIOLONCELLE = 'Violoncelle';
+    case ALTO = 'Alto';
+    case FLUTE = 'Flute';
+    case CLARINETTE = 'Clarinette';
     case TROMBONE = 'Trombone';
-    case TUBA = 'Tuba';
-    case XYLOPHONE = 'Xylophone';
-    case CYMBALS = 'Cymbals';
-    case TRIANGLE = 'Triangle';
-    case SNARE_DRUM = 'Snare drum';
-    case BASS_DRUM = 'Bass drum';
-    case TAMBOURINE = 'Tambourine';
-    case MARACAS = 'Maracas';
-    case GONG = 'Gong';
-    case CHIMES = 'Chimes';
-    case CASTANETS = 'Castanets';
-    case CELESTA = 'Celesta';
-    case ORCHESTRA_CONDUCTOR = 'Orchestra conductor';
+    case HAUT_BOIS = 'Haut-bois';
+    case CHANT = 'Chant';
+    case CHEF_ORCHESTRE = 'Chef orchestre';
 
     /**
      * @return array<int,mixed>
