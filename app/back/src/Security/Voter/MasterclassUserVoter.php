@@ -44,7 +44,7 @@ class MasterclassUserVoter extends Voter
 
     private function canCreate(User $user): bool
     {
-        return in_array('ROLE_ADMIN', $user->getRoles());
+        return in_array('ROLE_STUDENT', $user->getRoles());
     }
 
     private function canView(User $user, MasterclassUser $object): bool
@@ -78,7 +78,7 @@ class MasterclassUserVoter extends Voter
 
     private function canAdd(User $user): bool
     {
-        return in_array('ROLE_ADMIN', $user->getRoles());
+        return in_array('ROLE_STUDENT', $user->getRoles());
     }
 
     private function canDelete(User $user, MasterclassUser $object): bool
