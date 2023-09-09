@@ -36,7 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             security: 'is_granted("BADGE_DELETE")'
         ),
     ],
-    normalizationContext: ['groups' => ['badge:read', 'timestamp']],
+    normalizationContext: ['groups' => ['badge:read', 'timestamp', 'id']],
     denormalizationContext: ['groups' => ['badge:post:write']],
     filters: ['translation.groups'],
 )]
@@ -48,7 +48,7 @@ class Badge extends AbstractEntityTranslator
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badges')]
     private Collection $users;
 
-    #[Groups(['badge:post:write', 'translations', 'badge:read'])]
+    #[Groups(['badge:post:write', 'translations'])]
     #[ORM\OneToMany(mappedBy: 'translatable', targetEntity: BadgeTranslation::class, cascade: ['persist'], fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     protected Collection $translations;
 

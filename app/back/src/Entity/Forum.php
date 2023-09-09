@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -69,6 +71,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['forum:read', 'timestamp']],
     denormalizationContext: ['groups' => ['forum:write']]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact'])]
 class Forum extends AbstractEntity
 {
     use TimestampableTrait;

@@ -8,4 +8,5 @@ enum BadgeCategory: string
     case Partition = 'Partition';
     case Play = 'play';
     case Music = 'Music';
+    case None = '';
 }
