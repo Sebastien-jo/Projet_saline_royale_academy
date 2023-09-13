@@ -39,6 +39,7 @@ class MasterclassUserSubscriber implements EventSubscriberInterface
             $event->setResponse(new JsonResponse([
                 'response' => 'success',
                 'uri'   => $this->urlGenerator->generate('get_masterclass_user', ['id' => $masterclassUser->getId()]),
+                'masterclassUserId' => $masterclassUser->getId(),
             ]));
         } catch (Exception $e) {
             $event->setResponse(new JsonResponse([
