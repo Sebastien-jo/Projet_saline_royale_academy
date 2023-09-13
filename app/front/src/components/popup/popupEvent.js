@@ -23,8 +23,8 @@ const PopupEvent = ({openPopup = false, setOpen}) => {
             <div className="popup-content">
                 <div className="popup-close" onClick={() => handleLinkClick()}></div>
                 <div className="popup-header">
-                    <h1 className="popup-title">Nos prochaines masterclass</h1>
-                    <span>Recevez une notifications dès qu'une de nos nouvelles masterclass seras ajoutés </span>
+                    <h1 className="popup-title">{ t('popupEvent.title') }</h1>
+                    <span>{ t('popupEvent.subtitle') }</span>
                 </div>
 
                 <div className="popup-body">
@@ -38,9 +38,9 @@ const PopupEvent = ({openPopup = false, setOpen}) => {
                         }
                     </div>*/}
                     <p>
-                        Aucun évènement n'est prévu pour le moment.
+                        { t('popupEvent.no_event') }
                         <br/>
-                        Mais vous pourrez prochainement retrouver ici toutes nos prochains évènements.
+                        { t('popupEvent.no_event_more') }
                     </p>
                 </div>
             </div>

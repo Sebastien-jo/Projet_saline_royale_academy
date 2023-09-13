@@ -8,6 +8,7 @@ import useUsers from "../../../hooks/api/useUsers";
 import {useNavigate} from "react-router-dom";
 import InputFile from "../../../components/form/inputFile";
 import SubmitBtn from "../../../components/form/submitBtn";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -35,6 +36,7 @@ const FormUser = () => {
     const listInstrument = ["Violon", "Violoncelle", "Alto", "Flute", "Clarinette", "Trombone", "Haut-bois", "Piano", "Chant", "Chef d'orchestre"]
 
     const navigate = useNavigate();
+    const { i18n, t } = useTranslation();
 
     useEffect(() => {
         if(id !== undefined) {
@@ -79,17 +81,17 @@ const FormUser = () => {
     return (
         <div className="main-container">
             <div className="main-content">
-                <h2>Ajouter un utilisateur</h2>
+                <h2>{ t('admin.user.title') }</h2>
                 <form onSubmit={handleSubmit} method="POST">
                     <div className={`form-first`}>
                         <div className={"form-row"}>
-                            <Input name="lastname" label="Nom" type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
-                            <Input name="firstname" label="Prénom" type="text" value={firstName}  onChange={e => setFirstName(e.target.value)} />
+                            <Input name="lastname" label={ t('admin.user.form.lastname') } type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
+                            <Input name="firstname" label={ t('admin.user.form.firstname') } type="text" value={firstName}  onChange={e => setFirstName(e.target.value)} />
                         </div>
-                        <Input name="email" label="Email" type="email" value={email}  onChange={e => setEmail(e.target.value)} />
-                        <Input name="plainPassword" label="Password" type="password" onChange={e => setPlainPassword(e.target.value)} />
-                        <Input name="password2" label="Confimation de password" type="password" onChange={e => setPassword2(e.target.value)} />
-                        <Select name="role" label="Rôle" onChange={e => setRole(e.target.value)} list={listRole} />
+                        <Input name="email" label={ t('admin.user.form.email') } type="email" value={email}  onChange={e => setEmail(e.target.value)} />
+                        <Input name="plainPassword" label={ t('admin.user.form.password') } type="password" onChange={e => setPlainPassword(e.target.value)} />
+                        <Input name="password2" label={ t('admin.user.form.confirm_password') } type="password" onChange={e => setPassword2(e.target.value)} />
+                        <Select name="role" label={ t('admin.user.form.role') } onChange={e => setRole(e.target.value)} list={listRole} />
                         {
                             role === "User" || role === "Teacher" ?
                                 <Select name="instrument" label="Instrument" onChange={e => setInstrument(e.target.value)} list={listInstrument} />
@@ -99,11 +101,10 @@ const FormUser = () => {
                     </div>
 
                     <div className={`avatar-container`}>
-                        <p>Choisissez un avatar</p>
-                        <InputFile reference={fileInputRef} name="file" label="Image" onChange={handleFileChange} />
+                        <InputFile reference={fileInputRef} name="file" label={ t('admin.user.form.image') } onChange={handleFileChange} />
                     </div>
 
-                    <SubmitBtn title={"Ajouter"} />
+                    <SubmitBtn text={ t('bouton.add') } className={"red-full"}/>
 
                 </form>
             </div>

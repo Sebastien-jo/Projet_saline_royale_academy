@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Pastille from '../pastille/pastille';
+import {useTranslation} from "react-i18next";
 
 const SelectFilter = ({ items, applyFilters }) => {
     const [selectedFilters, setSelectedFilters] = useState([]);
+
+    const { i18n, t } = useTranslation();
 
     const handleFilterChange = (event) => {
         const category = event.target.value;
@@ -33,10 +36,9 @@ const SelectFilter = ({ items, applyFilters }) => {
 
     return (
         <div className="select-filter">
-            <h1>Filterable List</h1>
             <div className="filter-container">
                 <label htmlFor="filterSelect" className="filter-label">
-                    Filter by category:
+                    { t('filters.filter_category') }
                 </label>
                 <select
                     id="filterSelect"
@@ -54,12 +56,10 @@ const SelectFilter = ({ items, applyFilters }) => {
             </div>
             <div className="item-container">
                 {filteredItems.map((item) => (
-                    <Pastille
-                        key={item.id}
-                        text={item.name}
-                        className="red"
-                        click={() => handlePastilleClick(item.name)}
-                    />
+                    <div className={"filter-item"} key={item.id} onClick={() => handlePastilleClick(item.name)}>
+                        <p>{item.name}</p>
+                        <span>x</span>
+                    </div>
                 ))}
             </div>
         </div>

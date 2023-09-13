@@ -4,12 +4,15 @@ import useLikes from "../../../hooks/api/useLikes";
 import Pastille from "../../pastille/pastille";
 import logo_user from "../../../assets/logo/logo_user.png";
 import {useParseDate} from "../../../hooks/useParseDate";
+import {useTranslation} from "react-i18next";
 
 const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSidebar, refresh, setRefresh }) => {
 
     const [isLike, setIsLike] = useState(forum.isLiked);
     const {loading, error, handlePost} = useLikes();
     const {parseDate} = useParseDate();
+
+    const { i18n, t } = useTranslation();
 
     const handleLike = () => {
         !isLike ? setIsLike(true) : null;
@@ -41,12 +44,12 @@ const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSideba
                     <div className={"card_content_header"}>
                         <h2>{forum.title}</h2>
                         {
-                            forum.isClosed ? <Pastille text={"Fermé"} className={"red"} /> : <Pastille text={"Actif"} className={"green"} />
+                            forum.isClosed ? <Pastille text={ t('forum.cardForum.closed') } className={"red"} /> : <Pastille text={ t('forum.cardForum.active') } className={"green"} />
                         }
 
                     </div>
                     <p>{ forum.description }</p>
-                    <p className={"subtitle"}>Publiée le {parseDate(forum.createdAt)}</p>
+                    <p className={"subtitle"}>{ t('forum.cardForum.published') } {parseDate(forum.createdAt)}</p>
                 </div>
             </div>
 
@@ -55,11 +58,11 @@ const CardForum = ({forum, setSidebar, handleSelect, isSelected, setActiveSideba
             <div className={"card-row_container answer_action"}>
                 <div className={"card_row_col"}>
                     <div className={`card-icon`} onClick={handleLike}><span className={`icon like ${isLike ? "isLike" : ""}`}></span>{ forum.countLikes }</div>
-                    <div className={"card-icon"} onClick={handleClick}><span className={"icon answer"}></span>{ forum.forumMessages.length} commentaire</div>
+                    <div className={"card-icon"} onClick={handleClick}><span className={"icon answer"}></span>{ forum.forumMessages.length} { t('forum.cardForum.answers') }</div>
                 </div>
 
                 <div className={"card_row_col"}>
-                    <Button className={"blue-full"} text={"Afficher"} click={handleClick} />
+                    <Button className={"blue-full"} text={ t('bouton.show') } click={handleClick} />
                 </div>
             </div>
         </div>

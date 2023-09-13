@@ -6,12 +6,16 @@ import useSidebarContent from "../../../hooks/useSidebarContent";
 import useForum from "../../../hooks/api/useForum";
 import SidebarForumAdd from "../../../components/sidebar/Forum/sidebarForumAdd";
 import MenuBar from "../../../components/navbar/MenuBar";
+import {useTranslation} from "react-i18next";
 
 const Forum = () => {
 
     const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
     const [sidebar, setSidebar] = useState(false);
     const [activeSidebar, setActiveSidebar] = useState("");
+
+    const { i18n, t } = useTranslation();
+
 
 
     const closeSidebar = () => {
@@ -21,15 +25,15 @@ const Forum = () => {
 
     return (
         <div className="main-container">
-            <div className="main-content isSidebar">
+            <div className="main-content isSidebar menuTabs">
                 <MenuBar items={[
                     {
-                        name: "Forum",
+                        name: `${t('forum.menuBar.forum')}`,
                         link: "/forum",
                         isLinkActive: true,
                     },
                     {
-                        name: "Mes questions",
+                        name: `${t('forum.menuBar.myquestion')}`,
                         link: "/forum/myforum",
                         isLinkActive: false,
                     }

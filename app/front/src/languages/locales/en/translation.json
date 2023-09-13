@@ -2,33 +2,34 @@
   "navbar": {
     "links": [
       { "text": "Home", "href": "/" },
-      { "text": "Masterclass", "href": "/masterclass" },
+      { "text": "Masterclasses", "href": "/masterclass" },
       { "text": "MyStudy", "href": "/mystudy" },
       { "text": "Forum", "href": "/forum" },
-      { "text": "Signets", "href": "/signets" },
+      { "text": "Favorites", "href": "/signets" },
       { "text": "Library", "href": "/library" },
       { "text": "My Courses", "href": "/" },
-      { "text": "Notations", "href": "/notations" },
-      { "text": "Gestion", "href": "/gestion" },
-      { "text": "Settings", "href": "/" }
+      { "text": "Grades", "href": "/notations" },
+      { "text": "Management", "href": "/gestion" },
+      { "text": "Settings", "href": "/parametre" },
+      { "text": "Masterclasses", "href": "/masterclass" },
+      { "text": "Works", "href": "/works" },
+      { "text": "Composers", "href": "/composers" },
+      { "text": "Badges", "href": "/badges" },
+      { "text": "Users", "href": "/users" }
     ],
     "roles": [
-       "Student",
-       "Teacher"
+      "Student",
+      "Teacher"
     ]
   },
   "home": {
-    "card_new_masterclass": "DISCOVER AND FOLLOW OUR NEW MASTERCLASS",
+    "card_new_masterclass": "DISCOVER AND FOLLOW OUR NEW MASTERCLASSES",
     "card_new_events": "UPCOMING EVENTS",
     "section_masterclass": "Recently Added",
-    "section_selection": "Selected for You"
-  },
-  "bouton": {
-    "découvrir": "Discover",
-    "participer": "Participate",
-    "voir_plus": "See More",
-    "voir": "See",
-    "voir_tout": "See All"
+    "section_selection": "Selected for You",
+    "pastille_masterclass": "Masterclasses",
+    "pastille_work": "Works",
+    "pastille_composer": "Composers"
   },
   "parametre": {
     "title": "Settings",
@@ -41,12 +42,235 @@
     "sombre": "Dark"
   },
   "signets": {
-    "title": "Your Personal Library",
+    "title": "Your Library Just for You",
     "masterclass_title": "My Favorite Masterclasses",
     "masterclass_subtitle": "You don't have any favorite masterclasses yet",
     "oeuvres_title": "My Favorite Works",
     "oeuvres_subtitle": "You don't have any favorite works yet",
     "composer_title": "My Favorite Composers",
     "composer_subtitle": "You don't have any favorite composers yet"
+  },
+  "account": {
+    "menuBar": {
+      "information": "My Information",
+      "progress": "My Progress",
+      "legals": "Legal Notices"
+    },
+    "title_informations": "My Personal Information",
+    "form": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "mystudy": {
+    "otherStudy": "Your Other Courses",
+    "otherStudy_user": "Hello, {user}",
+    "otherStudy_no_data": "You don't have any ongoing courses yet. Discover our masterclasses and start learning"
+  },
+  "library": {
+    "menuBar": {
+      "masterclass": "Masterclasses",
+      "work": "Works",
+      "composer": "Composers"
+    },
+    "title": "Recently Added",
+    "no_masterclass": "No masterclasses have been added at the moment.",
+    "no_work": "No works have been added at the moment.",
+    "no_composer": "No composers have been added at the moment."
+  },
+  "forum": {
+    "menuBar": {
+      "forum": "Forum",
+      "myquestion": "My Questions"
+    },
+    "bouton_add": "Ask a Question",
+    "forum_no_data": "No questions have been asked yet. Be the first to ask a question!",
+    "forum_answer": "answers",
+    "forum_no_answer": "No answers have been given yet. Be the first to answer!",
+    "cardForum": {
+      "answers": "answers",
+      "published": "Published on",
+      "active": "Active",
+      "closed": "Closed"
+    },
+    "form": {
+      "answer_at": "Reply to"
+    }
+  },
+  "error": {
+    "error_data": "An error occurred while loading data"
+  },
+  "bouton": {
+    "découvrir": "Discover",
+    "participer": "Participate",
+    "voir_plus": "See More",
+    "voir": "See",
+    "send": "Send",
+    "voir_tout": "See All",
+    "start": "Start",
+    "continu": "Continue",
+    "delete": "Delete",
+    "show": "Show",
+    "answer": "Answer",
+    "answer_at": "Your Answer",
+    "snippet": "See Preview",
+    "save": "Save",
+    "modify": "Modify",
+    "add_badge": "Add a Badge",
+    "add_user": "Add a User",
+    "add_masterclass": "Add a Masterclass",
+    "add_work": "Add a Work",
+    "add_composer": "Add a Composer",
+    "add": "Add",
+    "cancel": "Cancel"
+  },
+  "badges": {
+    "title": "My Badges",
+    "subtitle": "Discover the badges you've earned",
+    "no_badges": "You don't have any badges yet. Keep learning to earn some!",
+    "badges": "Badges",
+    "no_badges_data": "No badges have been added at the moment."
+  },
+  "card": {
+    "professor": "Professor",
+    "date": "Date",
+    "composer": "Composer",
+    "birth": "Birth",
+    "death": "Death",
+    "nationality": "Nationality",
+    "add_at": "Added on"
+  },
+  "sidebarData": {
+    "title": "Overview"
+  },
+  "sidebarProgress": {
+    "title": "My Progress",
+    "lesson_finish": "lessons completed",
+    "masterclass_follow": "masterclasses followed",
+    "instrument_learn": "instruments learned",
+    "badges_earned": "badges earned",
+    "continue_lesson": "Continue MyStudy",
+    "lesson_not_started": "You haven't started any masterclasses yet. Get started!"
+  },
+  "cardMyStudy": {
+    "title": "Continue the last masterclass you started!",
+    "bouton": "Continue",
+    "text": "This masterclass is based on the work of"
+  },
+  "filters": {
+    "title": "Filters",
+    "filter_by": "Filter By",
+    "filter_category": "Category",
+    "sort_by": "Sort By",
+    "sort_recent": "Recent",
+    "sort_ancient": "Ancient",
+    "sort_alphabet": "Alphabetical"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "list": {
+    "badges": "List of Badges",
+    "users": "List of Users",
+    "masterclass": "List of Masterclasses",
+    "works": "List of Works",
+    "composers": "List of Composers"
+  },
+  "fileImage": {
+    "title": "Add a File",
+    "subtitle": "Click here to add a file",
+    "restriction": "Add files of type: *.jpg, *.png, *.svg",
+    "erase": "Delete the file",
+    "change": "Change the file"
+  },
+  "admin": {
+    "badge": {
+      "title": "Add a Badge",
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "image": "Image"
+      }
+    },
+    "user": {
+      "title": "Add a User",
+      "form": {
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
+        "role": "Role",
+        "role_student": "Student",
+        "role_teacher": "Teacher",
+        "role_admin": "Administrator",
+        "image": "Choose an Avatar"
+      }
+    },
+    "composer": {
+      "title": "Add a Composer",
+      "form": {
+        "name": "Composer's Name",
+        "complete_name": "Complete Name",
+        "birth": "Date of Birth",
+        "death": "Date of Death",
+        "category": "Category",
+        "nationality": "Nationality",
+        "description": "Description",
+        "image": "Image"
+      }
+    },
+    "work": {
+      "title": "Add a Work",
+      "form": {
+        "name": "Work Name",
+        "composer": "Composer",
+        "category": "Category",
+        "description": "Description",
+        "audio": "Audio of the Work",
+        "partition": "Partition of the Work"
+      }
+    },
+    "popupEvent": {
+      "title": "Our Upcoming Masterclasses",
+      "subtitle": "Receive a notification as soon as one of our new masterclasses is available!",
+      "no_event": "No events are scheduled at the moment",
+      "not_event_more": "But you'll soon find all our upcoming events here. Come back later!"
+    },
+    "popupAvatar": {
+      "avatar": "Your profile picture"
+    },
+    "popupUser": {
+      "title": "Delete a User",
+      "text": "Are you sure you want to delete this user?"
+    },
+    "popupBadge": {
+      "title": "Delete a Badge",
+      "text": "Are you sure you want to delete this badge?"
+    },
+    "masterclass": {
+      "title": "Add a Masterclass",
+      "form": {
+        "name": "Masterclass Name",
+        "composer": "Composer",
+        "chapter": "Chapter",
+        "chapter_name": "Chapter Name",
+        "lesson": "Lesson",
+        "add_chapter": "Add a Chapter",
+        "add_lesson": "Add a Lesson",
+        "lessons": {
+          "name": "Name",
+          "resume": "Summary",
+          "type": "Type",
+          "description": "Lesson Description",
+          "video": "Lesson Video",
+          "content": "Content"
+        },
+        "image": "Masterclass Image"
+      }
+    }
   }
 }

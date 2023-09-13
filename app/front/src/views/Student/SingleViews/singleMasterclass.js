@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import useMasterclass from "../../../hooks/api/useMasterclass";
 import CardSection from "../../../components/card/masterclass/cardSection";
 import SidebarChapter from "../../../components/sidebar/Masterclass/sidebarChapter";
+import useMasterclassUser from "../../../hooks/api/useMasterclassUser";
 
 const SingleMasterclass = () => {
 
@@ -13,7 +14,7 @@ const SingleMasterclass = () => {
     const [masterclass, setMasterclass] = useState(false);
     const [chapter, setChapter] = useState([]); // [state, function to update state
     const [isOpen, setIsOpen] = useState(false);
-    const {loading, error, handleGet } = useMasterclass();
+    const {loading, error, handleGet} = useMasterclassUser();
 
     useEffect(() => {
         handleGet(id).then((response) => {
@@ -29,12 +30,12 @@ const SingleMasterclass = () => {
             <div className="main-content isSidebar">
 
                 <div className="masterclass-container">
-                    <h2 className="masterclass-title">Masterclass: {masterclass.name}</h2>
+                    <h2 className="masterclass-title">Masterclass: {masterclass.masterclass.name}</h2>
                     <div className="masterclass-chapter-list">
 
                         {
                             masterclass ?
-                                masterclass.sections.map((item, index) => {
+                                masterclass.sectionUsers.map((item, index) => {
                                     return <CardSection chapter={item} key={index} setChapter={setChapter} setIsOpen={setIsOpen}/>
                                 })
                             : null

@@ -3,11 +3,18 @@ import "../../styles/components/popup.css";
 import { useTranslation } from 'react-i18next';
 
 import Button from "../button/button";
+import {
+    applyDarkModeStyles,
+    loadDarkModePreference,
+    removeDarkModeStyles,
+    saveDarkModePreference
+} from "../../utils/darkModeUtils";
 
 const PopupParametre = ({closePopup = false}) => {
 
     const [isOpened, setIsOpened] = useState(closePopup);
     const { i18n, t } = useTranslation();
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const handleLinkClick = () => {
         setIsOpened(!isOpened);
@@ -16,6 +23,38 @@ const PopupParametre = ({closePopup = false}) => {
     useEffect(() => {
         setIsOpened(closePopup);
     }, [closePopup]);
+
+    useEffect(() => {
+        // Load the user's dark mode preference
+        const darkModePreference = loadDarkModePreference();
+        const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+
+        if (darkModePreference === "true" || (!darkModePreference && prefersDarkMode)) {
+            // If the preference is true, enable dark mode
+            setIsDarkMode(true);
+            applyDarkModeStyles();
+            saveDarkModePreference(true);
+        } else {
+            // If the preference is false or not set, disable dark mode
+            setIsDarkMode(false);
+            removeDarkModeStyles();
+            saveDarkModePreference(false);
+        }
+    }, []);
+
+    const handleSwitchToggle = (e) => {
+        console.log(e.target.value);
+        setIsDarkMode((prevMode) => !prevMode);
+
+        if (e.target.value === "light") {
+            removeDarkModeStyles();
+            saveDarkModePreference(false);
+        } else {
+            applyDarkModeStyles();
+            saveDarkModePreference(true);
+        }
+    }
 
     return(
         <div className={`popup-container ${isOpened ? "open" : "close"}`}>
@@ -37,7 +76,7 @@ const PopupParametre = ({closePopup = false}) => {
 
                     <div className="popup-body-row">
                         <h2 className="popup-body-title">{ t('parametre.theme') }</h2>
-                        <select className="popup-body-select">
+                        <select className="popup-body-select" onChange={(e) => handleSwitchToggle(e)}>
                             <option value="light">{ t('parametre.clair') }</option>
                             <option value="dark">{ t('parametre.sombre') }</option>
                         </select>

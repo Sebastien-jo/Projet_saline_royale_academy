@@ -5,11 +5,14 @@ import {getMasterclasses} from "../../../api/endpoints/masterclass";
 import useMasterclass from "../../../hooks/api/useMasterclass";
 import ListMasterclass from "../../../components/list/listMasterclass";
 import useFavoris from "../../../hooks/api/useFavoris";
+import useSidebarContent from "../../../hooks/useSidebarContent";
 
 const Masterclass = () => {
 
     const [masterclass, setMasterclass] = useState(false); // [state, function to update state
     const {loading, error, handleGetAllFavorisMasterclass} = useFavoris();
+    const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
+
 
     useEffect(() => {
         handleGetAllFavorisMasterclass().then((response) => {
@@ -24,7 +27,7 @@ const Masterclass = () => {
 
     return (
         <div className="main-container">
-            <div className="main-content isSidebar">
+            <div className="main-content isSidebar menuTabs">
                 <MenuBar items={[
                     {
                         name: "Masterclass",
@@ -42,9 +45,9 @@ const Masterclass = () => {
                         isLinkActive: false,
                     }]}/>
 
-                <ListMasterclass masterclass={masterclass ? masterclass : false} error={error}/>
+                <ListMasterclass masterclass={masterclass ? masterclass : false} error={error} updateSidebarContent={updateSidebarContent} loading={loading} />
             </div>
-            <SidebarLibrary/>
+            <SidebarLibrary sidebarContent={sidebarContent} clearSidebarContent={clearSidebarContent} type={"masterclass"} />
         </div>
     );
 }

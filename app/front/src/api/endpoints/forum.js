@@ -21,3 +21,7 @@ export const deleteForum= (id) => {
 export const updateForum = (id, data) => {
     return putRequest(`/forums/${id}`, data);
 }
+
+export const getForumByUser = (id) => {
+    return getRequest(`/forums?user=${id}`)
+}

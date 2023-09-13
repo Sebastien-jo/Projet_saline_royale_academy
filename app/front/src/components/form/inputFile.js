@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
 import "../../styles/components/form.css";
 import file from "../../assets/icones/icon-upload-Blue-stroke.svg";
+import {useTranslation} from "react-i18next";
 
 const InputFile = ({ name, label, onChange, accept }) => {
     const fileInputRef = useRef(null);
     const [previewImage, setPreviewImage] = useState(null);
+
+    const { i18n, t } = useTranslation();
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -46,17 +49,17 @@ const InputFile = ({ name, label, onChange, accept }) => {
         <div className={`form-group`}>
             <div className="file-body">
                 <h2 className="file-title">{ label }</h2>
-                <p className="file-description">Ajouter un fichier</p>
+                <p className="file-description">{ t('fileImage.title') }</p>
                 <button className="upload-area">
                     {
                         previewImage ?
                             <>
                                 <div className="file-footer">
                                     <button className="btn-secondary" onClick={clearPreview}>
-                                        Effacer l'image
+                                        { t('fileImage.erase') }
                                     </button>
                                     <button className="btn-secondary" onClick={() => fileInputRef.current.click()}>
-                                        Changer l'image
+                                        { t('fileImage.change') }
                                     </button>
                                 </div>
 
@@ -69,9 +72,9 @@ const InputFile = ({ name, label, onChange, accept }) => {
                             <span className="upload-area-icon">
                                 <img src={file} alt="file" />
                             </span>
-                            <span className="upload-area-title">Cliquer ici pour ajouter un fichier</span>
+                            <span className="upload-area-title">{ t('fileImage.subtitle') }</span>
                             <span className="upload-area-description">
-                                Ajouter des fichiers type: *.jpg, *.png, *.svg
+                                { t('fileImage.restriction') }
                             </span>
                             <input
                                 name={name}

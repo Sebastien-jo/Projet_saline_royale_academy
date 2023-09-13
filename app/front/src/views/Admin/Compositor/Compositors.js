@@ -3,6 +3,7 @@ import Button from "../../../components/button/button";
 import icon_add from "../../../assets/icones/icon-add-White.svg";
 import ListCompositors from "../../../components/list/listCompositors";
 import useCompositors from "../../../hooks/api/useCompositors";
+import {useTranslation} from "react-i18next";
 
 
 const Compositors = () => {
@@ -12,6 +13,7 @@ const Compositors = () => {
     const [id, setId] = useState(null);
     const [refresh, setRefresh] = useState(false);
 
+    const { i18n, t } = useTranslation();
 
     useEffect(() => {
         handleGetAll().then((response) => {
@@ -32,7 +34,7 @@ const Compositors = () => {
     return (
         <div className="main-container">
             <div className="main-content">
-                <Button text="Ajouter un compositeur" link={"#/compositeurs/add"} className={"red-full"} isIcon={true} icon={icon_add} />
+                <Button text={ t('bouton.add_composer') } link={"#/compositeurs/add"} className={"red-full"} isIcon={true} icon={icon_add} />
 
                 <ListCompositors compositors={compositors ? compositors : false} error={error} loading={loading} isAdmin={true} deleteFunction={handleCompositorDelete} setId={setId} />
             </div>

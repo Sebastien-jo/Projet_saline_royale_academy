@@ -55,11 +55,11 @@ const Navbar = () => {
                 </div>
                 :
                 <div className="navbar__links">
-                    <Link to="/masterclass" state={{title: 'Masterclass'}} className={activeLink === "masterclass" ? "active" : ""} onClick={() => handleLinkClick("masterclass")}><span className="navbar__icon masterclass"></span><p>masterclass</p></Link>
-                    <Link to="/oeuvres" state={{title: 'Oeuvres'}} className={activeLink === "oeuvres" ? "active" : ""} onClick={() => handleLinkClick("oeuvres")}><span className="navbar__icon oeuvres"></span><p>oeuvres</p></Link>
-                    <Link to="/compositeurs" state={{title: 'Compositeurs'}} className={activeLink === "compositeurs" ? "active" : ""} onClick={() => handleLinkClick("compositeurs")}><span className="navbar__icon compositeurs"></span><p>compositeur</p></Link>
-                    <Link to="/badges" state={{title: 'Badges'}} className={activeLink === "badges" ? "active" : ""} onClick={() => handleLinkClick("badges")}><span className="navbar__icon badges"></span><p>badge</p></Link>
-                    <Link to="/users" state={{title: 'Users'}} className={activeLink === "users" ? "active" : ""} onClick={() => handleLinkClick("users")}><span className="navbar__icon users"></span><p>user</p></Link>
+                    <Link to="/masterclass" state={{title: 'Masterclass'}} className={activeLink === "masterclass" ? "active" : ""} onClick={() => handleLinkClick("masterclass")}><span className="navbar__icon masterclass"></span><p>{t('navbar.links.10.text')}</p></Link>
+                    <Link to="/oeuvres" state={{title: 'Oeuvres'}} className={activeLink === "oeuvres" ? "active" : ""} onClick={() => handleLinkClick("oeuvres")}><span className="navbar__icon oeuvres"></span><p>{t('navbar.links.11.text')}</p></Link>
+                    <Link to="/compositeurs" state={{title: 'Compositeurs'}} className={activeLink === "compositeurs" ? "active" : ""} onClick={() => handleLinkClick("compositeurs")}><span className="navbar__icon compositeurs"></span><p>{t('navbar.links.12.text')}</p></Link>
+                    <Link to="/badges" state={{title: 'Badges'}} className={activeLink === "badges" ? "active" : ""} onClick={() => handleLinkClick("badges")}><span className="navbar__icon badges"></span><p>{t('navbar.links.13.text')}</p></Link>
+                    <Link to="/users" state={{title: 'Users'}} className={activeLink === "users" ? "active" : ""} onClick={() => handleLinkClick("users")}><span className="navbar__icon users"></span><p>{t('navbar.links.14.text')}</p></Link>
                 </div>
 
             }
@@ -68,20 +68,33 @@ const Navbar = () => {
 
             <div className="navbar__user">
                 <div className={`navbar__links_link ${activeLink === "params" ? "active" : ""}`} onClick={() => handleLinkClick("params")}><span className="navbar__icon parameters"></span><p>{t('navbar.links.9.text')}</p></div>
-                <Link to="/account" state={{title: 'Mes Informations'}} className="navbar__user__avatar">
-                    <div className="navbar__user__avatar__img">
-                        <img src={ user.avatar && user.avatar !== ""  ? user.avatar.contentUrl : logo_user} alt={"avatar"} />
+                {
+                    user.roles[0] == "ROLE_STUDENT" || user.roles[0] == "ROLE_TEACHER" ?
+                        <Link to="/account" state={{title: 'Mes Informations'}} className="navbar__user__avatar">
+                            <div className="navbar__user__avatar__img">
+                                <img src={ user.avatar && user.avatar !== ""  ? user.avatar.contentUrl : logo_user} alt={"avatar"} />
+                            </div>
+                            <div className="navbar__user__infos">
+                                <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
+                                {
+                                    user.roles[0] !== "ROLE_TEACHER" ?
+                                        <div className="navbar__user__status">{t('navbar.roles.0')}</div>
+                                        :
+                                        <div className="navbar__user__status">{t('navbar.roles.1')}</div>
+                                }
+                            </div>
+                        </Link>
+                    :
+                    <div className="navbar__user__avatar">
+                        <div className="navbar__user__avatar__img">
+                            <img src={ user.avatar && user.avatar !== ""  ? user.avatar.contentUrl : logo_user} alt={"avatar"} />
+                        </div>
+                        <div className="navbar__user__infos">
+                            <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
+                            <div className="navbar__user__status">admin</div>
+                        </div>
                     </div>
-                    <div className="navbar__user__infos">
-                        <div className="navbar__user__name">{ user.firstname } {user.lastname}</div>
-                        {
-                            user.roles[0] !== "ROLE_TEACHER" ?
-                                <div className="navbar__user__status">{t('navbar.roles.0')}</div>
-                                :
-                                <div className="navbar__user__status">{t('navbar.roles.1')}</div>
-                        }
-                    </div>
-                </Link>
+                }
             </div>
 
             <PopupParametre closePopup={activeLink === "params" ? true : false} />

@@ -6,35 +6,35 @@ import useForum from "../../hooks/api/useForum";
 import Loader from "../loader/loader";
 import SortModal from "../filters/sortModal";
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 const ListForum = ({text, setSidebar, setActiveSidebar, myforum = false }) => {
 
     const [forums, setForums] = useState(false); // [state, function to update state
-    const {loading, error, handleGetAll, handleGet } = useForum();
+    const {loading, error, handleGetAll, handleGetByUser} = useForum();
     const [refresh, setRefresh] = useState(false); // [state, function to update state
     const [selectedForumId, setSelectedForumId] = useState(null);
-    const [sortedList, setSortedList] = useState([]);
+    const [sortedList, setSortedList] = useState(false);
 
     const user = useSelector(state => state.auth.user);
-
+    const { i18n, t } = useTranslation();
 
     const handleForumSelect = (forumId) => {
         setSelectedForumId(forumId);
     };
 
     useEffect(() => {
-        setSortedList(forums);
+        forums.length > 0 ? setSortedList(forums) : setSortedList(false);
     }, [forums]);
 
     useEffect(() => {
         !myforum ?
             handleGetAll().then((response) => {
                 setForums(response);
-                console.log(response);
             }).catch((err) => {
                 console.log(err);
             })
             :
-            handleGet(user.id).then((response) => {
+            handleGetByUser(user.id).then((response) => {
                 setForums(response);
             }).catch((err) => {
                 console.log(err);
@@ -45,7 +45,7 @@ const ListForum = ({text, setSidebar, setActiveSidebar, myforum = false }) => {
         <div className="container-forum">
             <div className="forum-row">
                 <div className="container__header">
-                    <Button text={"Poser une question"} className={"red-full"} isArrow={true} click={() => setActiveSidebar("addForum")} />
+                    <Button text={ t('forum.bouton_add') } className={"red-full"} isArrow={true} click={() => setActiveSidebar("addForum")} />
                     <SortModal list={forums} setSortedList={setForums} />
                 </div>
 
@@ -66,7 +66,8 @@ const ListForum = ({text, setSidebar, setActiveSidebar, myforum = false }) => {
                                         refresh={refresh}/>
                                 )
                             })
-                            : <Loader />
+                            :
+                            <p>{ t('forum.forum_no_data') }</p>
                     }
                 </div>
             </div>

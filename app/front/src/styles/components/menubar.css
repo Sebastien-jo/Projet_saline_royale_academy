@@ -1,5 +1,5 @@
 .menu-bar{
-    background-color: var(--primary-white-100);
+    background-color: var(--primary-bg-white);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -36,6 +36,11 @@
     font-size: var(--text-corps-size);
     color: var(--primary-blue-dark-100);
 }
+
+.dark-mode .menu-bar__item{
+    color: var(--primary-black-100);
+}
+
 .menu-bar__item.active{
     border-bottom: 1px solid var(--secondary-red-100);
 }

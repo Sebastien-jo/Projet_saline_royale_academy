@@ -4,6 +4,7 @@ import icon_add from "../../../assets/icones/icon-add-White.svg";
 import ListBadges from "../../../components/list/listBadges";
 import "../../../styles/components/badge.css";
 import useBadges from "../../../hooks/api/useBadges";
+import {useTranslation} from "react-i18next";
 
 const Badges = () => {
 
@@ -11,6 +12,8 @@ const Badges = () => {
     const [refresh, setRefresh] = useState(false);
     const [id, setId] = useState({}); // [1
     const {loading, error, handleDelete, handleGetAll, handleDeleteBadgeImage} = useBadges();
+
+    const { i18n, t } = useTranslation();
 
     const handleRemove = () => {
         console.log(id);
@@ -28,17 +31,20 @@ const Badges = () => {
     useEffect(() => {
         handleGetAll().then((response) => {
             setBadges(response.reverse());
+            console.log(response);
         }).catch((err) => {
             console.log(err);
         });
     }, [refresh]);
 
 
+
+
     return (
         <div className="main-container">
             <div className="main-content">
-                <Button text="Ajouter un badge" link={"#/badges/add"} className={"red-full"} isIcon={true} icon={icon_add} />
-                <ListBadges text={"Liste des badges"} badges={badges.length > 0 ? badges : false } handleRemove={handleRemove} setId={setId} />
+                <Button text={ t('bouton.add_badge') } link={"#/badges/add"} className={"red-full"} isIcon={true} icon={icon_add} />
+                <ListBadges text={ t('list.badges') } badges={badges.length > 0 ? badges : false } handleRemove={handleRemove} setId={setId} />
             </div>
         </div>
     );

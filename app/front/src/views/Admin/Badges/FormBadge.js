@@ -8,11 +8,13 @@ import useBadges from "../../../hooks/api/useBadges";
 import SubmitBtn from "../../../components/form/submitBtn";
 import InputFile from "../../../components/form/inputFile";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
-const FormBadge = ({title}) => {
+const FormBadge = () => {
 
     const id = parseInt(useParams().id);
     const [badge, setBadge] = useState([]);
+    const { i18n, t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -49,7 +51,12 @@ const FormBadge = ({title}) => {
         formData.append("badge", 2); // Append the selected file to the FormData
 
       const data = {
-            "category": name
+          "category": "Music",
+          "translations": [{
+              "name": name,
+              "description": description,
+              "locale":"fr"
+            }]
        }
         handlePost(data).then((response) => {
           console.log(response);
@@ -63,7 +70,7 @@ const FormBadge = ({title}) => {
             handleAddBadgeImage(formData).then((response) => {
                 console.log(response);
             }).then((error) => {
-                navigate("/badges");
+               /* navigate("/badges");*/
             }).catch((error) => {
                 console.log(error);
             });
@@ -75,14 +82,14 @@ const FormBadge = ({title}) => {
     return (
         <div className="main-container">
             <div className="main-content">
-                <h2>{ title }</h2>
+                <h2>{ t('admin.badge.title') }</h2>
                 <form onSubmit={handleSubmit} method="POST">
                     <div className={`form-first`}>
-                        <Input name="name" label="Nom" type="text" value={name} onChange={e => setName(e.target.value)} />
-                        <Textarea name="description" label="Description" value={description} type="text" onChange={e => setDescription(e.target.value)} />
-                        <InputFile reference={fileInputRef} name="file" label="Image" onChange={handleFileChange} accept="image/*" />
+                        <Input name="name" label={ t('admin.badge.form.name') } type="text" value={name} onChange={e => setName(e.target.value)} />
+                        <Textarea name="description" label={ t('admin.badge.form.description') } value={description} type="text" onChange={e => setDescription(e.target.value)} />
+                        <InputFile reference={fileInputRef} name="file" label={ t('admin.badge.form.image') } onChange={handleFileChange} accept="image/*" />
                     </div>
-                    <SubmitBtn title={"Ajouter"} />
+                    <SubmitBtn text={ t('bouton.add') } className={"red-full"}/>
                 </form>
             </div>
         </div>

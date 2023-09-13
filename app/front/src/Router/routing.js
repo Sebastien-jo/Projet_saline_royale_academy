@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {BrowserRouter, Routes, Route, Router, useNavigate, HashRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Router, useNavigate, HashRouter, Redirect} from "react-router-dom";
 import "../index.css";
 import { useAuth } from "../hooks/api/useAuth";
 
@@ -48,18 +48,23 @@ import FormOeuvre from "../views/Admin/Oeuvres/FormOeuvre";
 import SingleCompositor from "../views/Admin/Compositor/SingleCompositor";
 import MasterclassChapter from "../views/Student/SingleViews/Lessons/MasterclassChapter";
 import MyForum from "../views/Student/Forum/MyForum";
+import Response from "../api/helpers/response";
 
 
 
 const Routing = () => {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated, user, isTokenExpired } = useAuth();
 
-    console.log(isAuthenticated);
+    const tokenExpired = isTokenExpired();
+    console.log(isAuthenticated, tokenExpired);
 
     return (
         <HashRouter>
             <Routes>
-                {isAuthenticated ? (
+                { isAuthenticated ?
+                    tokenExpired ? (
+                        <Redirect to={"/login"} />
+                    ) : (
                     <>
                         {user.roles[0] === "ROLE_STUDENT" ? (
                             <Route path="/" element={<GlobalLayout />}>
@@ -139,7 +144,7 @@ const Routing = () => {
                                 </Route>
                             </Route>
                         ) : (
-                            <Route path="/" element={<Login />} />
+                            <Redirect to={"/login"} />
                         )}
                     </>
                 ) : (

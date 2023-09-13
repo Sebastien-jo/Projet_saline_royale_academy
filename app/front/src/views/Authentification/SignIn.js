@@ -47,6 +47,7 @@ const SignIn = () => {
         {name: "Chant", icon: voice},
         {name: "Chef d'orchestre", icon: ""}
     ];
+    //Violon, Violoncelle, Alto, Flute, Clarinette, Trombone, Haut-bois, Piano, Chant, Chef d'orchestre
 
     const {loading, error, handleRegister} = useRegister();
     const isMobile = useIsMobileScreen();
@@ -54,7 +55,8 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        handleRegister({ lastName, firstName, email, plainPassword, instrument }).then((response) => {
+
+       handleRegister({ lastName, firstName, email, plainPassword, instrument }).then((response) => {
             console.log(response);
         }
         ).catch((err) => {
@@ -68,12 +70,13 @@ const SignIn = () => {
         }
     }
 
-    const handleClicked = (e) => {
-        setClicked(e.target.value);
+    const handleClicked = (item) => {
+        setClicked(item);
     }
 
     useEffect(() => {
         handleGetNoToken().then((response) => {
+            console.log(response);
             setCategories(response);
         }).catch((err) => {
             console.log(err);
@@ -122,7 +125,7 @@ const SignIn = () => {
                                     <div className={"form-group center"}>
                                         <div className={`instrument-item ${instrument.name === clicked ? "check" : ""}`}>
                                             <img src={instrument.icon} alt={instrument.name}/>
-                                            <input type={"radio"} name={"instrument"} key={index} value={ categories.filter((category) => category.name === instrument.name).map((category) => category['@id']) } onChange={e => setInstrument(e.target.value)} onClick={handleClicked} />
+                                            <input type={"radio"} name={"instrument"} key={index} value={ categories.filter((category) => category.name === instrument.name).map((category) => category['@id']) } onClick={(e) => { handleClicked(instrument.name); setInstrument(e.target.value)}}/>
                                         </div>
                                         <label htmlFor={instrument.name}>{instrument.name}</label>
                                     </div>

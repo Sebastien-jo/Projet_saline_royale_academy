@@ -29,8 +29,10 @@ const PopupEvent = ({openPopup = false, setOpen, title, text, deleteFunc}) => {
                 </div>
 
                 <div className="popup-body">
-                    <Button text={"Annuler"} className={"blue-stroke"} isIcon={true} icon={icon_cross} click={() => setOpen(false)} />
-                    <Button text={"Supprimer"} className={"red-full"} isIcon={true} icon={icon_delete} click={() => {deleteFunc(); setOpen(false)}} />
+                    <div className="popup-body-row">
+                        <Button text={ t('bouton.cancel') } className={"blue-stroke"} isIcon={true} icon={icon_cross} click={() => setOpen(false)} />
+                        <Button text={ t('bouton.delete') } className={"red-full"} isIcon={true} icon={icon_delete} click={() => {deleteFunc(); setOpen(false)}} />
+                    </div>
                 </div>
             </div>
         </div>

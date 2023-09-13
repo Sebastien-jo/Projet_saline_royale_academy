@@ -107,6 +107,9 @@
     max-width: 40vw;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .form_forum{
@@ -270,6 +273,47 @@
     gap: 5px;
 }
 
+/*SIDEBAR HOME */
+.sidebar__progress{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.sidebar__progress__infos{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.sidebar__progress__infos__row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.sidebar__progress__infos__row img{
+    width: 20px;
+    height: 20px;
+    object-fit:contain;
+}
+.sidebar__masterclass_content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.sidebar__masterclass{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
 
 
 

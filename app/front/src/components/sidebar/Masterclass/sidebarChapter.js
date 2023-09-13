@@ -5,8 +5,6 @@ import Button from "../../button/button";
 import {Link} from "react-router-dom";
 
 const sidebarChapter = ({chapter, setChapter, idMasterclass}) => {
-    console.log(chapter);
-
 
 
     return(

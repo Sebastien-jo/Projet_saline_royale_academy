@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "../../styles/components/filters.css";
 import useSortList from "../../hooks/useSortList";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -8,6 +9,7 @@ const SortModal = ({list, setSortedList}) => {
 
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState("");
+    const { i18n, t } = useTranslation();
 
     const { sortList } = useSortList(); // Use the custom hook
 
@@ -22,12 +24,12 @@ const SortModal = ({list, setSortedList}) => {
     return (
         <div className="filters-container">
             <div className="filter-button" onClick={() => setOpen(true)}>
-                Trier par <span className="sort-icon"></span>{" "}
+                { t('filters.sort_by') } <span className="sort-icon"></span>{" "}
             </div>
 
             <div className={`filters-card ${open ? "active" : ""}`}>
                 <div className="filters-card__header">
-                    <h2>Filtrer par</h2>
+                    <h2>{ t('filters.filter_by') }</h2>
                     <span className="close-icon" onClick={() => setOpen(false)}></span>
                 </div>
 
@@ -35,7 +37,7 @@ const SortModal = ({list, setSortedList}) => {
                     <div className="filters-card__content__item">
                         <div className="item__list">
                             <div className="item__list__item">
-                                <label htmlFor="recent">Récents</label>
+                                <label htmlFor="recent">{ t('filters.sort_recent') }</label>
                                 <input
                                     type="checkbox"
                                     id="recent"
@@ -46,7 +48,7 @@ const SortModal = ({list, setSortedList}) => {
                                 />
                             </div>
                             <div className="item__list__item">
-                                <label htmlFor="old">Anciens</label>
+                                <label htmlFor="old">{ t('filters.sort_ancient') }</label>
                                 <input
                                     type="checkbox"
                                     id="old"
@@ -57,7 +59,7 @@ const SortModal = ({list, setSortedList}) => {
                                 />
                             </div>
                             <div className="item__list__item">
-                                <label htmlFor="alphabetical">Alphabétique</label>
+                                <label htmlFor="alphabetical">{ t('filters.sort_alphabet') }</label>
                                 <input
                                     type="checkbox"
                                     id="alphabetical"

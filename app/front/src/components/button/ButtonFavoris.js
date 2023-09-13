@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import "../../styles/components/button.css";
 import {useReload} from "../../hooks/useReload";
 
-const ButtonFavoris = ({favoris, id, isFavorite, setReload}) => {
+const ButtonFavoris = ({favoris, id, isFavorite, setIsReload}) => {
 
     const [isFavoris, setIsFavoris] = useState(favoris);
     const [hasFavorite, setHasFavorite] = useState(false);
@@ -21,10 +21,6 @@ const ButtonFavoris = ({favoris, id, isFavorite, setReload}) => {
         handleDeleteFavorisComposer
     } = useFavoris();
 
-    const {reload, reloadApi} = useReload();
-
-
-
     useEffect(() => {
         setIsFavoris(favoris);
         setHasFavorite(isFavorite);
@@ -37,37 +33,36 @@ const ButtonFavoris = ({favoris, id, isFavorite, setReload}) => {
         !hasFavorite ?
             isFavoris === "oeuvre" || isFavoris === "work" ?
                 handleAddFavorisOeuvre({"user": `api/users/${ user.id }`, "work": `api/works/${ id }`})
-                    .then((response) => {
-                        reloadApi();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                :
-                isFavoris === "masterclass" || isFavoris === "courses" ?
-                    handleAddFavorisMasterclass({
-                        "user": `api/users/${ user.id }`,
-                        "masterclass": `api/masterclasses/${ id }`
-                    })
-                        .then((response) => {
-                            reloadApi();
-
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        })
-                    : isFavoris === "composer" ?
-                        handleAddFavorisComposer({
-                            "user": `api/users/${ user.id }`,
-                            "composer": `api/composers/${ id }`
-                        })  // Fixed 'masterclass' to 'composer'
-                            .then((response) => {
-                                reloadApi();
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            })
-                        : null
+                .then((response) => {
+                    setIsReload(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            :
+            isFavoris === "masterclass" || isFavoris === "courses" ?
+                handleAddFavorisMasterclass({
+                    "user": `api/users/${ user.id }`,
+                    "masterclass": `api/masterclasses/${ id }`
+                })
+                .then((response) => {
+                    setIsReload(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            : isFavoris === "composer" ?
+                handleAddFavorisComposer({
+                    "user": `api/users/${ user.id }`,
+                    "composer": `api/composers/${ id }`
+                })  // Fixed 'masterclass' to 'composer'
+                .then((response) => {
+                    setIsReload(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                : null
             :
             /*isFavoris === "oeuvre" || isFavoris === "work" ?
                handleDeleteFavorisOeuvre({"user": `api/users/${ user.id }`, "work": `api/works/${ id }`})
@@ -96,9 +91,10 @@ const ButtonFavoris = ({favoris, id, isFavorite, setReload}) => {
                }) :*/ null
     }
 
+
     return (
         <button className={ `button-round favorite` } onClick={ handleFavoris }>
-            <img src={ hasFavorite ? favoriteFull : favorite } alt="favorite"/>
+            <img src={ isFavorite ? favoriteFull : favorite } alt="favorite"/>
         </button>
     )
 }

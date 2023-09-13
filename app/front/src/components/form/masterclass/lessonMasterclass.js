@@ -3,8 +3,12 @@ import Input from "../input";
 import Select from "../select";
 import Textarea from "../textarea";
 import InputFile from "../inputFile";
+import {useTranslation} from "react-i18next";
 
 const lessonMasterclass = ({index, lessonsContent, setLessonsContent}) => {
+
+    const { i18n, t } = useTranslation();
+
 
     const [name, setName] = useState("");
     const [resume, setResume] = useState("");
@@ -55,19 +59,19 @@ const lessonMasterclass = ({index, lessonsContent, setLessonsContent}) => {
     return (
         <div className="lesson-card">
             <div className={"form-row"}>
-                <Input name="name" label="Nom" type="text" value={name} onChange={e => setName(e.target.value)} />
-                <Select name="type" label="Type" value={type} onChange={e => setType(e.target.value)} list={["lesson_exercice", "lesson_article", "lesson_video"]} />
+                <Input name="name" label={ t('admin.masterclass.form.lessons.name') } type="text" value={name} onChange={e => setName(e.target.value)} />
+                <Select name="type" label={ t('admin.masterclass.form.lessons.type') }  value={type} onChange={e => setType(e.target.value)} list={["lesson_exercice", "lesson_article", "lesson_video"]} />
             </div>
             {
                 type ?
                     <>
-                        <Textarea name="resume" label="Résumé" type="text" value={resume} onChange={e => setResume(e.target.value)} />
-                        <Textarea name="description" label="Description" type="text" value={description} onChange={e => setDescription(e.target.value)} />
-                        <Input name="content" label="Contenu" type="text" value={content} onChange={e => setContent(e.target.value)} />
+                        <Textarea name="resume" label={ t('admin.masterclass.form.lessons.resume') }  type="text" value={resume} onChange={e => setResume(e.target.value)} />
+                        <Textarea name="description" label={ t('admin.masterclass.form.lessons.description') }  type="text" value={description} onChange={e => setDescription(e.target.value)} />
+                        <Input name="content" label={ t('admin.masterclass.form.lessons.content') }  type="text" value={content} onChange={e => setContent(e.target.value)} />
 
                         {
                             type === "lesson_video" ?
-                                <Input name="video" label="Lien video" type="text" value={video} onChange={e => setVideo(e.target.value)} />
+                                <Input name="video" label={ t('admin.masterclass.form.lessons.video') } type="text" value={video} onChange={e => setVideo(e.target.value)} />
                                 :
                                 null
                         }
