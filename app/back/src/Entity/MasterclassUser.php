@@ -50,7 +50,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: MasterclassUserStateProcessor::class
         ),
     ],
-    normalizationContext: ['groups' => ['masterclass_user:read', 'timestamp']],
+    normalizationContext: ['groups' => ['masterclass_user:read', 'timestamp', 'id']],
     denormalizationContext: ['groups' => ['masterclass_user:write']]
 )]
 #[ORM\HasLifecycleCallbacks]
@@ -67,7 +67,7 @@ class MasterclassUser extends AbstractEntity
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[ApiProperty(readableLink: false)]
-    #[Groups(['masterclass_user:read', 'masterclass_user:read:item'])]
+    #[Groups(['masterclass_user:read', 'masterclass_user:read:item', 'id'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
