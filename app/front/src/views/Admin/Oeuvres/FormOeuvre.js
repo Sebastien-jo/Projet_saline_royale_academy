@@ -11,9 +11,12 @@ import SubmitBtn from "../../../components/form/submitBtn";
 import useCompositors from "../../../hooks/api/useCompositors";
 import useCategories from "../../../hooks/api/useCategories";
 import useOeuvres from "../../../hooks/api/useOeuvres";
+import {useTranslation} from "react-i18next";
 
 
 const FormOeuvre = ({title}) => {
+
+    const { i18n, t } = useTranslation();
 
 
     const id = useParams().id;
@@ -101,20 +104,20 @@ const FormOeuvre = ({title}) => {
     return (
         <div className="main-container">
             <div className="main-content">
-                <h2>{ title }</h2>
+                <h2>{ t('admin.work.title') }</h2>
                 <form onSubmit={handleSubmit} method="POST" enctype="multipart/form-data">
                     <div className={`form-first`}>
 
-                        <Input type="text" name="name" label="Nom de l'oeuvre" onChange={e => setName(e.target.value)} value={name}/>
-                        <Select name="Composer" label="Compositeur" list={compositors !== [] ? compositors : [] } onChange={e => setComposer(e.target.value)} value={composer} isId={true}/>
-                        <Select name="Category" label="Category" list={categories !== [] ? categories : []} onChange={e => setCategory(e.target.value)} value={category} isId={true}/>
-                        <Textarea name="Description" label="Description" onChange={e => setDescription(e.target.value)} value={description}/>
+                        <Input type="text" name="name" label={ t('admin.work.form.name') } onChange={e => setName(e.target.value)} value={name}/>
+                        <Select name="Composer" label={ t('admin.work.form.composer') } list={compositors !== [] ? compositors : [] } onChange={e => setComposer(e.target.value)} value={composer} isId={true}/>
+                        <Select name="Category" label={ t('admin.work.form.category') } list={categories !== [] ? categories : []} onChange={e => setCategory(e.target.value)} value={category} isId={true}/>
+                        <Textarea name="Description" label={ t('admin.work.form.description') } onChange={e => setDescription(e.target.value)} value={description}/>
 
-                        <InputFile reference={fileInputRefAudio} name={"workAudio"} label={"Audio de l'oeuvre"} onChange={(e) => handleFileChange(e, {type: "audio"})} accept={".mp3"}/>
-                        <InputFile reference={fileInputRefPartition} name={"workScores"} label={"Partition de l'ouvres"} onChange={(e) => handleFileChange(e, {type: "partition"})} accept={".pdf"}/>
+                        <InputFile reference={fileInputRefAudio} name={"workAudio"} label={ t('admin.work.form.audio') } onChange={(e) => handleFileChange(e, {type: "audio"})} accept={".mp3"}/>
+                        <InputFile reference={fileInputRefPartition} name={"workScores"} label={ t('admin.work.form.partition') } onChange={(e) => handleFileChange(e, {type: "partition"})} accept={".pdf"}/>
 
 
-                        <SubmitBtn title={"Ajouter"} />
+                        <SubmitBtn text={ t('bouton.add') } className={"red-full"}/>
                     </div>
                 </form>
             </div>

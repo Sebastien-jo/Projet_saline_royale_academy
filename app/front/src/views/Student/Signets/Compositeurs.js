@@ -4,12 +4,16 @@ import ListCompositors from "../../../components/list/listCompositors";
 import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 
 import useFavoris from "../../../hooks/api/useFavoris";
+import useSidebarContent from "../../../hooks/useSidebarContent";
 
 
 const Compositeurs = () => {
 
     const [compositors, setCompositors] = useState(false); // [state, function to update state
     const {loading, error, handleGetAllFavorisComposer} = useFavoris();
+
+    const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
+
 
     useEffect(() => {
         handleGetAllFavorisComposer().then((response) => {
@@ -25,7 +29,7 @@ const Compositeurs = () => {
 
     return (
         <div className="main-container">
-            <div className="main-content isSidebar">
+            <div className="main-content isSidebar menuTabs">
                 <MenuBar items={[
                     {
                         name: "Masterclass",
@@ -43,9 +47,11 @@ const Compositeurs = () => {
                         isLinkActive: true,
 
                     }]}/>
-                <ListCompositors compositors={compositors ? compositors : false} error={error}/>
+                <ListCompositors compositors={compositors ? compositors : false} error={error} updateSidebarContent={updateSidebarContent} loading={loading}/>
+
             </div>
-            <SidebarLibrary/>
+            <SidebarLibrary sidebarContent={sidebarContent} clearSidebarContent={clearSidebarContent} type={"composer"} />
+
         </div>
     );
 }

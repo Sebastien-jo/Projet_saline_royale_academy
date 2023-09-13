@@ -3,8 +3,10 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
-    width: auto;
-    padding: 0 20px;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: fill-available;
+    padding: 0 30px;
 }
 
 .list-row{

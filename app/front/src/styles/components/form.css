@@ -289,6 +289,28 @@ input[type="file"] {
     border-color: var(--primary-blue-dark-100);
 }
 
+/*Darkmode*/
+.dark-mode label{
+    color: var(--primary-black-100);
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select{
+    border-color: var(--primary-blue-40);
+    background: transparent;
+    color: var(--primary-blue-40);
+}
+
+.dark-mode .upload-area{
+    background-image: url("data:image/svg+xml,%3csvg width=%27100%25%27 height=%27100%25%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3crect width=%27100%25%27 height=%27100%25%27 fill='none' stroke='white'  rx=%2715%27 ry=%2715%27 stroke-width=%274%27 stroke-dasharray=%2715%2c 15%27 stroke-dashoffset=%2720%27 stroke-linecap=%27square%27/%3e%3c/svg%3e");
+}
+
+.dark-mode .file-description,
+.dark-mode .upload-area-title,
+.dark-mode .upload-area-description{
+    color: var(--primary-blue-40);
+}
 
 /* MOBILE */
 .mobile .form-container form{

@@ -70,7 +70,7 @@ const PopupAvatar = ({openPopup = false, setOpen, isAvatar, userId, avatarId = f
             <div className="popup-content">
                 <div className="popup-close" onClick={() => handleLinkClick()}></div>
                 <div className="popup-header">
-                    <h1 className="popup-title">{isAvatar ? "Modifier" : "Ajouter"} votre photo de profil</h1>
+                    <h1 className="popup-title">{isAvatar ?  t('bouton.modify')  : t('bouton.add') } {t('popupAvatar.avatar')}</h1>
                 </div>
 
                 <div className="popup-body">
@@ -78,8 +78,8 @@ const PopupAvatar = ({openPopup = false, setOpen, isAvatar, userId, avatarId = f
                         <InputFile useRef={fileInputRef} name={"avatar"} label={"Avatar"} onChange={handleFileChange} accept="image/*" />
 
                         <div className="popup-body-row">
-                            <Button text={"Annuler"} className={"blue-stroke"} isIcon={true} icon={icon_cross} click={() => setOpen(false)} />
-                            <SubmitBtn text={isAvatar ? "Modifier" : "Ajouter"} className={"blue-full"}/>
+                            <Button text={ t('bouton.cancel') } className={"blue-stroke"} isIcon={true} icon={icon_cross} click={() => setOpen(false)} />
+                            <SubmitBtn text={isAvatar ? t('bouton.modify') : t('bouton.add')} className={"blue-full"}/>
                         </div>
                     </form>
                 </div>

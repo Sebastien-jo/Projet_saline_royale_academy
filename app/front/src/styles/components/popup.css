@@ -15,6 +15,11 @@
     z-index: 100;
 }
 
+.popup-container-relative{
+    position: relative;
+    width: 100%;
+}
+
 .popup-container.close{
     display: none;
 }

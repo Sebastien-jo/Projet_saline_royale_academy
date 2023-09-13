@@ -18,6 +18,10 @@
     gap: 20px;
 }
 
+.dark-mode .signets-card h1, .dark-mode .signets-card span{
+    color: var(--primary-black-100)!important;
+}
+
 .signets-card.masterclass{
     grid-column: 1;
     grid-row: 1 / 3;

@@ -5,11 +5,14 @@ import Pastille from "../pastille/pastille";
 import icon from "../../assets/icones/icon-infos-White-stroke.svg";
 import ButtonFavoris from "../button/ButtonFavoris";
 import {useParseDate} from "../../hooks/useParseDate";
+import {useTranslation} from "react-i18next";
 
 
-const CardColumn = ({ setReload, image, title, subtitle, description, link, category, favoris = false , id, handleSelect, isSelected, isFavorite = false, create, isAdmin, handleDelete }) => {
+const CardColumn = ({image, title, subtitle, description, link, category, favoris = false , id, handleSelect, isSelected, isFavorite = false, create, isAdmin, handleDelete, setIsReload}) => {
 
     const {parseDate} = useParseDate();
+
+    const { i18n, t } = useTranslation();
 
         const handleClick = () => {
             handleSelect();
@@ -18,7 +21,7 @@ const CardColumn = ({ setReload, image, title, subtitle, description, link, cate
         return (
             <div className={`card-column ${isSelected ? "selected" : ""}`}>
                 <div className="card-image">
-                    {favoris ? <ButtonFavoris favoris={favoris} id={id} isFavorite={isFavorite} setReload={setReload}/> : null}
+                    {favoris ? <ButtonFavoris favoris={favoris} id={id} isFavorite={isFavorite} setIsReload={setIsReload} /> : null}
                     <img src={image} alt="image" />
                 </div>
 
@@ -51,14 +54,16 @@ const CardColumn = ({ setReload, image, title, subtitle, description, link, cate
 
                     {
                         create &&
-                        <p className={"subtitle"}>Ajouté le {parseDate(create)}</p>
+                        <p className={"subtitle"}>{t('card.add_at') }  {parseDate(create)}</p>
                     }
 
-                    <Button className={"blue-full"} isIcon={true} icon={icon} link={link} text={"Voir"} click={handleClick} />
-                    {
-                        isAdmin &&
-                        <Button className={"red-full"} text={"Supprimer"} click={handleDelete} />
-                    }
+                    <div className={"card-column__buttons"}>
+                        <Button className={"blue-full"} isIcon={true} icon={icon} link={link} text={t('bouton.snippet') } click={handleClick} />
+                        {
+                            isAdmin &&
+                            <Button className={"red-full"} text={t('bouton.delete') } click={handleDelete} />
+                        }
+                    </div>
                 </div>
 
             </div>

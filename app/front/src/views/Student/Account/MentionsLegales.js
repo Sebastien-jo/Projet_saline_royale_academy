@@ -1,22 +1,27 @@
 import React from "react";
 import MenuBar from "../../../components/navbar/MenuBar";
+import {useTranslation} from "react-i18next";
 
 const MentionsLegales = () => {
+
+    const { i18n, t } = useTranslation();
+
     return (
         <div className="main-container">
             <div className="main-content isMenu">
                 <MenuBar items={[
                     {
-                        name: "Mes informations",
+                        name: `${t('account.menuBar.information')}`,
                         link: "/account"
                     },
                     {
-                        name: "Ma progression",
+                        name: `${t('account.menuBar.progress')}`,
                         link: "/account/progression"
                     },
                     {
-                        name: "Mentions légales",
-                        link: "/account/mentions-legales"
+                        name: `${t('account.menuBar.legals')}`,
+                        link: "/account/mentions-legales",
+                        active: true
                     }]}/>
                 <div className={"container-padding"}>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus mauris vitae magna cursus, sit amet varius tortor porttitor. Ut et neque eros. Fusce dignissim hendrerit dui in facilisis. In aliquam pretium magna at accumsan. Etiam accumsan ipsum eu velit malesuada varius. Suspendisse tempor risus dolor, sed fringilla diam hendrerit nec. Nullam facilisis feugiat odio eu ullamcorper. Ut consequat, ligula at blandit fringilla, lectus ligula molestie purus, id placerat sem sem eu just.

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {getForums, getForum, addForum, deleteForum, updateForum} from "../../api/endpoints/forum";
+import {getForums, getForum, addForum, deleteForum, updateForum, getForumByUser} from "../../api/endpoints/forum";
 
 const useForum = () => {
 
@@ -62,6 +62,17 @@ const useForum = () => {
         }
     }
 
+    const handleGetByUser = async (id) => {
+        try{
+            const response = await getForumByUser(id);
+            return response; // Return the response from the function
+        } catch(e){
+            setError(e);
+        } finally{
+            setLoading(false);
+        }
+    }
+
     return {
         loading,
         error,
@@ -69,7 +80,8 @@ const useForum = () => {
         handleGet,
         handlePost,
         handleDelete,
-        handleUpdate
+        handleUpdate,
+        handleGetByUser
     }
 
 }

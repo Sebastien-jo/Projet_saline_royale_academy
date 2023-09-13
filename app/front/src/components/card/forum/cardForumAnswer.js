@@ -5,11 +5,13 @@ import Button from "../../button/button";
 import icon from "../../../assets/icones/icon-edit-Blue-stroke.svg";
 import {useParseDate} from "../../../hooks/useParseDate";
 import ButtonIcon from "../../button/buttonIcon";
+import {useTranslation} from "react-i18next";
 
 const CardForumAnswer = ({message, forumId, setMessageAnswer, forumClosed}) => {
 
     const [isOpened, setIsOpened] = useState(false);
     const {parseDate} = useParseDate();
+    const { i18n, t } = useTranslation();
 
     return (
         <div className={"card_sidebar_answer"}>
@@ -21,7 +23,7 @@ const CardForumAnswer = ({message, forumId, setMessageAnswer, forumClosed}) => {
                 <div className={"card-row_container infos"}>
                     <p>{message.user.firstName} {message.user.lastName}</p>
                     <p>{ message.content }</p>
-                    <p className={"subtitle"}>Publiée le { parseDate(message.createdAt) }</p>
+                    <p className={"subtitle"}>{ t('forum.cardForum.published') } { parseDate(message.createdAt) }</p>
                 </div>
 
                 { !forumClosed ?
@@ -35,7 +37,7 @@ const CardForumAnswer = ({message, forumId, setMessageAnswer, forumClosed}) => {
 
 
             {
-                isOpened ? <CardMessageForm forumId={forumId} messageId={message.id} setMessageAnswer={setMessageAnswer}/> : null
+                isOpened ? <CardMessageForm forumId={forumId} messageId={message.id} setMessageAnswer={setMessageAnswer} setIsOpened={setIsOpened} name={message.user ? message.user.firstName : "Anonyme"} /> : null
             }
 
             <div className={"card_answer"}>
@@ -50,7 +52,7 @@ const CardForumAnswer = ({message, forumId, setMessageAnswer, forumClosed}) => {
                                 <div className={"card-row_container infos"}>
                                     <p>{message.user.firstName} {message.user.lastName}</p>
                                     <p>{ message.content }</p>
-                                    <p className={"subtitle"}>Publiée le { parseDate(message.createdAt) }</p>
+                                    <p className={"subtitle"}>{ t('forum.cardForum.published') } { parseDate(message.createdAt) }</p>
                                 </div>
                             </div>
                         )

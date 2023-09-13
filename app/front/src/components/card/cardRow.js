@@ -5,17 +5,15 @@ import Pastille from "../pastille/pastille";
 import {useParseDate} from "../../hooks/useParseDate";
 
 
-const CardRow = ({ setReload, title, subtitle, text, bouton, link, image, favoris, id, category = [], isFavorite = false, create }) => {
-
+const CardRow = ({title, subtitle, text, bouton, link, image, favoris, id, category = [], isFavorite = false , create, isAdmin, handleDelete, setIsReload}) => {
 
     const {parseDate} = useParseDate();
     const categoryList = Array.isArray(category) ? category : [category]; // Convert single object to an array
 
-
     return (
         <div className="card-row">
             <div className="card-row__image">
-                {favoris ? <ButtonFavoris favoris={favoris} id={id} isFavorite={isFavorite} setReload={{ setReload}}/> : null}
+                {favoris ? <ButtonFavoris favoris={favoris} id={id} isFavorite={isFavorite} setIsReload={setIsReload} /> : null}
                 <img src={image} alt="image"/>
             </div>
             <div className="card-row__content">

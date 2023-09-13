@@ -6,6 +6,8 @@ import Loader from "../loader/loader";
 import useOeuvres from "../../hooks/api/useOeuvres";
 import useCompositors from "../../hooks/api/useCompositors";
 import bg_work from "../../assets/images/bg_work.jpg";
+import {useReload} from "../../hooks/useReload";
+import {useTranslation} from "react-i18next";
 
 
 const ListHome = ({title}) => {
@@ -23,43 +25,53 @@ const ListHome = ({title}) => {
     const {loading: composerLoading, error: composerError, handleGetAll: composerHandleGetAll} = composers;
 
 
+    const [reload, setIsReload] = useState(false); // [state, function to update state
+    const { i18n, t } = useTranslation();
 
     const handleClick = (e) => {
         setFilter(e);
     }
 
+
+
+
     useEffect(() => {
+        console.log("reload", reload);
         filter === "courses" ?
             masterclassHandleGetAll().then((response) => {
                 setList(response.reverse());
+                setIsReload(false);
             }).catch((error) => {
                 console.log(error);
             })
         : filter === "work" ?
             oeuvreHandleGetAll().then((response) => {
                 setList(response.reverse());
+                setIsReload(false);
             }).catch((error) => {
                 console.log(error);
             }
         ) : filter === "composer" ?
             composerHandleGetAll().then((response) => {
                 setList(response.reverse());
+                setIsReload(false);
             }).catch((error) => {
                 console.log(error);
             }
         ) : setList(false);
-    }, [filter]);
 
-    console.log(list);
+    }, [filter, reload]);
+
+
 
     return(
         <div className="container-home">
             <div className="container__header">
                 <h2>{title}</h2>
                 <div className="container__filters">
-                    <Pastille text={"Masterclass"} className={`courses ${filter === "courses" ? "active" : ""}`} click={() => handleClick("courses")}/>
-                    <Pastille text={"Oeuvres"} className={`work ${filter === "work" ? "active" : ""}`} click={() => handleClick("work")}/>
-                    <Pastille text={"Compositeurs"} className={`composer ${filter === "composer" ? "active" : ""}`} click={() => handleClick("composer")}/>
+                    <Pastille text={t('home.pastille_masterclass')} className={`courses ${filter === "courses" ? "active" : ""}`} click={() => handleClick("courses")}/>
+                    <Pastille text={t('home.pastille_work')} className={`work ${filter === "work" ? "active" : ""}`} click={() => handleClick("work")}/>
+                    <Pastille text={t('home.pastille_composer')} className={`composer ${filter === "composer" ? "active" : ""}`} click={() => handleClick("composer")}/>
                 </div>
             </div>
 
@@ -80,21 +92,23 @@ const ListHome = ({title}) => {
                                       : "#"
                                     }
                                     image={
-                                        filter === "courses" ? item.masterclassImage ? item.masterclassImage.contentUrl : ""
-                                        : filter === "work" ? bg_work
-                                        : filter === "composer" ? item.composerImage ? item.composerImage.contentUrl : ""
+                                        filter === "courses" ? item.masterclassImage ? item.masterclassImage.contentUrl : "https://images.unsplash.com/photo-1471478331149-c72f17e33c73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80"
+                                        : filter === "work" ? "https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"
+                                        : filter === "composer" ? item.composerImage ? item.composerImage.contentUrl : "https://images.unsplash.com/photo-1621368286550-f54551f39b91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"
                                         : ""
                                     }
                                     favoris={filter}
-                                    isFavorite={item.isFavorite}
+                                    isFavorite={ filter === "courses" ? item.favorite : item.isFavorite }
                                     //category or categories
                                     category={ filter === "composer" ? item.categories : item.category }
                                     id={item.id}
+                                    reload={reload}
+                                    setIsReload={setIsReload}
                                 />
                             )
                         })
                         : masterclassError || oeuvreError || composerError ?
-                        <p>Une erreur est survenue</p>
+                            <p>Une erreur est survenue lors du chargement des données</p>
                         :
                         <Loader/>
                 }

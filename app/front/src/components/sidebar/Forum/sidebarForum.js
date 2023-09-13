@@ -53,13 +53,15 @@ const SidebarForum = ({isSideBar, closeSidebar}) => {
     return forum !== [] ? (
         <div className="sidebar isForum">
             <div className={'sidebar_fixed'}>
-                <ButtonIcon className={"blue"} click={closeSidebar} icon={close} />
-
                 <div className="sidebar__header">
-                    <h2>{ forum.title }</h2>
+                    <ButtonIcon className={"blue"} click={closeSidebar} icon={close} text={"Fermer"} />
                     {
                         forum.isClosed ? <Pastille text={"Fermé"} className={"red"} /> : <Pastille text={"Actif"} className={"green"} />
                     }
+                </div>
+
+                <div className="sidebar__header">
+                    <h2>{ forum.title }</h2>
                 </div>
                 <div className="sidebar__content">
 
@@ -88,7 +90,7 @@ const SidebarForum = ({isSideBar, closeSidebar}) => {
                 </div>
 
                 {
-                    isOpened ?  <CardForumForm forumId={forum.id} setNewMessage={setNewMessage} /> : null
+                    isOpened ?  <CardForumForm forumId={forum.id} setNewMessage={setNewMessage} setIsOpened={setIsOpened} name={forum.user ? forum.user.firstName : "Anonyme"} /> : null
                 }
 
                 <div className="card-forum-answer">

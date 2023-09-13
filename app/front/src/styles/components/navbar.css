@@ -33,6 +33,10 @@
     width: 35px;
 }
 
+.dark-mode .navbar__logo__link{
+    filter: invert(1);
+}
+
 
 .navbar__line{
     width: 100%;
@@ -78,6 +82,12 @@
     background: var(--primary-blue-light-100);
 }
 
+.dark-mode .navbar__links a:hover,
+.dark-mode .navbar__links_link:hover{
+    color: var(--primary-black-100);
+    background: var(--background-color);
+}
+
 .navbar__links a.active,
 .navbar__links_link.active{
     color: var(--primary-white-100);
@@ -86,6 +96,9 @@
 
 .navbar__links a.active p{
     color: var(--primary-white-100);
+}
+.dark-mode .navbar__links a.active p{
+    color: var(--primary-black-100);
 }
 
 .navbar p{
@@ -124,6 +137,11 @@
     background: var(--icon-home-white-stroke) no-repeat center/contain;
 }
 
+.dark-mode .home,
+.dark-mode a:hover .home{
+    background: var(--icon-home-white-stroke) no-repeat center/contain;
+}
+
 .masterclass{
     background: var(--icon-video-grey) no-repeat center/contain;
 }
@@ -131,6 +149,10 @@
     background: var(--icon-video-blue-stroke) no-repeat center/contain;
 }
 .navbar__links a.active .masterclass{
+    background: var(--icon-video-white-stroke) no-repeat center/contain;
+}
+.dark-mode .masterclass,
+.dark-mode a:hover .masterclass{
     background: var(--icon-video-white-stroke) no-repeat center/contain;
 }
 
@@ -141,6 +163,10 @@
     background: var(--icon-study-blue-stroke) no-repeat center/contain;
 }
 .navbar__links a.active .mystudy{
+    background: var(--icon-study-white-stroke) no-repeat center/contain;
+}
+.dark-mode .mystudy,
+.dark-mode a:hover .mystudy{
     background: var(--icon-study-white-stroke) no-repeat center/contain;
 }
 
@@ -154,6 +180,10 @@
 .navbar__links a.active .signets{
     background: var(--icon-signet-white-stroke) no-repeat center/contain;
 }
+.dark-mode .signets,
+.dark-mode a:hover .signets{
+    background: var(--icon-signet-white-stroke) no-repeat center/contain;
+}
 
 .library{
     background: var(--icon-books-grey) no-repeat center/contain;
@@ -162,6 +192,10 @@
     background: var(--icon-books-blue-stroke) no-repeat center/contain;
 }
 .navbar__links a.active .library{
+    background: var(--icon-books-white-stroke) no-repeat center/contain;
+}
+.dark-mode .library,
+.dark-mode a:hover .library{
     background: var(--icon-books-white-stroke) no-repeat center/contain;
 }
 
@@ -174,6 +208,10 @@
 .navbar__links a.active .forum{
     background: var(--icon-forum-white-stroke) no-repeat center/contain;
 }
+.dark-mode .forum,
+.dark-mode a:hover .forum{
+    background: var(--icon-forum-white-stroke) no-repeat center/contain;
+}
 
 .oeuvres{
     background: var(--icon-oeuvres-grey) no-repeat center/contain;
@@ -184,6 +222,11 @@
 .navbar__links a.active .oeuvres{
     background: var(--icon-oeuvres-white) no-repeat center/contain;
 }
+.dark-mode .oeuvres,
+.dark-mode a:hover .oeuvres{
+    background: var(--icon-oeuvres-white) no-repeat center/contain;
+}
+
 
 .compositeurs{
     background: var(--icon-compositor-grey) no-repeat center/contain;
@@ -194,6 +237,11 @@
 .navbar__links a.active .compositeurs{
     background: var(--icon-compositor-white) no-repeat center/contain;
 }
+.dark-mode .compositeurs,
+.dark-mode a:hover .compositeurs{
+    background: var(--icon-compositor-white) no-repeat center/contain;
+}
+
 
 .badges{
     background: var(--icon-badge-grey) no-repeat center/contain;
@@ -204,6 +252,11 @@
 .navbar__links a.active .badges{
     background: var(--icon-badge-white) no-repeat center/contain;
 }
+.dark-mode .badges,
+.dark-mode a:hover .badges{
+    background: var(--icon-badge-white) no-repeat center/contain;
+}
+
 
 .users{
     background: var(--icon-user-grey) no-repeat center/contain;
@@ -212,6 +265,10 @@
     background: var(--icon-user-blue-stroke) no-repeat center/contain;
 }
 .navbar__links a.active .users{
+    background: var(--icon-user-white) no-repeat center/contain;
+}
+.dark-mode .users,
+.dark-mode a:hover .users{
     background: var(--icon-user-white) no-repeat center/contain;
 }
 
@@ -224,6 +281,11 @@
 .navbar__user .active .parameters{
     background: var(--icon-params-white-stroke) no-repeat center/contain;
 }
+.dark-mode .parameters,
+.dark-mode a:hover .parameters{
+    background: var(--icon-params-white-stroke) no-repeat center/contain;
+}
+
 
 .navbar__user{
     display: flex;

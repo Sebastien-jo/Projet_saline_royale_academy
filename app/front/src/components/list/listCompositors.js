@@ -6,15 +6,16 @@ import SortModal from "../filters/sortModal";
 import PopupDelete from "../popup/popupDelete";
 import usePagination from "../../hooks/usePagination";
 import Pagination from "../pagination/pagination";
+import {useTranslation} from "react-i18next";
 
-const ListCompositors = ({compositors, error, loading, favoris= false, updateSidebarContent, isAdmin, deleteFunction, setId}) => {
+const ListCompositors = ({compositors, error, loading, favoris= false, updateSidebarContent, isAdmin, deleteFunction, setId, setIsReload }) => {
 
     const [selectedComposerId, setSelectedComposerId] = useState(null);
     const [sortedList, setSortedList] = useState([]);
     const [openPopup, setOpen] = useState(false);
     const { currentPage, itemsPerPage, itemsToDisplay, totalPages, nextPage, prevPage, goToPage } = usePagination(sortedList);
 
-
+    const { i18n, t } = useTranslation();
 
     const handleItemSelect = (item) => {
         setSelectedComposerId(item.id);
@@ -29,9 +30,9 @@ const ListCompositors = ({compositors, error, loading, favoris= false, updateSid
         <div className="container-list">
             <div className="list-row">
                 <div className="container__header">
-                    <h2>Récemment ajoutés</h2>
+                    <h2>{ t('library.title') }</h2>
                     <div className="container__header__buttons">
-                        <FiltersModal list={sortedList} setSortedList={setSortedList} />
+                        <FiltersModal list={sortedList} setSortedList={setSortedList} originalList={compositors} />
                         <SortModal list={sortedList} setSortedList={setSortedList} />
                     </div>
                 </div>
@@ -39,17 +40,12 @@ const ListCompositors = ({compositors, error, loading, favoris= false, updateSid
                 <div className="container-list__content">
 
                     {
-                        error?
-                            <p>Une erreur est survenue</p>
-                            :
-                            loading ?
-                                <Loader />
-                                : itemsToDisplay.length > 0 ? (
+                        itemsToDisplay.length > 0 ? (
                                 itemsToDisplay.map((item, index) => {
                                     return(
                                         <CardColumn
                                             key={index}
-                                            image={item.composerImage ? item.composerImage.contentUrl : ""}
+                                            image={item.composerImage ? item.composerImage.contentUrl : "https://images.unsplash.com/photo-1621368286550-f54551f39b91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"}
                                             title={item.name}
                                             subtitle={item.birth}
                                             description={item.description}
@@ -65,12 +61,17 @@ const ListCompositors = ({compositors, error, loading, favoris= false, updateSid
                                             }}
                                             handleSelect={() => handleItemSelect(item)}
                                             isSelected={selectedComposerId === item.id}
+                                            setIsReload={setIsReload}
                                         />
                                     )
                                 })
                             )
-                            :
-                            <p>Aucun compositeur ajouté pour le moment </p>
+                        : error?
+                            <p>{ t('error.error_data') }</p>
+                        : loading ?
+                            <Loader />
+                        :
+                        <p>{ t('library.no_composer') }</p>
                     }
                 </div>
                 <Pagination currentPage={currentPage} totalPages={totalPages} nextPage={nextPage} prevPage={prevPage} goToPage={goToPage} />

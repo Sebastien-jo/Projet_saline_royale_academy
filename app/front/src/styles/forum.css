@@ -3,7 +3,7 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
-    width: 100%;
+    width: inherit;
 }
 
 .forum-row{
@@ -11,6 +11,7 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    padding: 0 30px;
 }
 
 

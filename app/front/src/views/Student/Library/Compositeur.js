@@ -5,49 +5,49 @@ import "../../../styles/library.css";
 import SidebarLibrary from "../../../components/sidebar/Library/sidebarLibrary";
 import useCompositors from "../../../hooks/api/useCompositors";
 import useSidebarContent from "../../../hooks/useSidebarContent";
-import {useReload} from "../../../hooks/useReload";
+import {useTranslation} from "react-i18next";
 
 const CompositeurLibrary = () => {
 
     const [compositors, setCompositors] = useState(false); // [state, function to update state
     const {loading, error, handleGetAll} = useCompositors();
-    const {reload} = useReload();
+    const { i18n, t } = useTranslation();
 
     const { sidebarContent, updateSidebarContent, clearSidebarContent } = useSidebarContent();
 
+    const [reload, setIsReload] = useState(false); // [state, function to update state
 
     useEffect(() => {
         handleGetAll().then((response) => {
-            setCompositors(response);
+            setCompositors(response.reverse());
+            setIsReload(false);
         }).catch((err) => {
             console.log(err);
         });
     }, [reload]);
 
-    console.log(reload);
-
     return (
         <div className="main-container">
-            <div className="main-content isSidebar">
+            <div className="main-content isSidebar menuTabs">
                 <MenuBar items={[
                     {
-                        name: "Masterclass",
+                        name: `${t('library.menuBar.masterclass')}`,
                         link: "/library/masterclass",
                         isLinkActive: false,
                     },
                     {
-                        name: "Oeuvres",
+                        name: `${t('library.menuBar.work')}`,
                         link: "/library/oeuvres",
                         isLinkActive: false,
                     },
                     {
-                        name: "Compositeur",
+                        name: `${t('library.menuBar.composer')}`,
                         link: "/library/compositeur",
                         isLinkActive: true,
 
                     }]}/>
 
-                <ListCompositors compositors={compositors ? compositors : false} error={error} favoris={"composer"} updateSidebarContent={updateSidebarContent} />
+                <ListCompositors compositors={compositors ? compositors : false} error={error} favoris={"composer"} updateSidebarContent={updateSidebarContent} loading={loading} setIsReload={setIsReload} />
             </div>
             <SidebarLibrary sidebarContent={sidebarContent} clearSidebarContent={clearSidebarContent} type={"composer"} />
         </div>

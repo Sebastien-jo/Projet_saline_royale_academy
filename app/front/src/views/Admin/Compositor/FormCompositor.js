@@ -10,9 +10,12 @@ import useCategories from "../../../hooks/api/useCategories";
 import Select from "../../../components/form/select";
 import {useNavigate} from "react-router-dom";
 import SubmitBtn from "../../../components/form/submitBtn";
+import {useTranslation} from "react-i18next";
 
 
 const FormCompositor = ({title}) => {
+
+    const { i18n, t } = useTranslation();
 
 
         const id = useParams().id;
@@ -164,28 +167,28 @@ const FormCompositor = ({title}) => {
         return (
             <div className="main-container">
                 <div className="main-content">
-                    <h2>{ title }</h2>
+                    <h2>{ t('admin.composer.title') }</h2>
                     <form onSubmit={handleSubmit} method="POST">
 
                         <div className={`form-first`}>
                             <div className={"form-row"}>
-                                <Input type="text" name="name" label="Nom du compositeur" onChange={e => setName(e.target.value)} value={name}/>
-                                <Input type="text" name="completeName" label="Nom complet" onChange={e => setCompleteName(e.target.value)} value={completeName}/>
+                                <Input type="text" name="name" label={ t('admin.composer.form.name') } onChange={e => setName(e.target.value)} value={name}/>
+                                <Input type="text" name="completeName" label={ t('admin.composer.form.complete_name') } onChange={e => setCompleteName(e.target.value)} value={completeName}/>
                             </div>
                            <div className={"form-row"}>
-                                <Input type="date" name="DateOfBirth" label="Date de naissance" onChange={e => setDateOfBirth(e.target.value)} value={dateOfBirth}/>
-                                <Input type="date" name="DateOfDeath" label="Date de décès" onChange={e => setDateOfDeath(e.target.value)} value={dateOfDeath}/>
+                                <Input type="date" name="DateOfBirth" label={ t('admin.composer.form.birth') } onChange={e => setDateOfBirth(e.target.value)} value={dateOfBirth}/>
+                                <Input type="date" name="DateOfDeath" label={ t('admin.composer.form.death') } onChange={e => setDateOfDeath(e.target.value)} value={dateOfDeath}/>
                             </div>
                             <div className={"form-row"}>
-                                <Select name="Category" label="Category" list={categories !== [] ? categories : []} onChange={e => setCategory(e.target.value)} value={category} isId={true}/>
-                                <Select name="nationality" label={"Nationality"} list={languageNames} onChange={e => setNationality(e.target.value)} value={nationality} isId={false} />
+                                <Select name="Category" label={ t('admin.composer.form.category') } list={categories !== [] ? categories : []} onChange={e => setCategory(e.target.value)} value={category} isId={true}/>
+                                <Select name="nationality" label={ t('admin.composer.form.nationality') } list={languageNames} onChange={e => setNationality(e.target.value)} value={nationality} isId={false} />
                             </div>
-                            <Textarea name="Description" label="Description" onChange={e => setDescription(e.target.value)} value={description}/>
+                            <Textarea name="Description" label={ t('admin.composer.form.description') } onChange={e => setDescription(e.target.value)} value={description}/>
 
 
-                            <InputFile reference={fileInputRef} name="file" label="Image" onChange={handleFileChange} accept="image/*" />
+                            <InputFile reference={fileInputRef} name="file" label={ t('admin.composer.form.image') } onChange={handleFileChange} accept="image/*" />
 
-                            <SubmitBtn text={"Ajouter"} className={"red-full"} />
+                            <SubmitBtn ttext={ t('bouton.add') } className={"red-full"} />
                         </div>
                     </form>
                 </div>

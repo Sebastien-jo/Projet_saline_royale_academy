@@ -7,11 +7,15 @@ import PopupDelete from "../popup/popupDelete";
 import useUsers from "../../hooks/api/useUsers";
 import logo_user from "../../assets/logo/logo_user.png";
 import SortModal from "../filters/sortModal";
+import {useTranslation} from "react-i18next";
 
 const ListUsers= ({text, users, setId, handleRemove}) => {
 
     const [openPopup, setOpen] = useState(false);
     const [sortedList, setSortedList] = useState([]);
+
+    const { i18n, t } = useTranslation();
+
 
     useEffect(() => {
         setSortedList(users);
@@ -30,7 +34,7 @@ const ListUsers= ({text, users, setId, handleRemove}) => {
                     {
                         users.map((user, index) => {
                             return(
-                                <div className={"card-column"} key={index}>
+                                <div className={"card-column space-between"} key={index}>
                                     <div className={"card_avatar"}>
                                         {
                                             user.userAvatar ?
@@ -47,8 +51,8 @@ const ListUsers= ({text, users, setId, handleRemove}) => {
                                       <p className={"card-column__text"}>{ user.email }</p>
                                     <p className={"card-column__text"}>{ user.roles[0]}</p>
                                     <div className={"card-column__buttons"}>
-                                        <Button text="Modifier" link={`#/users/edit/${user.id}`} className={"blue-stroke"} isIcon={true} icon={edit} />
-                                        <Button text="Supprimer"
+                                        <Button text={ t('bouton.modify') } link={`#/users/edit/${user.id}`} className={"blue-stroke"} isIcon={true} icon={edit} />
+                                        <Button text={ t('bouton.delete') }
                                                 click={() => {
                                                     setOpen(true);
                                                     //setId({badgeId: badge.id, imageId: badge.badgeImage ? badge.badgeImage.id : null})
@@ -64,7 +68,7 @@ const ListUsers= ({text, users, setId, handleRemove}) => {
                     }
                 </div>
 
-                <PopupDelete deleteFunc={handleRemove} openPopup={openPopup} setOpen={setOpen} title={"Supprimer un utilisateur"} text={"Êtes-vous sûr de vouloir supprimer cet utilisateur ?"} />
+                <PopupDelete deleteFunc={handleRemove} openPopup={openPopup} setOpen={setOpen} title={ t('popupUser.title') } text={ t('popupUser.text') } />
             </div>
         </div>
     );

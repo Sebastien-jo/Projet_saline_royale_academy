@@ -13,6 +13,7 @@ import PopupDelete from "../../../components/popup/popupDelete";
 import useUsers from "../../../hooks/api/useUsers";
 import {changeAvatar, changeUser} from "../../../store/Slice/authSlice";
 import SubmitBtn from "../../../components/form/submitBtn";
+import {useTranslation} from "react-i18next";
 
 const Informations = () => {
 
@@ -25,6 +26,8 @@ const Informations = () => {
 
     const userRedux = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
+
+    const { i18n, t } = useTranslation();
 
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -39,7 +42,6 @@ const Informations = () => {
         }).catch((err) => {
             console.log(err);
         });
-
         setUser(userRedux);
     }, []);
 
@@ -89,29 +91,30 @@ const Informations = () => {
             <div className="main-content isMenu">
                 <MenuBar items={[
                     {
-                        name: "Mes informations",
-                        link: "/account"
+                        name: `${t('account.menuBar.information')}`,
+                        link: "/account",
+                        active: true
                     },
                     {
-                        name: "Ma progression",
+                        name: `${t('account.menuBar.progress')}`,
                         link: "/account/progression"
                     },
                     {
-                        name: "Mentions légales",
+                        name: `${t('account.menuBar.legals')}`,
                         link: "/account/mentions-legales"
                     }]}/>
 
 
                 <div className={"container-padding"}>
                     <div className={"column-container"}>
-                        <h2 className={"title"}>Mes informations personnelles</h2>
+                        <h2 className={"title"}>{t('account.title_informations')}</h2>
 
                         <div className={"row-container"}>
                             <div className={"column-container form-avatar"}>
                                 <img src={user.avatar ? user.avatar.contentUrl : logo_user } className={"avatar"}/>
                                 <div className={"avatar-buttons"}>
-                                    <Button text={"Supprimer"} type={"button"} className={"red-stroke"} click={() =>  setOpenPopupDelete(true)}/>
-                                    <Button text={"Modifier"} type={"button"} className={"blue-full"} icon={edit} isIcon={true} click={() =>  setOpenPopup(true)}/>
+                                    <Button text={t('bouton.delete')} type={"button"} className={"red-stroke"} click={() =>  setOpenPopupDelete(true)}/>
+                                    <Button text={t('bouton.modify')} type={"button"} className={"blue-full"} icon={edit} isIcon={true} click={() =>  setOpenPopup(true)}/>
                                 </div>
 
                                 <PopupDelete title={"Supprimer l'avatar"} text={"Êtes-vous sûr de vouloir supprimer votre avatar ?"} deleteFunc={deleteAvatar} openPopup={openPopupDelete} setOpen={setOpenPopupDelete} />
@@ -120,29 +123,29 @@ const Informations = () => {
                             <div className={"column-container"}>
                                 <form name={"form"} onSubmit={handlePatchUser}>
                                     <div className={"row-container"}>
-                                        <Input label={"Nom"} name={"lastName"} type={"text"} value={lastname} onChange={(e) => setLastname(e.target.value)}/>
-                                        <Input label={"Prénom"} name={"firstName"} type={"text"} value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
+                                        <Input label={t('account.form.lastname')} name={"lastName"} type={"text"} value={lastname} onChange={(e) => setLastname(e.target.value)}/>
+                                        <Input label={t('account.form.firstname')} name={"firstName"} type={"text"} value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
                                     </div>
                                     <div className={"row-container"}>
-                                            <Input label={"Email"} name={"email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                        <Input label={t('account.form.email')} name={"email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)}/>
                                     </div>
                                     <div className={"row-container"}>
-                                        <Input label={"Mot de passe"} name={"plainPassword"} type={"password"} value={plainPassword} onChange={(e) => setPlainPassword(e.target.value)}/>
+                                        <Input label={t('account.form.password')} name={"plainPassword"} type={"password"} value={plainPassword} onChange={(e) => setPlainPassword(e.target.value)}/>
                                     </div>
-                                    <SubmitBtn text={"Enregistrer"} className={"blue-full"} />
+                                    <SubmitBtn text={t('bouton.save')} className={"blue-full"} />
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     <div className={"badge-container"}>
-                        <h2>Mes badges</h2>
+                        <h2>{t('badges.title')}</h2>
 
                         <div className={"badge-list"}>
                             {
                                 badges.map((item, index) => {
                                     return (
-                                        <Badge key={index} name={item.category} image={item.badgeImage.contentUrl} />
+                                        <Badge key={index} name={item.category} image={item.badgeImage ? item.badgeImage.contentUrl : ""} />
                                     )
                                 })
                             }

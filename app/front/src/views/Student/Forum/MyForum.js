@@ -18,7 +18,7 @@ const MyForum = () => {
 
     return (
         <div className="main-container">
-            <div className="main-content isSidebar">
+            <div className="main-content isSidebar menuTabs">
                 <MenuBar items={[
                     {
                         name: "Forum",
@@ -33,7 +33,7 @@ const MyForum = () => {
                 ]}/>
 
 
-                <ListForum setSidebar={setSidebar} setActiveSidebar={setActiveSidebar}/>
+                <ListForum setSidebar={setSidebar} setActiveSidebar={setActiveSidebar} myforum={true} />
             </div>
 
             { activeSidebar === "addForum" ? <SidebarForumAdd closeSidebar={closeSidebar} /> : null }

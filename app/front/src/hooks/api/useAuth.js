@@ -15,7 +15,15 @@ const useAuth = () => {
         window.location.replace("/");
     }
 
-    return { isAuthenticated, user, handleLogin, handleLogout };
+    const isTokenExpired = () => {
+        //expiration for 1 day (86400 seconds)
+        const expiration = 86400;
+        const now = Date.now() / 1000;
+        const token = localStorage.getItem("token");
+        return now > token + expiration;
+    }
+
+    return { isAuthenticated, user, handleLogin, handleLogout, isTokenExpired };
 }
 
 export { useAuth };
