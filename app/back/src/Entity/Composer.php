@@ -68,7 +68,6 @@ class Composer extends AbstractEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['composer:read', 'composer:create'])]
-    #[Assert\Url(groups: ['import', 'Default'])]
     private ?string $description = null;
 
     #[ORM\Column(type: 'date')]

@@ -89,6 +89,7 @@ class LessonUser extends AbstractEntity
             'id' => $this->lesson?->getId(),
             'name' => $this->lesson?->getName(),
             'position' => $this->lesson?->getPosition(),
+            'description' => $this->lesson?->getDescription(),
         ];
     }
 }
