@@ -36,6 +36,7 @@ class BadgeVoter extends Voter
             self::VIEW => $this->canView(),
             self::CREATE => $this->canCreate($user),
             self::VIEW_LIST => $this->canViewList(),
+            self::DELETE => $this->canDelete($user),
             default => false,
         };
     }
@@ -56,6 +57,11 @@ class BadgeVoter extends Voter
     }
 
     private function canEdit(User $user): bool
+    {
+        return in_array('ROLE_ADMIN', $user->getRoles());
+    }
+
+    private function canDelete(User $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles());
     }
