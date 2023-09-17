@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new GetCollection(),
         new Post(
-            normalizationContext: ['groups' => ['translations']],
+            normalizationContext: ['groups' => ['translations', 'id']],
             security: 'is_granted("BADGE_CREATE")'
         ),
         new Get(),
