@@ -131,7 +131,8 @@
     "subtitle": "Discover the badges you've earned",
     "no_badges": "You don't have any badges yet. Keep learning to earn some!",
     "badges": "Badges",
-    "no_badges_data": "No badges have been added at the moment."
+    "no_badges_data": "No badges have been added at the moment.",
+    "no_badges_user": "No badges have been gain at the moment."
   },
   "card": {
     "professor": "Professor",

@@ -26,6 +26,14 @@ const ListCompositors = ({compositors, error, loading, favoris= false, updateSid
         compositors ? setSortedList(compositors) : setSortedList([]);
     }, [compositors]);
 
+    const cutDescription = (description) => {
+        if(description.length > 100) {
+            return description.slice(0, 100) + "...";
+        } else {
+            return description;
+        }
+    }
+
     return (
         <div className="container-list">
             <div className="list-row">
@@ -48,7 +56,7 @@ const ListCompositors = ({compositors, error, loading, favoris= false, updateSid
                                             image={item.composerImage ? item.composerImage.contentUrl : "https://images.unsplash.com/photo-1621368286550-f54551f39b91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"}
                                             title={item.name}
                                             subtitle={item.birth}
-                                            description={item.description}
+                                            description={cutDescription(item.description)}
                                             category={item.categories}
                                             favoris={favoris}
                                             isFavorite={item.isFavorite}

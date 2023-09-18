@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import "../../styles/components/navbar.css"
 import {useLocation} from "react-router-dom";
+import logo_user from "../../assets/logo/logo_user.png";
 
 const NavBarMobile = () => {
 
@@ -28,6 +29,11 @@ const NavBarMobile = () => {
                         <Link to="/mystudy" className={activeLink === "mystudy" ? "active" : ""} onClick={() => handleLinkClick("mystudy")}><span className="navbar__icon mystudy"></span></Link>
                         <Link to="/forum" className={activeLink === "forum" ? "active" : ""} onClick={() => handleLinkClick("forum")}><span className="navbar__icon forum"></span></Link>
                         <Link to="/library" className={activeLink === "library" ? "active" : ""} onClick={() => handleLinkClick("library")}><span className="navbar__icon library"></span></Link>
+                        <Link to="/account" state={{title: 'Mes Informations'}} className="navbar__user__avatar">
+                            <div className="navbar__user__avatar__img">
+                                <img src={ user.avatar && user.avatar !== ""  ? user.avatar.contentUrl : logo_user} alt={"avatar"} />
+                            </div>
+                        </Link>
                     </div>
                     : user.roles[0] == "ROLE_TEACHER" ?
                     <div className="navbar__links">
@@ -42,6 +48,12 @@ const NavBarMobile = () => {
                         <Link to="/compositeurs" className={activeLink === "compositeurs" ? "active" : ""} onClick={() => handleLinkClick("compositeurs")}><span className="navbar__icon compositeurs"></span></Link>
                         <Link to="/badges" className={activeLink === "badges" ? "active" : ""} onClick={() => handleLinkClick("badges")}><span className="navbar__icon badges"></span></Link>
                         <Link to="/users" className={activeLink === "users" ? "active" : ""} onClick={() => handleLinkClick("users")}><span className="navbar__icon users"></span></Link>
+
+                        <div className="navbar__user__avatar">
+                            <div className="navbar__user__avatar__img">
+                                <img src={ user.avatar && user.avatar !== ""  ? user.avatar.contentUrl : logo_user} alt={"avatar"} />
+                            </div>
+                        </div>
                     </div>
 
                 }

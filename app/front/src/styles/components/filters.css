@@ -186,3 +186,9 @@
     width: auto;
     cursor: pointer;
 }
+
+/*mobile*/
+
+.mobile .filters-card.active{
+    right: auto;
+}

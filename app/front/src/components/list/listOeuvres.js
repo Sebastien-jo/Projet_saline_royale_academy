@@ -21,6 +21,14 @@ const ListOeuvres = ({oeuvres, error, loading, favoris, updateSidebarContent , i
         updateSidebarContent(item);
     };
 
+    const cutDescription = (description) => {
+        if(description.length > 100) {
+            return description.slice(0, 100) + "...";
+        } else {
+            return description;
+        }
+    }
+
     useEffect(() => {
         oeuvres ? setSortedList(oeuvres) : setSortedList([]);
     }, [oeuvres]);
@@ -47,7 +55,7 @@ const ListOeuvres = ({oeuvres, error, loading, favoris, updateSidebarContent , i
                                         image={"https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"}
                                         title={item.name}
                                         subtitle={item.composer.name}
-                                        description={item.description}
+                                        description={item.description ? cutDescription(item.description) : ""}
                                         category={item.category}
                                         favoris={favoris}
                                         isFavorite={item.isFavorite}

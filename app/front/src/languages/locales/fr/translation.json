@@ -132,7 +132,8 @@
     "subtitle": "Découvrez les badges que vous avez obtenu",
     "no_badges": "Vous n'avez pas encore de badges. Continuez à apprendre pour en obtenir !",
     "badges": "Les badges",
-    "no_badges_data": "Aucun badge n'a été ajouté pour le moment."
+    "no_badges_data": "Aucun badge n'a été ajouté pour le moment.",
+    "no_badges_user": "Aucun badge n'a été obtenu pour le moment."
   },
   "card": {
     "professor": "Professeur",

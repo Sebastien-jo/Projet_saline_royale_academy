@@ -70,7 +70,7 @@ const FormBadge = () => {
             handleAddBadgeImage(formData).then((response) => {
                 console.log(response);
             }).then((error) => {
-               /* navigate("/badges");*/
+                navigate("/badges");
             }).catch((error) => {
                 console.log(error);
             });

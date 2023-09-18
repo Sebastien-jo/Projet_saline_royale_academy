@@ -63,6 +63,7 @@ const SingleCompositeur = () => {
                     <div className="oeuvre-other">
                         <h2 className="oeuvre-title">Apprendre de ce compositeurs ?</h2>
                         <div className="masterclass-infos-row">
+                            <p>Aucune masterclass n'est disponible pour le moment</p>
                         </div>
                     </div>
                 </div>

@@ -32,6 +32,15 @@ const ListHome = ({title}) => {
         setFilter(e);
     }
 
+    //cut description if too long
+    const cutDescription = (description) => {
+        if(description.length > 80) {
+            return description.slice(0, 80) + "...";
+        } else {
+            return description;
+        }
+    }
+
 
 
 
@@ -77,13 +86,18 @@ const ListHome = ({title}) => {
 
             <div className="container-home__content">
                 {
-                    list ?
+                    list && list.length > 0 ?
                         list.map((item, index) => {
                             return index < 8 && (
                                 <CardRow
                                     key={index}
                                     title={item.name}
-                                    subtitle={"Titre de la card"}
+                                    subtitle={
+                                        filter === "courses" ? cutDescription(item.description)
+                                        : filter === "work" ? cutDescription(item.description)
+                                        : filter === "composer" ? cutDescription(item.description)
+                                        : ""
+                                    }
                                     text={""} bouton={"Voir"}
                                     link={
                                         filter === "courses" ? "#/masterclass/" + item.id
@@ -107,10 +121,9 @@ const ListHome = ({title}) => {
                                 />
                             )
                         })
-                        : masterclassError || oeuvreError || composerError ?
-                            <p>Une erreur est survenue lors du chargement des données</p>
-                        :
-                        <Loader/>
+                        : list.length < 1 ?
+                            <p>Aucune donnée à afficher</p>
+                        : null
                 }
             </div>
         </div>
