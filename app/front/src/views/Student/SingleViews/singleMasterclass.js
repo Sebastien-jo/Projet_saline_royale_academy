@@ -18,8 +18,8 @@ const SingleMasterclass = () => {
 
     useEffect(() => {
         handleGet(id).then((response) => {
-              setMasterclass(response);
-            console.log(response);
+            setMasterclass(response);
+            console.log("masterclass", response);
         }).catch((error) => {
             console.log(error);
         });
@@ -30,9 +30,8 @@ const SingleMasterclass = () => {
             <div className="main-content isSidebar">
 
                 <div className="masterclass-container">
-                    <h2 className="masterclass-title">Masterclass: {masterclass.masterclass.name}</h2>
+                    <h2 className="masterclass-title">Masterclass: {masterclass.masterclass ? masterclass.masterclass.name : "Masterclass"}</h2>
                     <div className="masterclass-chapter-list">
-
                         {
                             masterclass ?
                                 masterclass.sectionUsers.map((item, index) => {
