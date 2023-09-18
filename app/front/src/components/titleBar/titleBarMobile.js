@@ -1,8 +1,14 @@
 import React from "react";
+import {useSelector} from "react-redux";
+import {useAuth} from "../../hooks/api/useAuth";
+import "../../styles/components/titlebar.css";
 import DarkLightSwitch from "./DarkLightSwitch";
-import {Link} from "react-router-dom";
 
 const TitleBar = ({title}) => {
+
+    const user = useSelector(state => state.auth.user);
+    const { handleLogout } = useAuth();
+
 
     return (
         <div className="titleBar">
@@ -14,11 +20,9 @@ const TitleBar = ({title}) => {
             </div>
 
             <div className="titleBar__end">
-                <Link to="/account" className="navbar__user__avatar">
-                    <div className="navbar__user__avatar__img"></div>
-                </Link>
+                <DarkLightSwitch />
+                <button className="logout" onClick={handleLogout}></button>
             </div>
-
         </div>
     );
 }

@@ -24,7 +24,7 @@ const Home = () => {
                     <ListHome title={ t('home.section_masterclass') } isFilter={true}/>
                 </div>
             </div>
-            <SidebarProgress />
+            <SidebarProgress isHome={true}/>
         </div>
     );
 }

@@ -56,3 +56,11 @@
     align-items: flex-start;
     gap: 30px;
 }
+
+
+.mobile .oeuvre-content{
+    flex-direction: column;
+    align-items: flex-start;
+    
+    gap: 20px;
+}

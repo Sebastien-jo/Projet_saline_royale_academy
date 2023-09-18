@@ -13,7 +13,7 @@ import instrumentIcon from "../../assets/icones/icon-music-Default.svg";
 import badgeIcon from "../../assets/icones/icon-badge-Default.svg";
 import {useTranslation} from "react-i18next";
 
-const SidebarProgress = () => {
+const SidebarProgress = ({isHome = false}) => {
 
     const {loading, error, handleGet} = useUsers();
     const [user, setUser] = useState(false);
@@ -45,7 +45,7 @@ const SidebarProgress = () => {
 
 
     return (
-        <div className="sidebar">
+        <div className={`sidebar ${isHome ? "isHome" : ""}`}>
             <div className="sidebar__progress">
                 <h3>{ t('sidebarProgress.title') }</h3>
                 <div className="sidebar__progress__level">
@@ -100,7 +100,7 @@ const SidebarProgress = () => {
                         :
                         <>
                             <p>{ t('sidebarProgress.lesson_not_started') }</p>
-                            <Button className={"red-full"} text={ t('bouton.start') } link={`#/masterclass`} click={clearSidebarContent} />
+                            <Button className={"red-full"} text={ t('bouton.start') } link={`#/library/masterclass`} click={clearSidebarContent} />
                         </>
 
                 }

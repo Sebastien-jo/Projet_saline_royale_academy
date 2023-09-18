@@ -66,11 +66,7 @@ const SingleOeuvre = () => {
                     <div className="oeuvre-other">
                         <h2 className="oeuvre-title">Vous voulez apprendre cette oeuvres ?</h2>
                         <div className="masterclass-infos-row">
-                            {
-                                masterclass.map((item, index) => {
-                                    return <CardFull key={index} title={"Masterclass de piano"} subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec"} bouton={"Voir la masterclass"} link={"#"}/>
-                                })
-                           }
+                            <p>Aucune masterclass n'est disponible pour cette oeuvre</p>
                         </div>
                     </div>
                 </div>

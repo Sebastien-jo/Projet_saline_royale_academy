@@ -101,6 +101,7 @@ const FormOeuvre = ({title}) => {
         });
     }, []);
 
+
     return (
         <div className="main-container">
             <div className="main-content">
@@ -114,7 +115,7 @@ const FormOeuvre = ({title}) => {
                         <Textarea name="Description" label={ t('admin.work.form.description') } onChange={e => setDescription(e.target.value)} value={description}/>
 
                         <InputFile reference={fileInputRefAudio} name={"workAudio"} label={ t('admin.work.form.audio') } onChange={(e) => handleFileChange(e, {type: "audio"})} accept={".mp3"}/>
-                        <InputFile reference={fileInputRefPartition} name={"workScores"} label={ t('admin.work.form.partition') } onChange={(e) => handleFileChange(e, {type: "partition"})} accept={".pdf"}/>
+                        <InputFile reference={fileInputRefPartition} name={"workScores"} label={ t('admin.work.form.partition') } onChange={(e) => handleFileChange(e, {type: "partition"})} accept={".pdf, .jpg, .png"}/>
 
 
                         <SubmitBtn text={ t('bouton.add') } className={"red-full"}/>

@@ -375,6 +375,15 @@
     width: 100%;
 }
 
+/* ------- MOBILE NAVBAR -------------- */
+.navbar-mobile .navbar__user__avatar__img img{
+    width: 25px;
+    height: 25px;
+}
+
+.navbar-mobile .navbar__links a, .navbar__links_link{
+    padding: 10px;
+}
 
 
 

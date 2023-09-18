@@ -46,13 +46,7 @@ const Progress = () => {
                     <div className="progress-container">
                         <h2>{t('badges.title')}</h2>
                         <div className={"badge-list"}>
-                            {
-                                badges.map((item, index) => {
-                                    return (
-                                        <Badge key={index} name={item.category} image={item.badgeImage.contentUrl} />
-                                    )
-                                })
-                            }
+                            <p>{t('badges.no_badges_user')}</p>
                         </div>
                     </div>
 
@@ -63,7 +57,7 @@ const Progress = () => {
                             {
                                 badges.map((item, index) => {
                                     return (
-                                        <Badge key={index} name={item.category} image={item.badgeImage.contentUrl} />
+                                        <Badge key={index} name={item.name} image={item.badgeImage.contentUrl} text={item.description} />
                                     )
                                 })
                             }
