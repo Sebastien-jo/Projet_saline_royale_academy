@@ -49,3 +49,23 @@
 .signets-card h1, .signets-card span{
     color: var(--primary-white-100);
 }
+
+/* MOBILE */
+.mobile .signets-container{
+    grid-template-columns: repeat(1, 1fr)!important;
+}
+
+.mobile .signets-card.masterclass{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.mobile .signets-card.work{
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.mobile .signets-card.composer{
+    grid-column: 1;
+    grid-row: 3;
+}

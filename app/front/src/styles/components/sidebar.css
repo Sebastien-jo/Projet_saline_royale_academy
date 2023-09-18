@@ -320,6 +320,16 @@
 /* MOBILE */
 
 .mobile .sidebar{
+    position: fixed;
+    width: 100%;
+    max-width: 90vw;
+}
+
+.mobile .sidebar_fixed{
+    max-width: 90vw;
+}
+
+.mobile .sidebar.isHome{
     display: none;
 }
 
