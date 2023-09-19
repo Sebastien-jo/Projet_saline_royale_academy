@@ -10,6 +10,7 @@ use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -37,7 +38,7 @@ class Category extends AbstractEntity
     #[ORM\ManyToMany(targetEntity: Composer::class, mappedBy: 'categories')]
     private Collection $composers;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['work:read', 'masterclass_user:read:item', 'composer:read', 'masterclass:read', 'category:read'])]
     private ?string $description = null;
 

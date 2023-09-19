@@ -119,7 +119,7 @@ class Work extends AbstractEntity
     #[Groups(['work:read', 'masterclass_user:read:item', 'work:create', 'work:update'])]
     private ?Composer $composer = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['work:read', 'work:create', 'work:update'])]
     private ?string $description = null;
 

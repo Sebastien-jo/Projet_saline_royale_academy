@@ -15,6 +15,7 @@ use App\State\ComposerProvider;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Context;
@@ -66,7 +67,7 @@ class Composer extends AbstractEntity
     #[Groups(['composer:read', 'composer:create', 'work:read'])]
     private ?string $completeName = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['composer:read', 'composer:create'])]
     private ?string $description = null;
 

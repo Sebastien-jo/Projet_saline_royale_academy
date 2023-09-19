@@ -17,6 +17,7 @@ use App\State\ForumProvider;
 use App\State\SetUserProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -98,7 +99,7 @@ class Forum extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Like::class)]
     private Collection $likes;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Groups(['forum:read', 'forum:write', 'admin:write', 'forum:edit'])]
     #[Assert\NotBlank(message: 'Champ obligatoire', allowNull: false)]
     private ?string $description = null;
