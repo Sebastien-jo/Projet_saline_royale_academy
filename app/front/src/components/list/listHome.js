@@ -93,7 +93,7 @@ const ListHome = ({title}) => {
                                     key={index}
                                     title={item.name}
                                     subtitle={
-                                        filter === "courses" ? cutDescription(item.description)
+                                        filter === "courses" ? cutDescription("")
                                         : filter === "work" ? cutDescription(item.description)
                                         : filter === "composer" ? cutDescription(item.description)
                                         : ""
