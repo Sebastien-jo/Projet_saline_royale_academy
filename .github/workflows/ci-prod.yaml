@@ -42,6 +42,7 @@ jobs:
             docker cp /tmp/files/ docker_symfony_1:/var/www/symfony/public/files
             docker cp docker_symfony_1:/var/www/react/public/build /tmp
             docker cp /tmp/build/ docker_symfony_1:/var/www/symfony/public/build
+            rm -rf /tmp/files
             rm -rf /tmp/build
       - name: Run DB migrations
         id: migration
