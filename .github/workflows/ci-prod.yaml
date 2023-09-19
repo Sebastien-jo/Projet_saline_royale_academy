@@ -21,6 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.HOST }}
           script: |
+            docker cp docker_symfony_1:/var/www/symfony/public/files /tmp
             docker stop docker_symfony_1
             docker rm docker_symfony_1
             docker stop docker_nginx_1
@@ -38,6 +39,7 @@ jobs:
           script: |
             cd .docker
             docker-compose up -d
+            docker cp /tmp/files/ docker_symfony_1:/var/www/symfony/public/files
             docker cp docker_symfony_1:/var/www/react/public/build /tmp
             docker cp /tmp/build/ docker_symfony_1:/var/www/symfony/public/build
             rm -rf /tmp/build
