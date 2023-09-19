@@ -14,13 +14,13 @@ const sidebarChapter = ({chapter, setChapter, idMasterclass}) => {
                     <div className="lesson_icon"></div>
                     <div className="lesson_title">Chapitre 1: {chapter.name}</div>
                 </div>
-               <div className="lesson_nb">0/{chapter.lessons.length}</div>
+               <div className="lesson_nb">0/{chapter.lessons ? chapter.lessons.length : 0}</div>
             </div>
             <div className="sidebar__content">
                 <div className="sidebar__content lesson_accordion_content">
                     <div className={"lesson_container"}>
                     {
-                        chapter.lessons.map((item, index) => {
+                        chapter.lessons && chapter.lessons.map((item, index) => {
                             return <CardLesson key={index} lesson={item} setChapter={setChapter}/>
                         })
                     }
@@ -30,7 +30,7 @@ const sidebarChapter = ({chapter, setChapter, idMasterclass}) => {
                     <Link to={`/masterclass/${idMasterclass}/chapter`} params={{chapter: chapterObjectString}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
 */}
 
-                    <Link to={`/masterclass/${idMasterclass}/chapter`} state={{chapter: chapter, id: idMasterclass}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
+                    <Link to={`/masterclass/${idMasterclass}/chapter`} state={{chapter: chapter, id: idMasterclass}} className={"button red-full"}>Commencer</Link>
                 </div>
             </div>
         </div>

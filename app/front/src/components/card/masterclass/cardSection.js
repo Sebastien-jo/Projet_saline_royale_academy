@@ -18,10 +18,10 @@ const cardSection = ({chapter, setChapter, setIsOpen, key}) => {
                 <RoundProgress progress={30} />
             </div>
             <div className="chapter-list__content">
-                <h2>Chapitre:  { chapter.infoSection.name }</h2>
-                <p>{  chapter.description }</p>
+                <h2>Chapitre {chapter.position}:  { chapter.name }</h2>
+                <p>Un chapitre compreneant {chapter.lessons ? chapter.lessons.length : "0"} leçons</p>
 
-                <Button text={"Voir les leçons"} className={"btn btn--primary"} click={handleToggle}/>
+                <Button text={"Voir les leçons"} className={"blue-full"} click={handleToggle}/>
             </div>
         </div>
     )

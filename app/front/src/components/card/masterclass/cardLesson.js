@@ -11,12 +11,13 @@ const cardLesson = ({lesson}) => {
             </div>
 
             <div className={"lesson_details_content"}>
-                <div className={"lesson_details_infos_time"}>Temps: 2m30</div>
+                <div className={"lesson_details_infos_time"}>{lesson.content}</div>
+                <p></p>
                 {
                     lesson.videoUrl ?
-                        <div className={"lesson_details_infos_type"}>Type: Vidéo</div>
+                        <div className={"lesson_details_infos_type"}><strong>Type:</strong> Vidéo</div>
                         :
-                        <div className={"lesson_details_infos_type"}>Type: Article</div>
+                        <div className={"lesson_details_infos_type"}><strong>Type:</strong> Article</div>
                 }
             </div>
         </div>
