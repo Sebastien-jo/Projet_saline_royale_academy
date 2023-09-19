@@ -11,8 +11,8 @@ COPY --from=node /usr/local/bin /usr/local/bin
 COPY ./app/front .
 
 RUN npm install -g yarn --force
-RUN yarn install --legacy-peer-deps
-RUN yarn build
+RUN npm install --legacy-peer-deps
+RUN npm run build
 
 RUN apk add --no-cache \
     git \
