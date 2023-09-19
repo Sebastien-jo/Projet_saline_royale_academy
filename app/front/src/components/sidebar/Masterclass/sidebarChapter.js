@@ -30,7 +30,7 @@ const sidebarChapter = ({chapter, setChapter, idMasterclass}) => {
                     <Link to={`/masterclass/${idMasterclass}/chapter`} params={{chapter: chapterObjectString}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
 */}
 
-                    <Link to={`/masterclass/${idMasterclass}/chapter`} state={{chapter: chapter, id: idMasterclass}} className={"btn btn-primary btn-lg btn-block"}>Commencer</Link>
+                    <Link to={`/masterclass/${idMasterclass}/chapter`} state={{chapter: chapter, id: idMasterclass}} className={"button red-full"}>Commencer</Link>
                 </div>
             </div>
         </div>

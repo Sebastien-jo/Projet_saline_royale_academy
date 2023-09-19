@@ -15,11 +15,16 @@ const SingleMasterclass = () => {
     const [chapter, setChapter] = useState([]); // [state, function to update state
     const [isOpen, setIsOpen] = useState(false);
     const {loading, error, handleGet} = useMasterclassUser();
+    const {handleGet: handleGetMasterclass} = useMasterclass();
 
     useEffect(() => {
         handleGet(id).then((response) => {
-            setMasterclass(response);
-            console.log("masterclass", response);
+            handleGetMasterclass(response.masterclass.id).then((response) => {
+                console.log(response);
+                setMasterclass(response);
+            }).catch((error) => {
+                console.log(error);
+            });
         }).catch((error) => {
             console.log(error);
         });
@@ -30,11 +35,11 @@ const SingleMasterclass = () => {
             <div className="main-content isSidebar">
 
                 <div className="masterclass-container">
-                    <h2 className="masterclass-title">Masterclass: {masterclass.masterclass ? masterclass.masterclass.name : "Masterclass"}</h2>
+                    <h2 className="masterclass-title">Masterclass: {masterclass ? masterclass.name : "Masterclass"}</h2>
                     <div className="masterclass-chapter-list">
                         {
                             masterclass ?
-                                masterclass.sectionUsers.map((item, index) => {
+                                masterclass.sections.map((item, index) => {
                                     return <CardSection chapter={item} key={index} setChapter={setChapter} setIsOpen={setIsOpen}/>
                                 })
                             : null
